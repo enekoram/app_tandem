@@ -1,0 +1,41 @@
+# Dependencias y builds
+node_modules/
+dist/
+build/
+.expo/
+.expo-shared/
+web-build/
+ios/
+android/
+*.tsbuildinfo
+coverage/
+
+# Entorno y secretos (solo se versiona .env.example)
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist
+credentials.json
+service-account*.json
+
+# Logs y procesos en segundo plano
+.logs/
+*.log
+.pids/
+
+# Sistema y editores
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Claude Code (ajustes locales)
+.claude/settings.local.json
