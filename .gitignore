@@ -39,3 +39,7 @@ service-account*.json
 
 # Claude Code (ajustes locales)
 .claude/settings.local.json
+
+# Notas locales con secretos (nunca al repo)
+pwd_*
+*.rtf
