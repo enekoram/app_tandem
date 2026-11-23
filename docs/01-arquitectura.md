@@ -128,8 +128,10 @@ Firebase Dynamic Links ya no existe y Branch es caro. Propuesta propia:
 
 Ganaría Live Activities, PiP y widgets sin puentes, y la forma unida en Metal. Perdería Android (habría que hacer otra app en Compose: el doble de trabajo para una sola persona) y la reutilización de tipos con la API. **Descartado** para el MVP; Skia da el mismo resultado visual en las dos plataformas.
 
-## 10. Desarrollo local (en este equipo no hay Docker)
+## 10. Desarrollo (decidido: Atlas + Render, sin Docker)
 
-- Tests de la API: `mongodb-memory-server` en modo réplica (transacciones y change streams sin Docker). Redis para tests de colas: instalado con Homebrew o, si no hay permisos, un Redis gratuito en la nube.
+- **Base de datos de desarrollo:** Atlas M0 en la UE (base `tandems_dev`); staging usa otra base (`tandems_staging`) en el mismo clúster hasta que haya M10 de producción. En desarrollo la lista de IPs de Atlas incluye la IP del equipo.
+- **Redis de desarrollo:** el Key Value de staging en Render, con acceso externo limitado a la IP del equipo y prefijo de claves `dev:` para no mezclar colas.
+- **Tests:** `mongodb-memory-server` en modo réplica (transacciones y change streams sin Docker). Los procesadores de BullMQ se prueban con `redis-memory-server`; si no compila en este equipo, contra el Key Value con prefijo `test:`.
 - `pnpm dev`: lanza API (watch), worker y Metro en segundo plano con logs en `.logs/` y PIDs en `.pids/`; `pnpm stop` los para.
-- Base de datos de desarrollo: Docker Compose si se instala Docker/OrbStack; si no, Mongo y Redis con Homebrew, o Atlas M0 + Redis gestionado. **Pendiente de que me digas qué puedes instalar** (ver doc 04).
+- **Dominio:** el de Render (`tandems-api.onrender.com`, `tandems-web.onrender.com`). Limitaciones en doc 04 §A.

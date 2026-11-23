@@ -1,28 +1,51 @@
 # 04 · Riesgos y decisiones abiertas
 
-> Estado: **pendiente de tu respuesta** · 2026-11-23
-> Para cada punto propongo una opción por defecto (**★**). Si no dices nada, se aplica esa.
+> Estado: **decidido** el 2026-11-23 (la persona que encarga delegó las decisiones abiertas; se aplican las ★). Se puede revisar cualquier punto más adelante.
 
-## A. Lo que necesito de ti para empezar la fase 1
+## A. Respuestas recibidas (2026-11-23)
 
-| # | Qué | Por qué |
+| # | Qué | Respuesta y consecuencias |
 |---|---|---|
-| A1 | **Acceso al canvas del prototipo** (enlace de Figma o exportación de las páginas «Prototipo con look and feel», «Tests happy path», «Key-visuals», «Marca · Tandems») | Es la fuente de verdad visual; sin él no puedo completar la lista de pantallas de `PROGRESO.md` ni comparar capturas. Tengo acceso a Figma desde aquí: con el enlace basta. |
-| A2 | **Herramientas locales**: en este equipo no hay Docker ni pnpm. ¿Puedes instalar software (¿tienes permisos de administrador?) | ★ Instalar pnpm (`npm i -g pnpm`) y **OrbStack o Docker Desktop**. Alternativa sin admin: Atlas M0 + Redis gratuito en la nube para desarrollo. |
-| A3 | Nombre del dominio (¿`tandems.app`?) | Universal Links, email, API. Conviene comprarlo pronto. |
-| A4 | Cuenta de GitHub para el repositorio remoto (privado) | CI y despliegue en Render. |
+| A1 | Canvas | Recibido (artifact de diseño, 4 páginas, 112 pantallas en el prototipo). Lista completa en `PROGRESO.md`. |
+| A2 | Entorno de desarrollo | **Sin Docker local.** Base de datos de desarrollo en **Atlas M0** (UE) y API en **Render** (staging). Para desarrollo diario la API también corre en local (`pnpm dev`) contra Atlas. Redis: **Render Key Value** de staging (acepta conexiones externas con lista de IPs) para desarrollo; los tests usan `mongodb-memory-server` y un Redis de tests (ver doc 01 §10). |
+| A3 | Dominio | **El de Render** (`*.onrender.com`) por ahora. Ver limitaciones abajo. |
+| A4 | GitHub | `github.com/enekoram/app_tandem` |
 
-## B. Decisiones abiertas del encargo (§13)
+### Limitaciones de usar el dominio de Render (sin dominio propio)
 
-| # | Decisión | ★ Propuesta por defecto | Afecta a |
+| Qué | ¿Funciona con `*.onrender.com`? | Plan |
+|---|---|---|
+| API y WebSocket con TLS | ✅ Sí | `tandems-api.onrender.com` |
+| Universal Links / App Links | ✅ Sí (controlamos ese subdominio) | AASA y `assetlinks.json` en el Static Site `tandems-web.onrender.com/.well-known/` con `Content-Type: application/json` |
+| Web de aterrizaje, política de privacidad, condiciones | ✅ Sí | Static Site |
+| **Email transaccional** (invitaciones, recuperar contraseña) | ❌ No a destinatarios reales: Resend/Postmark exigen verificar un dominio propio (SPF/DKIM) | En desarrollo, el modo de pruebas de Resend envía solo a tu propio email. **Antes de la beta con usuarios hace falta un dominio** (~10–15 €/año); cambiarlo luego es solo DNS y variables de entorno. Mientras tanto, la invitación se comparte sobre todo con la **hoja de compartir** (WhatsApp, Telegram…), que no necesita email. |
+| **Verificación de Google OAuth** (Calendar/Meet automático) | ❌ No: Google exige un dominio autorizado verificado en Search Console | Fase 4 arranca con **enlace de Meet pegado a mano**; el modo automático se activa cuando haya dominio. |
+| Fichas de App Store / Play | ✅ Sí (URL de privacidad en onrender.com) | — |
+
+**Recomendación:** comprar el dominio antes de la fase 2 (invitaciones por email). No bloquea la fase 1.
+
+## B. Decisiones abiertas del encargo (§13) — aplicadas
+
+| # | Decisión | ★ Decisión tomada | Afecta a |
 |---|---|---|---|
-| 1 | Contraseña o solo proveedores + enlace mágico | ★ **Sin contraseña**: enlace mágico + Apple + Google. Menos fricción (TDAH: olvidar contraseñas es fricción real), menos superficie de ataque. Si la añadimos: mínimo 10 caracteres, comprobación contra contraseñas filtradas, sin reglas de símbolos. | Fase 1 |
+| 1 | Contraseña o solo proveedores + enlace mágico | ★ **Email + contraseña**, porque el canvas ya diseña ese flujo (Iniciar sesión, Crear cuenta, Recuperar contraseña, Crear contraseña nueva). Requisitos: **mínimo 8 caracteres, sin reglas de símbolos**, comprobación contra contraseñas filtradas (Have I Been Pwned por k-anonimato: solo se envían 5 caracteres del hash), botón para mostrar la contraseña. **Sign in with Apple y Google** se añaden en fase 2 (ayudan a la invitada a registrarse rápido). | Fases 1–2 |
 | 2 | Minutos de aviso antes de una sesión | ★ **10 min** (push) y la home entra en SesionPorEmpezar a los 10 min. Configurable más adelante (5/10/15). | Fases 3–4 |
 | 3 | Nombre de «¡hurra!» y responder con un gracias | ★ Mantener **«¡hurra!»** (se entiende sin explicación; «togedah!» no se lee bien con lector de pantalla en castellano). Sí a responder con **«Gracias»** de un toque, sin texto libre. | Fase 5 |
 | 4 | Onboarding propio para la invitada | ★ **Sí, corto**: 2 pantallas (qué es acompañar + permiso de notificaciones) y BienvenidaInvitado con la tarea compartida. | Fase 2 |
 | 5 | Meet por enlace o videollamada integrada | ★ **Meet (Opción A)** + SesionActiva en la app; enlace manual mientras Google verifica. LiveKit tras el MVP si las pruebas con usuarios lo piden. Ver doc 01 §7. | Fase 4 |
 | 6 | Reciprocidad por defecto | ★ La **relación de contacto** es siempre mutua; **acompañar** no: cada tarea se acepta una a una. No se activa nada «por defecto» sin que la otra persona acepte. | Fase 2 |
-| 7 | Ventana de deshacer y duración del apoyo | ★ Deshacer: **8 s**. Petición de apoyo: caduca a los **15 min** sin respuesta. Envío de apoyo en vivo: hasta que se suelta o **5 min** como máximo por envío. | Fases 2 y 5 |
+| 7 | Ventana de deshacer y duración del apoyo | ★ Deshacer: **8 s**. Petición de apoyo: caduca a los **15 min** sin respuesta. Envío de apoyo en vivo: hasta que se suelta o **5 min** como máximo por envío. Vibración del corazón: háptica suave en cada latido solo en estímulo «completo». | Fases 2 y 5 |
+
+### Otras dudas que plantea el canvas (decididas)
+
+| Tema | Lo que muestra el canvas | ★ Decisión |
+|---|---|---|
+| Idioma | «Crear cuenta» tiene un selector de idioma (Català, Español, English) | El encargo dice **solo castellano**: el selector **no se implementa**. Los textos quedan en `strings/es.ts`, así que añadir idiomas después es posible. |
+| Método de invitación (email, enlace o teléfono) | Por definir | **Email + enlace compartible** (hoja de compartir). Sin teléfono/SMS en el MVP. |
+| Sin conexión | Por definir qué se ve y qué se guarda | Se ve la última copia en caché (TanStack Query persistido) en modo lectura, con el aviso SinConexion; **las acciones no se encolan** (crear, aceptar, pedir apoyo necesitan conexión) para evitar sorpresas con el límite y con el tiempo real. |
+| Refuerzo positivo al terminar | Por definir | Pantalla TareaTerminada + ¡hurra! enviado automáticamente al acompañante (si lo hay), respetando el nivel de estímulo. |
+| Animación de la forma en ApoyoRecibido | Nota: «está mal, tiene que estar igual que el onboarding» | La animación del onboarding es la referencia para la forma en todas las pantallas. |
+| Rechazo de tarea o sesión | Supuestos por validar | Se implementan tal cual: la tarea queda «Pendiente: elige a otra persona»; al rechazar una sesión se puede proponer otra hora o elegir otra persona (lo que cambia también el acompañante de la tarea). |
 
 ## C. Cambios que propongo sobre el encargo
 
@@ -42,7 +65,8 @@
 |---|---|---|---|
 | **Verificación de Google** para `calendar.events` tarda semanas | Alta | Medio | Empezar en fase 1 (pantalla de consentimiento, política de privacidad, dominio verificado, vídeo de demostración). Enlace manual como plan B. |
 | **Rendimiento de la forma unida** en Android de gama baja | Media | Alto | Shader SkSL (una sola pasada en GPU) en lugar de blur + matriz de color; medir en un Android modesto en fase 3; degradar a perfil «suave» si baja de 50 fps. |
-| Sin Docker / sin permisos de admin en el equipo | Media | Medio | mongodb-memory-server para tests; servicios en la nube para dev (ver A2). |
+| Sin Docker en el equipo | — | Medio | Decidido: Atlas M0 + Render Key Value para dev; mongodb-memory-server para tests (ver A2). |
+| Sin dominio propio | Alta | Medio | Email a destinatarios reales y verificación de Google bloqueados hasta comprarlo (ver A3). |
 | Revisión de App Store (cuentas, borrado, Sign in with Apple, declaración de datos) | Media | Medio | Borrado de cuenta en la app desde fase 2; fichas de privacidad preparadas en fase 6. |
 | Push en iOS con `time-sensitive` requiere *entitlement* | Baja | Bajo | Activarlo en el perfil de aprovisionamiento con EAS; si no, prioridad normal. |
 | Change streams y WebSocket con varias instancias | Media | Medio | Cada instancia emite solo a sus sockets locales; resume token en Redis; test con 2 instancias. |

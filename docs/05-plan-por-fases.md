@@ -6,8 +6,9 @@
 ## Fase 0 · Documentación (esta rama: `fase-0-documentacion`)
 - [x] Repositorio, `.gitignore`, `CLAUDE.md`
 - [x] Docs 01–05 y `PROGRESO.md`
-- [ ] 🧑 Revisar y aprobar; responder doc 04 §A y §B
-- [ ] Completar la lista de pantallas con el canvas
+- [x] Respuestas a doc 04 §A y §B (2026-11-23)
+- [x] Lista de pantallas completa desde el canvas (112)
+- [ ] 🧑 Visto bueno final → fusionar en `main`
 
 ## Fase 1 · Fundamentos (`fase-1-fundamentos`)
 1. Monorepo pnpm (`.npmrc`, workspaces), TypeScript base, ESLint + Prettier, Husky + lint-staged + commitlint.
@@ -16,10 +17,10 @@
 4. Tests de la API con mongodb-memory-server en réplica; primer e2e de `/health`.
 5. Generación del cliente (`packages/api-client`) desde OpenAPI con orval.
 6. `apps/mobile`: Expo + expo-router, fuentes, `strings/es.ts`, componentes base (Button, Card con filo, Text con regla redonda/cursiva, Sheet, Toast, TabBar flotante), 4 pestañas + Perfil.
-7. Autenticación: Better Auth en la API (enlace mágico, Apple, Google) + pantallas de entrada y «¿Cómo quieres que te llamemos?».
+7. Autenticación: Better Auth en la API con email + contraseña; pantallas Onboarding 1–4, Iniciar sesión, Crear cuenta («¿Cómo quieres que te llamemos?»), Recuperar contraseña, Revisa tu email, Crear contraseña nueva, ErrLogin, ErrRegistro. (Apple y Google en fase 2.)
 8. Scripts `pnpm dev` / `pnpm stop` con logs en `.logs/`.
 9. CI en GitHub Actions; `render.yaml` (api, worker, kv, cron, static) para staging.
-10. 🧑 Cuentas: GitHub, Expo/EAS, Render, Atlas, Resend/Postmark, Apple Developer, Google Play, proyecto de Google Cloud (**y arrancar la verificación de OAuth**), dominio.
+10. 🧑 Cuentas: Expo/EAS, Render, Atlas, Resend, Apple Developer, Google Play. (Google Cloud y verificación de OAuth quedan para cuando haya dominio propio; ver doc 04 §A.)
 11. Logo A1 · Rotunda como SVG + icono de app y splash.
 12. Development build con EAS para iOS y Android → 🧑 instalar y probar.
 
