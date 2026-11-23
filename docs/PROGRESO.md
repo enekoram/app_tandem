@@ -195,4 +195,5 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-23 | Repositorio remoto: github.com/enekoram/app_tandem. |
 | 2026-11-23 | Canvas: pantallas solo de «Prototipo con look and feel»; componentes de «UI kit»; resto de páginas ignoradas. |
 | 2026-11-23 | Soluciones a las dudas del canvas aprobadas (docs/04). |
+| 2026-11-23 | Email transaccional: **Resend** (plan gratuito, región UE) sobre un subdominio de un dominio existente en OVHcloud. La web y el correo del dominio principal no se tocan. Proyecto académico: se priorizan planes gratuitos. |
 | 2026-11-23 | Decisiones abiertas delegadas: se aplican las propuestas de docs/04 §B (con ajustes tras leer el canvas). |

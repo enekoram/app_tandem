@@ -22,7 +22,7 @@
 | **Verificación de Google OAuth** (Calendar/Meet automático) | ❌ No: Google exige un dominio autorizado verificado en Search Console | Fase 4 arranca con **enlace de Meet pegado a mano**; el modo automático se activa cuando haya dominio. |
 | Fichas de App Store / Play | ✅ Sí (URL de privacidad en onrender.com) | — |
 
-**Recomendación:** comprar el dominio antes de la fase 2 (invitaciones por email). No bloquea la fase 1.
+**Resuelto (2026-11-23):** el email sale de un **subdominio** de un dominio que ya existe (DNS en OVHcloud), con **Resend** en su plan gratuito y región UE. Solo se añaden registros DKIM/SPF/MX/DMARC del subdominio; la web y el correo del dominio principal no se tocan. La app, la API y los Universal Links siguen en `*.onrender.com`.
 
 ## B. Decisiones abiertas del encargo (§13) — aplicadas
 
