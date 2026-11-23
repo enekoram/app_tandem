@@ -1,7 +1,7 @@
 # Progreso
 
 Canvas del prototipo: https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f (versión leída el 2026-11-23, actualizado por diseño el 18/11/2026).
-Páginas del canvas: **UI kit** (Mini UI kit, CTA, Notificaciones, HoyKit) · **Key-visuals** (Apoyo D, Mis tareas, vacío, Nueva tarea) · **Prototipo con look and feel** (112 pantallas, abajo) · **Marca · Tandems** (Logo A1 · Rotunda, nombre). No existe una página «Tests happy path»: los happy paths E2E se sacan de los flujos del prototipo.
+Se usan **solo dos páginas** del canvas (decisión del 2026-11-23): «Prototipo con look and feel» para las pantallas (112, abajo) y «UI kit» para componentes y tokens (ver `docs/06-ui-kit.md`). El resto de páginas se ignoran.
 
 Estados: `pendiente` · `hecha` · `revisada`
 
@@ -193,4 +193,6 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-23 | Desarrollo contra MongoDB Atlas y API en Render (sin Docker local). |
 | 2026-11-23 | Dominio: el de Render (`*.onrender.com`) por ahora. Consecuencias en docs/04 §A. |
 | 2026-11-23 | Repositorio remoto: github.com/enekoram/app_tandem. |
+| 2026-11-23 | Canvas: pantallas solo de «Prototipo con look and feel»; componentes de «UI kit»; resto de páginas ignoradas. |
+| 2026-11-23 | Soluciones a las dudas del canvas aprobadas (docs/04). |
 | 2026-11-23 | Decisiones abiertas delegadas: se aplican las propuestas de docs/04 §B (con ajustes tras leer el canvas). |

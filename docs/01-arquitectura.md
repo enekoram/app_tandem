@@ -1,6 +1,7 @@
 # 01 · Arquitectura y justificación
 
 > Estado: **propuesta, pendiente de visto bueno** · 2026-11-23
+> Componentes y tokens: ver `06-ui-kit.md`.
 
 ## 1. Vista general
 
