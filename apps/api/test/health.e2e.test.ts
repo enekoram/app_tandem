@@ -20,6 +20,12 @@ describe('GET /health (e2e)', () => {
     expect(res.body).toMatchObject({ status: 'ok', info: { mongodb: { status: 'up' } } });
   });
 
+  it('sin caché ni ETag (nunca 304)', async () => {
+    const res = await request(t.app.getHttpServer()).get('/health');
+    expect(res.headers.etag).toBeUndefined();
+    expect(res.headers['cache-control']).toMatch(/no-store/);
+  });
+
   it('añade cabeceras de seguridad (helmet)', async () => {
     const res = await request(t.app.getHttpServer()).get('/health');
     expect(res.headers['x-content-type-options']).toBe('nosniff');
