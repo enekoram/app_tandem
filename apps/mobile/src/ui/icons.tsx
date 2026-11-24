@@ -1,0 +1,64 @@
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import { sizes } from '@/theme';
+
+/** Iconos de línea del canvas (24×24, trazo 1.6–1.8). Siempre decorativos: la etiqueta va en el control. */
+export type IconName = 'today' | 'tasks' | 'sessions' | 'companion' | 'profile' | 'plus' | 'close';
+
+interface IconProps {
+  name: IconName;
+  size?: number;
+  color: string;
+  strokeWidth?: number;
+}
+
+export function Icon({ name, size = sizes.icon.nav, color, strokeWidth = 1.6 }: IconProps) {
+  const common = {
+    fill: 'none',
+    stroke: color,
+    strokeWidth,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
+      {name === 'today' && (
+        <Path
+          {...common}
+          d="M12 2C12.8 8.5 15.5 11.2 22 12C15.5 12.8 12.8 15.5 12 22C11.2 15.5 8.5 12.8 2 12C8.5 11.2 11.2 8.5 12 2Z"
+        />
+      )}
+      {name === 'tasks' && (
+        <Path
+          {...common}
+          d="M10 6h10M10 12h10M10 18h10M3.5 6l1.5 1.5L7.5 5M3.5 12l1.5 1.5 2.5-2.5M3.5 18l1.5 1.5 2.5-2.5"
+        />
+      )}
+      {name === 'sessions' && (
+        <>
+          <Rect {...common} x={3.5} y={5} width={17} height={15.5} rx={3} />
+          <Path {...common} d="M3.5 10h17M8 3v4M16 3v4" />
+        </>
+      )}
+      {name === 'companion' && (
+        <>
+          <Circle {...common} cx={9} cy={12} r={5.5} />
+          <Circle {...common} cx={15} cy={12} r={5.5} />
+        </>
+      )}
+      {name === 'profile' && (
+        <>
+          <Circle {...common} cx={12} cy={8.5} r={3.5} />
+          <Path {...common} d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5" />
+        </>
+      )}
+      {name === 'plus' && <Path {...common} d="M12 5v14M5 12h14" />}
+      {name === 'close' && <Path {...common} d="M6 6l12 12M18 6L6 18" />}
+    </Svg>
+  );
+}

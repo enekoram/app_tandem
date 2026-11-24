@@ -5,6 +5,8 @@
 export const colors = {
   bg: {
     ground: '#FAF5E8',
+    /** El mismo ground al 0 %: inicio del degradado que funde el contenido bajo la barra. */
+    groundTransparent: 'rgba(250, 245, 232, 0)',
     surface: '#FFFDF8',
     bubble: '#EBE7D7',
     muted: '#E4DCCD',
@@ -13,6 +15,8 @@ export const colors = {
   },
   border: {
     subtle: '#EDE3D4',
+    /** Borde del botón de perfil (contraste ≥ 3:1 para elemento interactivo). */
+    control: '#8A8076',
     /** Borde discontinuo de «pendiente» (avatar sin aceptar, CTA ghost deshabilitado). */
     pending: '#A69B8E',
   },

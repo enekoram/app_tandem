@@ -2,6 +2,9 @@ packages:
   - 'apps/*'
   - 'packages/*'
 
+# Node 24 obligatorio (ver .nvmrc)
+engineStrict: true
+
 # Scripts de instalación de dependencias: solo los necesarios
 allowBuilds:
   '@swc/core': true
