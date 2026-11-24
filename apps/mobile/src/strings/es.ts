@@ -3,6 +3,7 @@
  * Títulos con parte en cursiva: { lead, em } → «lead *em*».
  * «amig@» se escribe para lectura como «amiga o amigo» en las etiquetas de accesibilidad.
  */
+import { pluralEs } from '@/lib/plural';
 
 export interface Emphasis {
   lead: string;
@@ -147,9 +148,7 @@ export const es = {
       submit: 'Crear cuenta',
       /** «Revisa 3 campos para continuar» */
       summary: (n: number) =>
-        new Intl.PluralRules('es').select(n) === 'one'
-          ? 'Revisa 1 campo para continuar'
-          : `Revisa ${n} campos para continuar`,
+        pluralEs(n, 'Revisa 1 campo para continuar', `Revisa ${n} campos para continuar`),
       signInWithEmail: 'Iniciar sesión con este email',
     },
     forgot: {

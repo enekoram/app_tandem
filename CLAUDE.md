@@ -28,7 +28,7 @@ Sin Docker. Dev contra Atlas M0 (`tandems_dev`) y Render Key Value (prefijo `dev
 
 ## Reglas que siempre aplican
 - **Tokens**: ningún color, tamaño, radio, duración o curva suelto en pantallas; todo sale de `packages/shared/theme`. Colores de personas solo vía `PersonToken` / `usePersonStyle`.
-- **Textos**: nunca literales en componentes; todos en `apps/mobile/src/strings/es.ts`. Fechas y plurales con `Intl`.
+- **Textos**: nunca literales en componentes; todos en `apps/mobile/src/strings/es.ts`. Fechas con `Intl.DateTimeFormat`; plurales con `pluralEs` (`apps/mobile/src/lib/plural.ts`): Hermes no trae `Intl.PluralRules` en iOS.
 - **Límite de 5 tareas abiertas** en el servidor con `$inc` condicional sobre `users.open_task_count` dentro de transacción (doc 02). Nunca confiar solo en la app.
 - **Autorización en la API**: toda consulta filtrada por el usuario autenticado; cada recurso con test «persona ajena → 404». La app nunca accede a Mongo/Redis/S3 directamente.
 - **Accesibilidad**: etiquetas de VoiceOver/TalkBack, objetivos ≥ 44 pt, Dynamic Type, Reducir movimiento y nivel de estímulo respetados en toda animación; el significado nunca depende solo del color. «amig@» se lee «amiga o amigo».
