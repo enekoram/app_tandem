@@ -975,6 +975,92 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
       return useMutation(getTasksControllerRejectMutationOptions(options), queryClient);
     }
+    export type tasksControllerHurraResponse200 = {
+  data: TaskDto
+  status: 200
+}
+
+export type tasksControllerHurraResponse409 = {
+  data: void
+  status: 409
+}
+
+export type tasksControllerHurraResponseSuccess = (tasksControllerHurraResponse200) & {
+  headers: Headers;
+};
+export type tasksControllerHurraResponseError = (tasksControllerHurraResponse409) & {
+  headers: Headers;
+};
+
+export type tasksControllerHurraResponse = (tasksControllerHurraResponseSuccess | tasksControllerHurraResponseError)
+
+export const getTasksControllerHurraUrl = (id: string,) => {
+
+
+
+
+  return `/tasks/${id}/hurra`
+}
+
+export const tasksControllerHurra = async (id: string, options?: Parameters<typeof apiFetch>[1]): Promise<tasksControllerHurraResponse> => {
+
+  return apiFetch<tasksControllerHurraResponse>(getTasksControllerHurraUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+
+export const getTasksControllerHurraMutationKey = () => ['tasksControllerHurra'] as const;
+
+export const getTasksControllerHurraMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof tasksControllerHurra>>, TError,TasksControllerHurraMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof tasksControllerHurra>>, TError,TasksControllerHurraMutationVariables, TContext> => {
+
+const mutationKey = getTasksControllerHurraMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tasksControllerHurra>>, TasksControllerHurraMutationVariables> = (props) => {
+          const {id} = props ?? {};
+
+          return  tasksControllerHurra(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type TasksControllerHurraMutationResult = NonNullable<Awaited<ReturnType<typeof tasksControllerHurra>>>
+
+    export type TasksControllerHurraMutationError = void
+    export type TasksControllerHurraMutationVariables = {id: string}
+
+    export const useTasksControllerHurra = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof tasksControllerHurra>>, TError,TasksControllerHurraMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof tasksControllerHurra>>,
+        TError,
+        TasksControllerHurraMutationVariables,
+        TContext
+      > => {
+      return useMutation(getTasksControllerHurraMutationOptions(options), queryClient);
+    }
     export type tasksControllerLeaveResponse200 = {
   data: TaskDto
   status: 200

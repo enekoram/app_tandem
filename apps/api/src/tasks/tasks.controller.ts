@@ -134,6 +134,16 @@ export class TasksController {
     return this.respond(session, id, 'reject');
   }
 
+  /** Enviar un «¡hurra!» a la dueña de una tarea terminada que acompañé. */
+  @Post(':id/hurra')
+  @HttpCode(200)
+  @ApiOkResponse({ type: TaskDto })
+  @ApiConflictResponse({ description: 'HURRA_ALREADY_SENT' })
+  async hurra(@Session() session: UserSession, @Param('id') id: string): Promise<TaskDto> {
+    const me = await this.me(session);
+    return this.one(me, await this.tasks.hurra(me, id), 'companion');
+  }
+
   /** Dejar de acompañar. */
   @Post(':id/leave')
   @HttpCode(200)

@@ -34,6 +34,13 @@ export const es = {
     emptyTitle: { lead: 'Aún ', em: 'no tienes tareas' } satisfies Emphasis,
     emptyBody: 'Empieza por una sola cosa que quieras hacer, y elige a alguien que te acompañe.',
     createFirst: 'Crear mi primera tarea',
+    liveTitle: { lead: 'Contigo ', em: 'ahora' } satisfies Emphasis,
+    seeTasks: 'Ver mis tareas',
+    sharedWaiting: (n: number) =>
+      pluralEs(n, 'Te han compartido 1 tarea', `Te han compartido ${n} tareas`),
+    sharedWaitingSub: 'Acepta o rechaza en Acompaño',
+    hurraReceived: (name: string, title: string) =>
+      `${name} te ha enviado un ¡hurra! por «${title}»`,
   },
   tasks: {
     caption: 'Sin tareas todavía',
@@ -79,7 +86,7 @@ export const es = {
     finished: {
       caption: 'Hecha · hoy',
       title: { lead: '¡Tarea ', em: 'terminada', tail: '!' } satisfies Emphasis,
-      told: (name: string) => `Hemos avisado a ${name} de que la has terminado.`,
+      told: (name: string) => `${name} lo verá en su lista y podrá enviarte un ¡hurra!`,
       next: 'Ver mi siguiente tarea',
       seeDone: 'Ver tareas terminadas',
     },
@@ -141,6 +148,7 @@ export const es = {
       count: (n: number) => pluralEs(n, '1 terminada', `${n} terminadas`),
       title: { lead: 'Tareas ', em: 'terminadas' } satisfies Emphasis,
       doneOn: (when: string) => `Hecha · ${when}`,
+      hurraFrom: (name: string) => `${name} te ha enviado un ¡hurra!`,
       emptyTitle: { lead: 'Aún no has ', em: 'terminado ninguna' } satisfies Emphasis,
       emptyBody: 'Cuando marques una tarea como hecha, aparecerá aquí.',
       seeTasks: 'Ver mis tareas',
@@ -163,6 +171,11 @@ export const es = {
     count: (n: number) => pluralEs(n, 'Acompañas 1 tarea', `Acompañas ${n} tareas`),
     shared: { lead: 'Te ', em: 'comparten' } satisfies Emphasis,
     mine: { lead: 'Lo que ', em: 'acompaño' } satisfies Emphasis,
+    recent: { lead: 'Recién ', em: 'terminadas' } satisfies Emphasis,
+    finishedLine: 'ha terminado la tarea',
+    sendHurra: 'Enviar un ¡hurra!',
+    hurraSent: (name: string) => `¡Hurra! enviado. ${name} lo verá en sus tareas terminadas.`,
+    hurraAlready: 'Ya le enviaste un ¡hurra!',
     sharedCaption: 'Tarea compartida',
     /** Va tras el nombre de la persona, que se escribe en su color: «Juan quiere que le acompañes». */
     wantsYou: 'quiere que le acompañes',

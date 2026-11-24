@@ -124,12 +124,40 @@ export class TasksService {
       task.status = 'open';
       task.done_at = undefined;
       task.deleted_at = undefined;
+      task.hurra_at = undefined;
       await task.save({ session });
     });
     return task;
   }
 
   // ── Acompañante ─────────────────────────────────────────────────────────────
+
+  /** «¡hurra!»: quien acompañó una tarea terminada lo envía una vez. */
+  async hurra(me: UserDocument, id: string): Promise<TaskDocument> {
+    if (!Types.ObjectId.isValid(id)) throw notFound('Tarea');
+    const task = await this.tasks.findOneAndUpdate(
+      {
+        _id: id,
+        status: 'done',
+        'companion.user_id': me._id,
+        'companion.status': 'accepted',
+        hurra_at: { $exists: false },
+      },
+      { $set: { hurra_at: new Date() } },
+      { returnDocument: 'after' },
+    );
+    if (task) return task;
+    const exists = await this.tasks.exists({
+      _id: id,
+      status: 'done',
+      'companion.user_id': me._id,
+      'companion.status': 'accepted',
+    });
+    if (exists) {
+      throw new DomainError(HttpStatus.CONFLICT, 'HURRA_ALREADY_SENT', 'Ya enviaste un ¡hurra!');
+    }
+    throw notFound('Tarea');
+  }
 
   async respond(
     me: UserDocument,

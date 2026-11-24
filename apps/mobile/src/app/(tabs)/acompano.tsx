@@ -8,6 +8,7 @@ import {
   useTasksControllerAccompanying,
   type TaskDto,
 } from '@tandems/api-client';
+import { useSendHurra } from '@/features/tasks/useSendHurra';
 import { formatDue } from '@/lib/dates';
 import { invalidateTasks } from '@/lib/queries';
 import { runUndoable } from '@/lib/undoable';
@@ -26,11 +27,15 @@ import {
   useToast,
 } from '@/ui';
 
+const RECENT_MS = 7 * 24 * 60 * 60 * 1000;
+
 export default function CompanionScreen() {
   const t = es.companion;
   const toast = useToast();
   const queryClient = useQueryClient();
   const query = useTasksControllerAccompanying({ status: 'open' });
+  const doneQuery = useTasksControllerAccompanying({ status: 'done' });
+  const hurra = useSendHurra();
   const accept = useTasksControllerAccept();
   const [rejecting, setRejecting] = useState<TaskDto | null>(null);
   const [hidden, setHidden] = useState<string[]>([]);
@@ -40,6 +45,10 @@ export default function CompanionScreen() {
   );
   const shared = tasks.filter((x) => x.companionStatus === 'pending');
   const accompanied = tasks.filter((x) => x.companionStatus === 'accepted');
+  // Terminadas en la última semana a las que aún no he enviado un ¡hurra!
+  const recent = (doneQuery.data?.status === 200 ? doneQuery.data.data : []).filter(
+    (x) => !x.hurraAt && x.doneAt && Date.now() - new Date(x.doneAt).getTime() < RECENT_MS,
+  );
 
   const doAccept = (task: TaskDto) =>
     accept.mutate(
@@ -71,7 +80,7 @@ export default function CompanionScreen() {
     });
   };
 
-  const empty = query.isSuccess && tasks.length === 0;
+  const empty = query.isSuccess && tasks.length === 0 && recent.length === 0;
 
   return (
     <Screen
@@ -115,6 +124,27 @@ export default function CompanionScreen() {
                         onPress={() => setRejecting(task)}
                       />
                     </>
+                  }
+                />
+              ))}
+            </>
+          )}
+          {recent.length > 0 && (
+            <>
+              <EmphasisText
+                text={t.recent}
+                variant="section"
+                accessibilityRole="header"
+                style={styles.pad}
+              />
+              {recent.map((task) => (
+                <CompanionTaskCard
+                  key={task.id}
+                  task={task}
+                  caption={es.tasks.doneList.doneOn(es.dates.today)}
+                  line={t.finishedLine}
+                  actions={
+                    <CardAction label={t.sendHurra} icon="check" onPress={() => hurra.send(task)} />
                   }
                 />
               ))}

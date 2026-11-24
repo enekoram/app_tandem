@@ -54,6 +54,10 @@ export class Task {
   @Prop()
   deleted_at?: Date;
 
+  /** «¡hurra!» de quien acompaña al terminar (uno por tarea). Fase 5 añadirá el aviso push. */
+  @Prop()
+  hurra_at?: Date;
+
   created_at!: Date;
 }
 

@@ -39,6 +39,7 @@ export default function DoneTasksScreen() {
               subtitle={[
                 t.doneOn(doneWhen(task.doneAt)),
                 task.person && `${es.tasks.card.with} ${task.person.name}`,
+                task.hurraAt && task.person && t.hurraFrom(task.person.name),
               ]
                 .filter(Boolean)
                 .join(' · ')}

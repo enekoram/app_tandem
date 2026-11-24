@@ -28,5 +28,10 @@ export interface TaskDto {
   person: TaskPersonDto | null;
   /** @nullable */
   doneAt: string | null;
+  /**
+     * Cuándo envió quien acompaña un ¡hurra!
+     * @nullable
+     */
+  hurraAt: string | null;
   createdAt: string;
 }

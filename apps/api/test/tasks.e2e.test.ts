@@ -242,6 +242,36 @@ describe('Tareas (e2e)', () => {
     expect(after.filter((x) => x.person.name === 'Marta')).toHaveLength(0);
   });
 
+  it('¡hurra!: solo quien acompañó una tarea terminada, una vez; la dueña lo ve', async () => {
+    const lucia = (
+      (await as('Marta').get('/contacts')).body as { id: string; name: string }[]
+    ).find((c) => c.name === 'Lucia')!.id;
+    let created = await as('Marta').post('/tasks', task('Para el hurra', lucia));
+    if (created.status === 409) {
+      const open = (await as('Marta').get('/tasks')).body as { id: string }[];
+      await as('Marta').post(`/tasks/${open[0]!.id}/complete`).expect(200);
+      created = await as('Marta').post('/tasks', task('Para el hurra', lucia)).expect(201);
+    }
+    const id = created.body.id as string;
+    await as('Lucia').post(`/tasks/${id}/hurra`).expect(404); // aún abierta y sin aceptar
+    await as('Lucia').post(`/tasks/${id}/accept`).expect(200);
+    await as('Marta').post(`/tasks/${id}/complete`).expect(200);
+
+    await as('Pepe').post(`/tasks/${id}/hurra`).expect(404);
+    await as('Marta').post(`/tasks/${id}/hurra`).expect(404); // la dueña no se lo envía a sí misma
+    const sent = await as('Lucia').post(`/tasks/${id}/hurra`).expect(200);
+    expect(sent.body.hurraAt).toEqual(expect.any(String));
+    expect((await as('Lucia').post(`/tasks/${id}/hurra`).expect(409)).body.code).toBe(
+      'HURRA_ALREADY_SENT',
+    );
+
+    const done = (await as('Marta').get('/tasks?status=done')).body as {
+      id: string;
+      hurraAt: string | null;
+    }[];
+    expect(done.find((x) => x.id === id)?.hurraAt).toEqual(expect.any(String));
+  });
+
   it('persona ajena → 404 en todo; la acompañante no puede editar ni terminar', async () => {
     const id = ((await as('Marta').get('/tasks')).body as { id: string }[])[0]!.id;
     await as('Pepe').get(`/tasks/${id}`).expect(404);

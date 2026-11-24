@@ -65,6 +65,14 @@ export class TaskDto {
   @ApiProperty({ nullable: true, type: String, format: 'date-time' })
   doneAt!: string | null;
 
+  @ApiProperty({
+    nullable: true,
+    type: String,
+    format: 'date-time',
+    description: 'Cuándo envió quien acompaña un ¡hurra!',
+  })
+  hurraAt!: string | null;
+
   @ApiProperty({ format: 'date-time' })
   createdAt!: string;
 }
@@ -91,6 +99,7 @@ export function toTaskDto(task: TaskDocument, role: TaskRole, person?: ContactDo
     companionStatus: task.companion.status,
     person: personFrom(person),
     doneAt: task.done_at?.toISOString() ?? null,
+    hurraAt: task.hurra_at?.toISOString() ?? null,
     createdAt: task.created_at.toISOString(),
   };
 }

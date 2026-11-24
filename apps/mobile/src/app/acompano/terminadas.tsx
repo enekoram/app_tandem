@@ -1,7 +1,8 @@
 import { router } from 'expo-router';
 import { useTasksControllerAccompanying } from '@tandems/api-client';
 import { es } from '@/strings/es';
-import { CompanionTaskCard, EmptyStateCard, Screen } from '@/ui';
+import { useSendHurra } from '@/features/tasks/useSendHurra';
+import { CardAction, CompanionTaskCard, EmptyStateCard, Screen } from '@/ui';
 
 const dayFormatter = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' });
 
@@ -10,6 +11,7 @@ export default function AccompaniedDoneScreen() {
   const t = es.companion.doneList;
   const query = useTasksControllerAccompanying({ status: 'done' });
   const tasks = query.data?.status === 200 ? query.data.data : [];
+  const hurra = useSendHurra();
   return (
     <Screen
       kind="inner"
@@ -31,7 +33,20 @@ export default function AccompaniedDoneScreen() {
                   ? dayFormatter.format(new Date(task.doneAt))
                   : '',
             )}
-            meta={t.from(task.person?.name ?? '')}
+            meta={
+              task.hurraAt
+                ? `${t.from(task.person?.name ?? '')} · ${es.companion.hurraAlready}`
+                : t.from(task.person?.name ?? '')
+            }
+            actions={
+              task.hurraAt ? undefined : (
+                <CardAction
+                  label={es.companion.sendHurra}
+                  icon="check"
+                  onPress={() => hurra.send(task)}
+                />
+              )
+            }
           />
         ))
       )}

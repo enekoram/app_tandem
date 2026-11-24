@@ -817,6 +817,44 @@
         ]
       }
     },
+    "/tasks/{id}/hurra": {
+      "post": {
+        "operationId": "TasksController_hurra",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "HURRA_ALREADY_SENT"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
     "/tasks/{id}/leave": {
       "post": {
         "operationId": "TasksController_leave",
@@ -1202,6 +1240,12 @@
             "nullable": true,
             "format": "date-time"
           },
+          "hurraAt": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "description": "Cuándo envió quien acompaña un ¡hurra!"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -1217,6 +1261,7 @@
           "companionStatus",
           "person",
           "doneAt",
+          "hurraAt",
           "createdAt"
         ]
       }
