@@ -6,6 +6,7 @@
     "@better-auth/expo": "1.7.27",
     "@expo-google-fonts/eb-garamond": "^0.4.3",
     "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
+    "@react-native-community/datetimepicker": "9.2.1",
     "@shopify/react-native-skia": "2.14.0",
     "@tandems/api-client": "workspace:*",
     "@tandems/shared": "workspace:*",

@@ -2,10 +2,9 @@ import { router } from 'expo-router';
 import { formatLongDay } from '@/lib/dates';
 import { es } from '@/strings/es';
 import { colors } from '@/theme';
-import { Button, EmphasisText, EmptyStateCard, IconButton, Screen, Text, useToast } from '@/ui';
+import { Button, EmphasisText, EmptyStateCard, IconButton, Screen, Text } from '@/ui';
 
 export default function TodayScreen() {
-  const toast = useToast();
   return (
     <Screen
       caption={formatLongDay(new Date())}
@@ -30,7 +29,7 @@ export default function TodayScreen() {
           <Button
             label={es.today.createFirst}
             icon="plus"
-            onPress={() => toast(es.common.comingSoon)}
+            onPress={() => router.push('/tarea/nueva')}
           />
         }
       />

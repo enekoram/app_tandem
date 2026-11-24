@@ -85,6 +85,8 @@ export const colors = {
 export const gradients = {
   /** Forma unida de la home y animación del onboarding. */
   energy: ['#F3B58E', '#F2DFA6', '#E9CFC4', '#A98BC2'],
+  /** Filo de una tarea sin acompañante (gris cálido, canvas). */
+  edgeNeutral: ['#B5AA9C', '#D9CFC0', '#EDE3D4'],
   /** Forma «tú + amig@» del onboarding (paradas 0 · .42 · .62 · 1). */
   onboarding: ['#F3B58E', '#F2DFA6', '#D6C2E6', '#A9C9AE'],
   /** Logo e icono de app (encargo). */

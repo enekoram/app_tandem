@@ -21,7 +21,8 @@ export type IconName =
   | 'userMinus'
   | 'send'
   | 'share'
-  | 'users';
+  | 'users'
+  | 'clock';
 
 interface IconProps {
   name: IconName;
@@ -101,6 +102,12 @@ export function Icon({ name, size = sizes.icon.nav, color, strokeWidth = 1.6 }: 
         </>
       )}
       {name === 'check' && <Path {...common} d="M5 12.5l4.5 4.5L19 7" />}
+      {name === 'clock' && (
+        <>
+          <Circle {...common} cx={12} cy={12} r={8.5} />
+          <Path {...common} d="M12 7.5V12l3 2" />
+        </>
+      )}
       {name === 'chevron' && <Path {...common} d="M9 5l7 7-7 7" />}
       {name === 'checkCircle' && (
         <>

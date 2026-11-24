@@ -58,6 +58,10 @@ export const sizes = {
   },
   icon: { nav: 22, header: 20, button: 18, inline: 15, back: 24, illustration: 60 },
   checkbox: { size: 26, radius: 8, icon: 16 },
+  /** Marca de opción elegida (PersonPicker). */
+  radioCheck: 28,
+  /** Botón de acción dentro de una tarjeta (Hecha, Pedir apoyo). */
+  cardAction: { height: 44 },
   /** Aviso flotante (FloatingNotice): icono redondo, corazón y punto «en vivo». */
   notice: { icon: 42, heart: 18, liveDot: 7 },
   onboardingArt: { height: 216 },

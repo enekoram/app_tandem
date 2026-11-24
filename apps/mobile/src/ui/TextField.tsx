@@ -43,7 +43,12 @@ export const TextField = forwardRef<TextInputRef, TextFieldProps>(function TextF
         {label}
       </Text>
       <View
-        style={[styles.box, focused && styles.focused, error || invalid ? styles.errorBox : null]}
+        style={[
+          styles.box,
+          rest.multiline && styles.boxMultiline,
+          focused && styles.focused,
+          error || invalid ? styles.errorBox : null,
+        ]}
       >
         <TextInput
           ref={ref}
@@ -63,7 +68,7 @@ export const TextField = forwardRef<TextInputRef, TextFieldProps>(function TextF
             setFocused(false);
             onBlur?.(e);
           }}
-          style={styles.input}
+          style={[styles.input, rest.multiline && styles.multiline]}
         />
         {password && (
           <Pressable
@@ -117,6 +122,7 @@ const styles = StyleSheet.create({
     paddingLeft: spacing.lg,
     paddingRight: spacing.xs,
   },
+  boxMultiline: { alignItems: 'flex-start' },
   focused: { borderColor: colors.field.borderFocus },
   errorBox: { borderWidth: borders.pending, borderColor: colors.field.borderError },
   input: {
@@ -127,6 +133,7 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     paddingVertical: spacing.sm,
   },
+  multiline: { minHeight: sizes.textarea.height - 2, paddingTop: spacing.md },
   eye: {
     width: MIN_TOUCH_TARGET,
     height: MIN_TOUCH_TARGET,

@@ -56,6 +56,11 @@ export default function RootLayout() {
               <Stack.Screen name="contactos/index" />
               <Stack.Screen name="contactos/[id]" />
               <Stack.Screen name="contactos/nuevo" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="tarea/nueva" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="tarea/[id]" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="tarea/[id]/acompanante" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="tarea/terminada" options={{ gestureEnabled: false }} />
+              <Stack.Screen name="tarea/terminadas" />
             </Stack.Protected>
             <Stack.Protected guard={!signedIn}>
               <Stack.Screen name="(auth)" />
