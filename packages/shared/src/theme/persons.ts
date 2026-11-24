@@ -9,7 +9,7 @@
  * - `text`  → nombre de la persona escrito en su color (≥ 4,5:1 sobre ground y surface).
  *
  * Los cuatro primeros y el tono de «tú» vienen del UI kit; salvia y ocre, del prototipo;
- * pervinca y agua son nuevos. Estado: PROPUESTA (pendiente de visto bueno).
+ * pervinca y agua son nuevos. Aprobada el 2026-11-24.
  */
 import type { Hex } from '../color/contrast';
 

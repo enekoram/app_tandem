@@ -53,5 +53,24 @@ Layout de pantalla: status bar 47 · título fijo 126 (padding 18/24/16) · el c
 | Título de pantalla interior | 32 | 30/33 | **Kit**. |
 | Verde «en vivo» | #2F7A52 | punto #7FCFA3 | Punto #7FCFA3 (decorativo); texto «En vivo» en #2F7A52 para cumplir contraste AA. |
 | Degradado | #F09A6A → … → #8FC19A «logo e iconos» | gradient.energy (4 paradas) para la forma | Los dos: el del encargo para logo e icono de app; `gradient.energy` para la forma unida. |
-| Colores de personas | paleta cerrada de 8, sin género | 4 de ejemplo (lila #A98BC2, azul gris #AAC0C8, rosado #E9CFC4, amarillo #F2DFA6); el prototipo habla de Marta lila, Juan salvia, Lucía ocre | Paleta de 8 que **incluye** los del kit y el salvia/ocre del prototipo; los 3 restantes se proponen en fase 1 con test de contraste y te los enseño antes de cerrarlos. |
+| Colores de personas | paleta cerrada de 8, sin género | 4 de ejemplo (lila #A98BC2, azul gris #AAC0C8, rosado #E9CFC4, amarillo #F2DFA6); el prototipo habla de Marta lila, Juan salvia, Lucía ocre | Paleta de 8 **aprobada el 2026-11-24** (ver abajo). |
+| Nombres en color | — | nombre en el tono base (#A98BC2 sobre surface = 2,9:1) | Tono `text` propio de cada persona, ≥ 4,5:1 (AA). |
 | Nombres de ejemplo | Marta, Juan, Lucía | Javier, Ramón | Irrelevante: los nombres salen de los datos. |
+
+## Paleta de personas (aprobada el 2026-11-24)
+
+Fuente: `packages/shared/src/theme/persons.ts` (tests en `theme.test.ts`). Cada persona tiene cuatro tonos: `soft` (final claro del filo), `base` (avatar y forma), `deep` (inicio oscuro del filo; el filo es un degradado deep → base → soft de 5 pt, como en el kit) y `text` (nombre escrito en su color).
+
+| id | Etiqueta | soft | base | deep | text | Origen |
+|---|---|---|---|---|---|---|
+| `lilac` | lila | #D6C2E6 | #A98BC2 | #8A6CAA | #7E5FA0 | kit |
+| `slate` | azul gris | #D0E5ED | #AAC0C8 | #86A3AE | #57727C | kit |
+| `rose` | rosado | #F4E7E2 | #E9CFC4 | #C1ACA2 | #985D61 | kit |
+| `sun` | amarillo | #F9EFD3 | #F2DFA6 | #C8B88A | #776F23 | kit |
+| `sage` | salvia | #D4E1D0 | #A9C2A0 | #8EA185 | #56744C | prototipo |
+| `ochre` | ocre | #EBD4AD | #D6A85A | #B28C4D | #9A5F1E | prototipo |
+| `periwinkle` | pervinca | #D7DCF4 | #AFB8E8 | #9399BF | #5566B8 | nuevo |
+| `sea` | agua | #CEE7E3 | #9CCFC6 | #83ACA4 | #2E7A73 | nuevo |
+
+«Tú»: #F3C4A0 (no asignable). Reglas que comprueban los tests: inicial (#211E1B) sobre `base` ≥ 4,5:1; `text` sobre ground y surface ≥ 4,5:1; rellenos entre sí y con «tú» ΔE00 ≥ 9; tonos de texto entre sí y con el rojo teja ΔE00 ≥ 10. El par más cercano es rosado–tú (9,4): se acepta porque la inicial y el nombre los distinguen.
+Vista previa: https://claude.ai/artifact/85K4qowXEp52zjUZ3qaRhi
