@@ -18,6 +18,15 @@ describe('validateEnv', () => {
     expect(env.PORT).toBe(10000);
   });
 
+  it('en Render usa RENDER_EXTERNAL_URL como URL pública', () => {
+    const env = validateEnv({
+      ...base,
+      MONGODB_URI: 'mongodb://h/db',
+      RENDER_EXTERNAL_URL: 'https://tandems-api.onrender.com',
+    });
+    expect(env.BETTER_AUTH_URL).toBe('https://tandems-api.onrender.com');
+  });
+
   it('falla si falta MONGODB_URI y nombra la variable', () => {
     expect(() => validateEnv(base)).toThrow(/MONGODB_URI/);
   });

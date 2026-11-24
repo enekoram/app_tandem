@@ -26,7 +26,13 @@ export type Env = z.infer<typeof envSchema>;
 /** Para `ConfigModule.forRoot({ validate })`. */
 export function validateEnv(raw: Record<string, unknown>): Env {
   // Variables vacías en .env cuentan como no definidas
-  const cleaned = Object.fromEntries(Object.entries(raw).filter(([, v]) => v !== ''));
+  const cleaned: Record<string, unknown> = Object.fromEntries(
+    Object.entries(raw).filter(([, v]) => v !== ''),
+  );
+  // En Render la URL pública llega en RENDER_EXTERNAL_URL (no hace falta configurarla)
+  if (!cleaned.BETTER_AUTH_URL && typeof cleaned.RENDER_EXTERNAL_URL === 'string') {
+    cleaned.BETTER_AUTH_URL = cleaned.RENDER_EXTERNAL_URL;
+  }
   const result = envSchema.safeParse(cleaned);
   if (!result.success) {
     const detail = result.error.issues

@@ -13,7 +13,11 @@ async function main(): Promise<void> {
   });
   const config = app.get<ConfigService<Env, true>>(ConfigService);
 
-  configureApp(app, { swagger: config.get('NODE_ENV', { infer: true }) !== 'production' });
+  const production = config.get('NODE_ENV', { infer: true }) === 'production';
+  // Detrás del proxy de Render: la IP real llega en X-Forwarded-For (límites por IP)
+  if (production) app.getHttpAdapter().getInstance().set('trust proxy', 1);
+
+  configureApp(app, { swagger: !production });
 
   // 0.0.0.0: Render exige escuchar en todas las interfaces.
   await app.listen(config.get('PORT', { infer: true }), '0.0.0.0');
