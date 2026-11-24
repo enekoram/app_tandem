@@ -61,6 +61,8 @@ export default function RootLayout() {
               <Stack.Screen name="tarea/[id]/acompanante" options={{ presentation: 'modal' }} />
               <Stack.Screen name="tarea/terminada" options={{ gestureEnabled: false }} />
               <Stack.Screen name="tarea/terminadas" />
+              <Stack.Screen name="acompano/tareas" />
+              <Stack.Screen name="acompano/terminadas" />
             </Stack.Protected>
             <Stack.Protected guard={!signedIn}>
               <Stack.Screen name="(auth)" />

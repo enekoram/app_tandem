@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './Card';
+export * from './CompanionTaskCard';
 export * from './DateTimePill';
 export * from './EmptyStateCard';
 export * from './form';

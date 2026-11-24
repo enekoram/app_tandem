@@ -159,6 +159,60 @@ export const es = {
     title: { lead: '', em: 'Acompaño' } satisfies Emphasis,
     emptyTitle: { lead: 'Aún no ', em: 'acompañas ninguna tarea' } satisfies Emphasis,
     emptyBody: 'Cuando alguien comparta una tarea contigo o te pida apoyo, aparecerá aquí.',
+    /** «Acompañas 2 tareas» */
+    count: (n: number) => pluralEs(n, 'Acompañas 1 tarea', `Acompañas ${n} tareas`),
+    shared: { lead: 'Te ', em: 'comparten' } satisfies Emphasis,
+    mine: { lead: 'Lo que ', em: 'acompaño' } satisfies Emphasis,
+    sharedCaption: 'Tarea compartida',
+    /** Va tras el nombre de la persona, que se escribe en su color: «Juan quiere que le acompañes». */
+    wantsYou: 'quiere que le acompañes',
+    accept: 'Aceptar',
+    reject: 'Rechazar',
+    tasksRow: 'Tareas',
+    doneRow: 'Terminadas',
+    accepted: (title: string, name: string) =>
+      `Ahora acompañas «${title}». ${name} lo verá en su lista.`,
+    rejectSheet: {
+      title: (name: string): Emphasis => ({ lead: '¿Rechazar la tarea de ', em: name, tail: '?' }),
+      body: (title: string, name: string) =>
+        `«${title}». ${name} lo verá en su lista para poder elegir a otra persona.`,
+      confirm: 'Rechazar tarea',
+      cancel: 'Cancelar',
+      done: (title: string, name: string) =>
+        `Has rechazado «${title}». ${name} podrá elegir a otra persona.`,
+    },
+    list: {
+      back: 'Acompaño',
+      count: (n: number) => pluralEs(n, '1 tarea', `${n} tareas`),
+      title: { lead: 'Tareas que ', em: 'acompaño' } satisfies Emphasis,
+      from: (name: string, state: string) => `De ${name} · ${state}`,
+      stateAccepted: 'aceptada',
+      youAccompany: 'Le acompañas',
+      leave: 'Dejar de acompañar',
+      emptyTitle: { lead: 'Aún no ', em: 'acompañas ninguna tarea' } satisfies Emphasis,
+      emptyBody: 'Cuando aceptes una tarea compartida, aparecerá aquí.',
+    },
+    leaveSheet: {
+      title: (title: string): Emphasis => ({
+        lead: '¿Dejar de acompañar ',
+        em: `«${title}»`,
+        tail: '?',
+      }),
+      body: (name: string) =>
+        `${name} lo verá en su lista para poder elegir a otra persona. Dejarás de ver esta tarea.`,
+      confirm: 'Dejar de acompañar',
+      cancel: 'Cancelar',
+      done: (title: string) => `Has dejado de acompañar «${title}».`,
+    },
+    doneList: {
+      back: 'Acompaño',
+      caption: 'Terminadas',
+      title: { lead: 'Tareas ', em: 'terminadas' } satisfies Emphasis,
+      from: (name: string) => `De ${name}`,
+      emptyTitle: { lead: 'Aún no ', em: 'hay tareas terminadas' } satisfies Emphasis,
+      emptyBody: 'Cuando alguien termine una tarea que acompañas, aparecerá aquí.',
+    },
+    undo: 'Deshacer',
   },
   profile: {
     back: 'Hoy',
