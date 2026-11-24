@@ -28,5 +28,12 @@ export default tseslint.config(
       'no-console': ['error', { allow: ['warn', 'error'] }],
     },
   },
+  {
+    // Nest inyecta dependencias por el tipo del constructor: las clases no pueden importarse como `import type`
+    files: ['apps/api/**/*.ts'],
+    languageOptions: {
+      parserOptions: { emitDecoratorMetadata: true, experimentalDecorators: true },
+    },
+  },
   prettier,
 );

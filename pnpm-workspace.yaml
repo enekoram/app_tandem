@@ -1,3 +1,10 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+
+# Scripts de instalación de dependencias: solo los necesarios
+allowBuilds:
+  '@swc/core': true
+  mongodb-memory-server: true
+  # Telemetría de swagger-ui: no
+  '@scarf/scarf': false

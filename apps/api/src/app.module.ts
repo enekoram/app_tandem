@@ -1,0 +1,44 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { LoggerModule } from 'nestjs-pino';
+import { validateEnv, type Env } from './config/env.js';
+import { HealthModule } from './health/health.module.js';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, cache: true, validate: validateEnv }),
+    LoggerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<Env, true>) => ({
+        pinoHttp: {
+          level: config.get('LOG_LEVEL', { infer: true }),
+          // Privacidad: nunca credenciales ni cookies en los logs; los cuerpos no se registran.
+          redact: {
+            paths: ['req.headers.authorization', 'req.headers.cookie', 'res.headers["set-cookie"]'],
+            remove: true,
+          },
+          autoLogging: { ignore: (req) => req.url === '/health' },
+          transport:
+            config.get('NODE_ENV', { infer: true }) === 'development'
+              ? { target: 'pino-pretty', options: { singleLine: true } }
+              : undefined,
+        },
+      }),
+    }),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<Env, true>) => ({
+        uri: config.get('MONGODB_URI', { infer: true }),
+        serverSelectionTimeoutMS: 5000,
+      }),
+    }),
+    // Límite general por IP; las rutas sensibles (login, invitaciones) tendrán límites propios.
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 120 }]),
+    HealthModule,
+  ],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
+})
+export class AppModule {}
