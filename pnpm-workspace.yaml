@@ -5,6 +5,10 @@ packages:
 # Node 24 obligatorio (ver .nvmrc)
 engineStrict: true
 
+# Versiones únicas en todo el monorepo (las que espera Expo SDK 58)
+overrides:
+  react-dom: 19.3.0
+
 # Scripts de instalación de dependencias: solo los necesarios
 allowBuilds:
   '@swc/core': true

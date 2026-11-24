@@ -12,6 +12,7 @@ import { buildOpenApiConfig } from './bootstrap.js';
 
 // `preview`: Nest registra módulos y controladores pero no crea proveedores (no conecta a Mongo).
 process.env.MONGODB_URI ??= 'mongodb://localhost:27017/openapi';
+process.env.BETTER_AUTH_SECRET ??= 'solo-para-generar-openapi-no-es-un-secreto';
 const { AppModule } = await import('./app.module.js');
 const app = await NestFactory.create(AppModule, { preview: true, logger: false });
 const document = SwaggerModule.createDocument(app, buildOpenApiConfig());

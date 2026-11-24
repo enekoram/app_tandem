@@ -2,9 +2,11 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse, ApiServiceUnavailableResponse, ApiTags } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { HealthCheck, HealthCheckService, MongooseHealthIndicator } from '@nestjs/terminus';
+import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 
 @ApiTags('health')
 @SkipThrottle()
+@AllowAnonymous()
 @Controller('health')
 export class HealthController {
   constructor(

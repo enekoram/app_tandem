@@ -12,13 +12,22 @@ export const envSchema = z.object({
     .string()
     .min(1, 'falta la cadena de conexión de MongoDB')
     .regex(/^mongodb(\+srv)?:\/\//, 'debe empezar por mongodb:// o mongodb+srv://'),
+  /** Firma cookies y tokens de Better Auth. Mínimo 32 caracteres aleatorios. */
+  BETTER_AUTH_SECRET: z.string().min(32, 'debe tener al menos 32 caracteres'),
+  /** URL pública de esta API (se usa en los enlaces de los emails). */
+  BETTER_AUTH_URL: z.url('debe ser una URL').default('http://localhost:3000'),
+  /** Sin clave, los emails no se envían (se avisa en el log). */
+  RESEND_API_KEY: z.string().startsWith('re_', 'debe empezar por re_').optional(),
+  EMAIL_FROM: z.string().default('Tandems <avisos@tandems.minucampoy.com>'),
 });
 
 export type Env = z.infer<typeof envSchema>;
 
 /** Para `ConfigModule.forRoot({ validate })`. */
 export function validateEnv(raw: Record<string, unknown>): Env {
-  const result = envSchema.safeParse(raw);
+  // Variables vacías en .env cuentan como no definidas
+  const cleaned = Object.fromEntries(Object.entries(raw).filter(([, v]) => v !== ''));
+  const result = envSchema.safeParse(cleaned);
   if (!result.success) {
     const detail = result.error.issues
       .map((issue) => `  - ${issue.path.join('.') || '(raíz)'}: ${issue.message}`)

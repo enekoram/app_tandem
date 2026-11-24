@@ -12,6 +12,8 @@
     "openapi": "nest build && node dist/openapi.js"
   },
   "dependencies": {
+    "@better-auth/expo": "^1.7.27",
+    "@better-auth/mongo-adapter": "^1.7.27",
     "@nestjs/common": "^12.6.0",
     "@nestjs/config": "^12.1.1",
     "@nestjs/core": "^12.6.0",
@@ -20,12 +22,17 @@
     "@nestjs/swagger": "^12.1.2",
     "@nestjs/terminus": "^12.2.0",
     "@nestjs/throttler": "^6.8.0",
+    "@thallesp/nestjs-better-auth": "^2.8.0",
+    "better-auth": "^1.7.27",
+    "express": "5.3.0",
     "helmet": "^8.3.0",
+    "mongodb": "7.8.0",
     "mongoose": "^9.12.3",
     "nestjs-pino": "^5.3.2",
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
     "reflect-metadata": "^0.2.2",
+    "resend": "^6.39.0",
     "rxjs": "^7.8.2",
     "zod": "^4.6.7"
   },

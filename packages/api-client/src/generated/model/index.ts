@@ -10,6 +10,8 @@ export * from './healthControllerCheck200';
 export * from './healthControllerCheck200Status';
 export * from './healthControllerCheck503';
 export * from './healthControllerCheck503Status';
+export * from './meDto';
+export * from './meDtoStimulus';
 export * from './terminusHealthCheckResult';
 export * from './terminusHealthCheckResultDetails';
 export * from './terminusHealthCheckResultError';

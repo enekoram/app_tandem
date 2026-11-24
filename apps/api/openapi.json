@@ -1,6 +1,35 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/me": {
+      "get": {
+        "operationId": "MeController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sin sesión"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
     "/health": {
       "get": {
         "operationId": "HealthController_check",
@@ -102,6 +131,43 @@
   "servers": [],
   "components": {
     "schemas": {
+      "MeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "665f1c2e8b3a4d0012345678"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "Marta",
+            "maxLength": 40
+          },
+          "email": {
+            "type": "string",
+            "example": "marta@example.com"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Madrid"
+          },
+          "stimulus": {
+            "type": "string",
+            "enum": [
+              "full",
+              "soft",
+              "minimal"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "displayName",
+          "email",
+          "timezone",
+          "stimulus"
+        ]
+      },
       "TerminusHealthIndicatorResult": {
         "type": "object",
         "properties": {

@@ -6,7 +6,11 @@ import { configureApp } from './bootstrap.js';
 import type { Env } from './config/env.js';
 
 async function main(): Promise<void> {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+    // Better Auth lee el cuerpo crudo; la librería vuelve a añadir los parsers para el resto
+    bodyParser: false,
+  });
   const config = app.get<ConfigService<Env, true>>(ConfigService);
 
   configureApp(app, { swagger: config.get('NODE_ENV', { infer: true }) !== 'production' });

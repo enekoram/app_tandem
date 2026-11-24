@@ -21,6 +21,16 @@ if (!services.length) {
   process.exit(1);
 }
 
+/** IP del Mac en la red local (la que usa el móvil para llegar a Metro y a la API). */
+function lanAddress() {
+  for (const addresses of Object.values(networkInterfaces())) {
+    for (const a of addresses ?? []) {
+      if (a.family === 'IPv4' && !a.internal) return a.address;
+    }
+  }
+  return null;
+}
+
 mkdirSync(LOGS, { recursive: true });
 mkdirSync(PIDS, { recursive: true });
 
@@ -41,7 +51,14 @@ for (const service of services) {
     cwd: ROOT,
     detached: true, // grupo de procesos propio: `pnpm stop` lo cierra entero
     stdio: ['ignore', out, out],
-    env: { ...process.env, FORCE_COLOR: '0' },
+    env: {
+      ...process.env,
+      FORCE_COLOR: '0',
+      // Los enlaces de los emails (recuperar contraseña) deben abrirse desde el móvil
+      ...(service.name === 'api' && lanAddress() && !process.env.BETTER_AUTH_URL
+        ? { BETTER_AUTH_URL: `http://${lanAddress()}:3000` }
+        : {}),
+    },
   });
   child.unref();
   writeFileSync(pidFile, String(child.pid));
@@ -76,16 +93,6 @@ if (services.some((s) => s.name === 'api')) {
       ? '✓ API en http://localhost:3000 (salud: /health · documentación: /docs)'
       : '✗ La API no ha arrancado: mira .logs/api.log',
   );
-}
-
-/** IP del Mac en la red local (la que usa el móvil para llegar a Metro y a la API). */
-function lanAddress() {
-  for (const addresses of Object.values(networkInterfaces())) {
-    for (const a of addresses ?? []) {
-      if (a.family === 'IPv4' && !a.internal) return a.address;
-    }
-  }
-  return null;
 }
 
 async function waitForMetro(timeoutMs) {

@@ -5,7 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 import { validateEnv, type Env } from './config/env.js';
+import { AuthModule } from './auth/auth.module.js';
 import { HealthModule } from './health/health.module.js';
+import { MailModule } from './mail/mail.module.js';
+import { UsersModule } from './users/users.module.js';
 
 @Module({
   imports: [
@@ -21,6 +24,13 @@ import { HealthModule } from './health/health.module.js';
             remove: true,
           },
           autoLogging: { ignore: (req) => req.url === '/health' },
+          // Nunca registrar la query de las rutas de auth (lleva tokens de un solo uso)
+          serializers: {
+            req: (req: { method: string; url: string }) => ({
+              method: req.method,
+              url: req.url.startsWith('/api/auth') ? req.url.split('?')[0] : req.url,
+            }),
+          },
           transport:
             config.get('NODE_ENV', { infer: true }) === 'development'
               ? { target: 'pino-pretty', options: { singleLine: true } }
@@ -37,6 +47,9 @@ import { HealthModule } from './health/health.module.js';
     }),
     // Límite general por IP; las rutas sensibles (login, invitaciones) tendrán límites propios.
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 120 }]),
+    MailModule,
+    UsersModule,
+    AuthModule,
     HealthModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
