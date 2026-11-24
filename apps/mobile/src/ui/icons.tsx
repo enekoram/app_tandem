@@ -2,7 +2,20 @@ import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { sizes } from '@/theme';
 
 /** Iconos de línea del canvas (24×24, trazo 1.6–1.8). Siempre decorativos: la etiqueta va en el control. */
-export type IconName = 'today' | 'tasks' | 'sessions' | 'companion' | 'profile' | 'plus' | 'close';
+export type IconName =
+  | 'today'
+  | 'tasks'
+  | 'sessions'
+  | 'companion'
+  | 'profile'
+  | 'plus'
+  | 'close'
+  | 'back'
+  | 'eye'
+  | 'eyeOff'
+  | 'alert'
+  | 'check'
+  | 'mail';
 
 interface IconProps {
   name: IconName;
@@ -59,6 +72,35 @@ export function Icon({ name, size = sizes.icon.nav, color, strokeWidth = 1.6 }: 
       )}
       {name === 'plus' && <Path {...common} d="M12 5v14M5 12h14" />}
       {name === 'close' && <Path {...common} d="M6 6l12 12M18 6L6 18" />}
+      {name === 'back' && <Path {...common} d="M15 5l-7 7 7 7" />}
+      {name === 'eye' && (
+        <>
+          <Path
+            {...common}
+            d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"
+          />
+          <Circle {...common} cx={12} cy={12} r={3} />
+        </>
+      )}
+      {name === 'eyeOff' && (
+        <Path
+          {...common}
+          d="M3 3l18 18M10.6 6a9.6 9.6 0 0 1 1.4-.1c6 0 9.5 6.1 9.5 6.1a17 17 0 0 1-3 3.6M6.5 7.6A16 16 0 0 0 2.5 12S6 18.1 12 18.1c1.6 0 3-.4 4.2-1M9.9 9.9a3 3 0 0 0 4.2 4.2"
+        />
+      )}
+      {name === 'alert' && (
+        <>
+          <Circle {...common} cx={12} cy={12} r={8.5} />
+          <Path {...common} d="M12 11v5M12 8h.01" />
+        </>
+      )}
+      {name === 'check' && <Path {...common} d="M5 12.5l4.5 4.5L19 7" />}
+      {name === 'mail' && (
+        <>
+          <Rect {...common} x={3} y={5.5} width={18} height={13} rx={3} />
+          <Path {...common} d="M4 7.5l8 6 8-6" />
+        </>
+      )}
     </Svg>
   );
 }

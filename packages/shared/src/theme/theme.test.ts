@@ -79,6 +79,8 @@ describe('contrastes del UI kit', () => {
     ['toast ok', colors.toast.ok.text, colors.toast.ok.bg],
     ['toast err', colors.toast.err.text, colors.toast.err.bg],
     ['rojo teja / surface', colors.danger, colors.bg.surface],
+    ['error de campo / ground', colors.field.errorText, colors.bg.ground],
+    ['error de campo / surface', colors.field.errorText, colors.bg.surface],
   ];
 
   it.each(textPairs)('%s cumple AA de texto normal', (_, fg, bg) => {
@@ -89,6 +91,12 @@ describe('contrastes del UI kit', () => {
     expect(contrastRatio(colors.text.inactive, colors.bg.surface)).toBeGreaterThanOrEqual(
       WCAG_AA.largeText,
     );
+  });
+
+  it('los bordes de campo con foco o error y la casilla cumplen AA no textual', () => {
+    for (const c of [colors.field.borderFocus, colors.field.borderError, colors.field.checkbox]) {
+      expect(contrastRatio(c, colors.bg.surface)).toBeGreaterThanOrEqual(WCAG_AA.nonText);
+    }
   });
 
   it('el icono atenuado cumple AA de elementos no textuales', () => {

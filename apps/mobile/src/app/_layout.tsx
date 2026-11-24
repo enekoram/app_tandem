@@ -10,7 +10,7 @@ import {
   PlusJakartaSans_500Medium,
   PlusJakartaSans_600SemiBold,
 } from '@expo-google-fonts/plus-jakarta-sans';
-import '@/lib/api';
+import { authClient } from '@/lib/auth';
 import { colors, fontFamilies } from '@/theme';
 import { ToastProvider } from '@/ui';
 
@@ -18,18 +18,26 @@ void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
-  const [loaded, error] = useFonts({
+  const { data: session, isPending } = authClient.useSession();
+  const [fontsLoaded, fontsError] = useFonts({
     [fontFamilies.serif]: EBGaramond_500Medium,
     [fontFamilies.serifItalic]: EBGaramond_500Medium_Italic,
     [fontFamilies.sans]: PlusJakartaSans_500Medium,
     [fontFamilies.sansSemiBold]: PlusJakartaSans_600SemiBold,
   });
+  const ready = (fontsLoaded || !!fontsError) && !isPending;
+  const signedIn = !!session;
 
   useEffect(() => {
-    if (loaded || error) void SplashScreen.hideAsync();
-  }, [loaded, error]);
+    if (ready) void SplashScreen.hideAsync();
+  }, [ready]);
 
-  if (!loaded && !error) return null;
+  // Al cerrar sesión, fuera los datos de la persona anterior
+  useEffect(() => {
+    if (!signedIn) queryClient.clear();
+  }, [signedIn, queryClient]);
+
+  if (!ready) return null;
 
   return (
     <SafeAreaProvider>
@@ -42,8 +50,13 @@ export default function RootLayout() {
               contentStyle: { backgroundColor: colors.bg.ground },
             }}
           >
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="perfil" options={{ presentation: 'modal' }} />
+            <Stack.Protected guard={signedIn}>
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="perfil" options={{ presentation: 'modal' }} />
+            </Stack.Protected>
+            <Stack.Protected guard={!signedIn}>
+              <Stack.Screen name="(auth)" />
+            </Stack.Protected>
           </Stack>
         </ToastProvider>
       </QueryClientProvider>

@@ -51,9 +51,34 @@ export const sizes = {
     textMaxWidth: 280,
     illustration: { width: 120, height: 112 },
   },
-  icon: { nav: 22, header: 20, button: 18, illustration: 60 },
+  icon: { nav: 22, header: 20, button: 18, inline: 15, back: 24, illustration: 60 },
+  checkbox: { size: 26, radius: 8, icon: 16 },
+  /** Aviso flotante (FloatingNotice): icono redondo, corazón y punto «en vivo». */
+  notice: { icon: 42, heart: 18, liveDot: 7 },
+  onboardingArt: { height: 216 },
+  logo: { width: 92, height: 66 },
+  stepDot: { size: 6, activeWidth: 18 },
   /** Cabecera fija de pantalla (sin status bar: la da el sistema vía safe area). */
   screenTitle: { height: 126, paddingTop: 18, paddingHorizontal: 24, paddingBottom: 16, gap: 8 },
+} as const;
+
+/** Sombra de elementos que flotan sobre el contenido (aviso, hoja). */
+export const shadows = {
+  /** Tarjeta destacada sobre el fondo (formulario de inicio de sesión). */
+  card: {
+    shadowColor: '#211E1B',
+    shadowOpacity: 0.05,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 2,
+  },
+  floating: {
+    shadowColor: '#211E1B',
+    shadowOpacity: 0.12,
+    shadowRadius: 17,
+    shadowOffset: { width: 0, height: 14 },
+    elevation: 6,
+  },
 } as const;
 
 export const borders = {

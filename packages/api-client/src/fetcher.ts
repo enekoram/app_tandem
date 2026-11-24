@@ -1,12 +1,12 @@
 /**
  * Cliente HTTP que usan todas las funciones generadas por orval.
- * La app lo configura una vez al arrancar con `configureApiClient` (URL base y token de sesión).
+ * La app lo configura una vez al arrancar con `configureApiClient` (URL base y cabeceras de sesión).
  */
 
 export interface ApiClientConfig {
   baseUrl: string;
-  /** Devuelve el token de sesión actual, o null si no hay sesión. */
-  getToken?: () => string | null | Promise<string | null>;
+  /** Cabeceras de sesión (en la app, la cookie de Better Auth guardada en SecureStore). */
+  getHeaders?: () => Record<string, string> | Promise<Record<string, string>>;
 }
 
 let config: ApiClientConfig | null = null;
@@ -31,10 +31,12 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}): Promi
 
   const headers = new Headers(options.headers);
   headers.set('Accept', 'application/json');
-  const token = await config.getToken?.();
-  if (token) headers.set('Authorization', `Bearer ${token}`);
+  for (const [key, value] of Object.entries((await config.getHeaders?.()) ?? {})) {
+    if (value) headers.set(key, value);
+  }
 
-  const res = await fetch(`${config.baseUrl}${url}`, { ...options, headers });
+  // `omit`: la cookie va a mano; `include` interfiere con ella en React Native
+  const res = await fetch(`${config.baseUrl}${url}`, { ...options, headers, credentials: 'omit' });
   const text = await res.text();
   const data: unknown = text ? JSON.parse(text) : undefined;
 

@@ -18,6 +18,8 @@ export const typography = {
   h4: { family: 'sansSemiBold', size: 20, lineHeight: 24, letterSpacing: 0.1, uppercase: true },
   h5: { family: 'sansSemiBold', size: 17, lineHeight: 21, letterSpacing: 0.1, uppercase: true },
   bodyStrong: { family: 'sansSemiBold', size: 16, lineHeight: 22, letterSpacing: 0 },
+  /** Entradilla (onboarding, textos de pantalla de acceso). */
+  lead: { family: 'sans', size: 16, lineHeight: 23, letterSpacing: 0 },
   body: { family: 'sans', size: 14, lineHeight: 20, letterSpacing: 0 },
   label: { family: 'sansSemiBold', size: 13, lineHeight: 18, letterSpacing: 0 },
   caption: {
@@ -28,6 +30,13 @@ export const typography = {
     uppercase: true,
   },
   nav: { family: 'sansSemiBold', size: 11, lineHeight: 14, letterSpacing: 0 },
+  /** Texto que se escribe en un campo. */
+  input: { family: 'sans', size: 17, lineHeight: 22, letterSpacing: 0 },
+  /** Marca «Tandems» (logo) y su lema. */
+  logo: { family: 'serif', size: 62, lineHeight: 56, letterSpacing: -0.03 },
+  tagline: { family: 'serif', size: 21, lineHeight: 23, letterSpacing: 0 },
+  /** Titular grande del onboarding. */
+  hero: { family: 'serif', size: 44, lineHeight: 45, letterSpacing: -0.01 },
   /** Inicial dentro del avatar. */
   avatarInitial: { family: 'serif', size: 24, lineHeight: 28, letterSpacing: 0 },
 } as const satisfies Record<

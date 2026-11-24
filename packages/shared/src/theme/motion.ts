@@ -19,6 +19,20 @@ export const durations = {
   undo: 8000,
 } as const;
 
+/**
+ * Deriva de las formas del onboarding (referencia de la forma unida, canvas): ciclo de
+ * `durations.breath`, ida y vuelta con ease-in-out. Desplazamiento en pt y escala.
+ */
+export const drift = {
+  self: { dx: 5, dy: -3, scale: 1.04 },
+  other: { dx: -10, dy: 5, scale: 0.96 },
+  /** Latido del corazón de apoyo. */
+  heartbeat: { duration: 1100, peak: 1.25, rebound: 0.94 },
+} as const;
+
+/** Efecto «goo»: desenfoque y umbral de alfa que funde las formas (SVG/Skia). */
+export const goo = { blur: 11, alphaSlope: 26, alphaOffset: -12 } as const;
+
 /** Curvas cúbicas [x1, y1, x2, y2]. */
 export const easings = {
   standard: [0.2, 0, 0, 1],

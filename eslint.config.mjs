@@ -36,6 +36,13 @@ export default tseslint.config(
     },
   },
   {
+    // Metro carga fuentes e imágenes con require()
+    files: ['apps/mobile/**/*.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-require-imports': ['error', { allow: ['\\.(ttf|otf|png|jpg)$'] }],
+    },
+  },
+  {
     // Scripts de terminal: su salida es para la persona que los ejecuta
     files: ['scripts/**/*.mjs'],
     rules: { 'no-console': 'off' },

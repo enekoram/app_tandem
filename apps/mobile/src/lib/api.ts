@@ -1,5 +1,4 @@
 import Constants from 'expo-constants';
-import { configureApiClient } from '@tandems/api-client';
 
 /**
  * URL de la API:
@@ -14,5 +13,3 @@ function resolveApiUrl(): string {
 }
 
 export const API_URL = resolveApiUrl();
-
-configureApiClient({ baseUrl: API_URL });

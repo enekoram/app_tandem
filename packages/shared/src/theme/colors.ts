@@ -54,10 +54,34 @@ export const colors = {
   },
   /** Rojo teja: solo para acciones destructivas y errores. */
   danger: '#7A2A1F',
+  /** Campos de formulario (canvas: .fd / .ferr). */
+  field: {
+    bg: '#FFFDF8',
+    border: '#EDE3D4',
+    borderFocus: '#211E1B',
+    borderError: '#A33A2B',
+    errorText: '#8A2E22',
+    /** Borde de la casilla sin marcar. */
+    checkbox: '#6B6259',
+  },
+  /** Colores de las ilustraciones (onboarding): la otra persona es genérica, no de la paleta. */
+  illustration: {
+    self: '#F3B58E',
+    selfLight: '#F3C4A0',
+    other: '#A9C9AE',
+    otherLight: '#D6C2E6',
+    sparkle: ['#F2DFA6', '#D6C2E6', '#A9C9AE', '#F3B58E', '#E9CFC4'],
+    liveDot: '#6FC28F',
+    slotEmpty: '#8A8076',
+  },
 } as const;
 
 /** Degradados con sus paradas en orden. */
 export const gradients = {
   /** Forma unida de la home y animación del onboarding. */
   energy: ['#F3B58E', '#F2DFA6', '#E9CFC4', '#A98BC2'],
+  /** Forma «tú + amig@» del onboarding (paradas 0 · .42 · .62 · 1). */
+  onboarding: ['#F3B58E', '#F2DFA6', '#D6C2E6', '#A9C9AE'],
+  /** Logo e icono de app (encargo). */
+  brand: ['#F09A6A', '#F3C98A', '#EBCFB4', '#C6A9DF', '#8FC19A'],
 } as const;
