@@ -5,10 +5,10 @@
  * API de Tandems
  * OpenAPI spec version: 0.1.0
  */
-import type { TerminusHealthCheckResultDetails } from './terminusHealthCheckResultDetails';
-import type { TerminusHealthCheckResultError } from './terminusHealthCheckResultError';
-import type { TerminusHealthCheckResultInfo } from './terminusHealthCheckResultInfo';
-import type { TerminusHealthCheckResultStatus } from './terminusHealthCheckResultStatus';
+import type { TerminusHealthCheckResultDetails } from './terminusHealthCheckResultDetails.ts';
+import type { TerminusHealthCheckResultError } from './terminusHealthCheckResultError.ts';
+import type { TerminusHealthCheckResultInfo } from './terminusHealthCheckResultInfo.ts';
+import type { TerminusHealthCheckResultStatus } from './terminusHealthCheckResultStatus.ts';
 
 export interface TerminusHealthCheckResult {
   status: TerminusHealthCheckResultStatus;

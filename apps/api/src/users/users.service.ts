@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import type { Model } from 'mongoose';
+import type { Model, Types } from 'mongoose';
 import { User, type UserDocument } from './user.schema.js';
 
 export interface AuthIdentity {
@@ -31,5 +31,10 @@ export class UsersService {
         { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true, runValidators: true },
       )
       .orFail();
+  }
+
+  /** Perfil por id (null si no existe o la cuenta está borrada). */
+  async findById(id: Types.ObjectId | string): Promise<UserDocument | null> {
+    return this.users.findOne({ _id: id, deleted_at: { $exists: false } });
   }
 }

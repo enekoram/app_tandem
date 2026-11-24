@@ -119,6 +119,289 @@
           "health"
         ]
       }
+    },
+    "/contacts": {
+      "get": {
+        "operationId": "ContactsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ]
+      },
+      "post": {
+        "operationId": "ContactsController_invite",
+        "parameters": [
+          {
+            "name": "host",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-app-link",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InviteResultDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONTACT_EXISTS: ya está en tus contactos"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ]
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "operationId": "ContactsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ]
+      },
+      "delete": {
+        "operationId": "ContactsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ]
+      }
+    },
+    "/contacts/{id}/resend": {
+      "post": {
+        "operationId": "ContactsController_resend",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "host",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-app-link",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendResultDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "contacts"
+        ]
+      }
+    },
+    "/invitations/{token}": {
+      "get": {
+        "operationId": "InvitationsController_preview",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationPreviewDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "INVITATION_NOT_FOUND"
+          },
+          "410": {
+            "description": "INVITATION_EXPIRED · INVITATION_USED"
+          }
+        },
+        "tags": [
+          "invitations"
+        ]
+      }
+    },
+    "/invitations/{token}/accept": {
+      "post": {
+        "operationId": "InvitationsController_accept",
+        "parameters": [
+          {
+            "name": "token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "El contacto de quien te invitó, ya aceptado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "invitations"
+        ]
+      }
     }
   },
   "info": {
@@ -267,6 +550,105 @@
         "required": [
           "status",
           "details"
+        ]
+      },
+      "ContactDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "665f1c2e8b3a4d0012345678"
+          },
+          "name": {
+            "type": "string",
+            "example": "Lucía"
+          },
+          "email": {
+            "type": "string",
+            "example": "lucia@email.com"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted"
+            ]
+          },
+          "color": {
+            "type": "string",
+            "enum": [
+              "lilac",
+              "slate",
+              "rose",
+              "sun",
+              "sage",
+              "ochre",
+              "periwinkle",
+              "sea"
+            ],
+            "description": "Color de persona (usePersonStyle)"
+          },
+          "initials": {
+            "type": "string",
+            "example": "L",
+            "description": "1–2 letras o un emoji"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Solo si ya tiene cuenta"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "status",
+          "color",
+          "initials",
+          "createdAt"
+        ]
+      },
+      "InviteResultDto": {
+        "type": "object",
+        "properties": {
+          "contact": {
+            "$ref": "#/components/schemas/ContactDto"
+          },
+          "inviteUrl": {
+            "type": "string",
+            "description": "Enlace para la hoja de compartir (WhatsApp, Telegram…)"
+          }
+        },
+        "required": [
+          "contact",
+          "inviteUrl"
+        ]
+      },
+      "ResendResultDto": {
+        "type": "object",
+        "properties": {
+          "inviteUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "inviteUrl"
+        ]
+      },
+      "InvitationPreviewDto": {
+        "type": "object",
+        "properties": {
+          "inviterName": {
+            "type": "string",
+            "example": "Marta"
+          }
+        },
+        "required": [
+          "inviterName"
         ]
       }
     }

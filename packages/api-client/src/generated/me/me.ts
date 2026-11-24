@@ -24,7 +24,7 @@ import type {
   MeDto
 } from '../model';
 
-import { apiFetch } from '../../fetcher';
+import { apiFetch } from '../../fetcher.ts';
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 

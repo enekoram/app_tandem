@@ -5,8 +5,8 @@
  * API de Tandems
  * OpenAPI spec version: 0.1.0
  */
-import type { HealthControllerCheck200Status } from './healthControllerCheck200Status';
-import type { TerminusHealthCheckResult } from './terminusHealthCheckResult';
+import type { HealthControllerCheck200Status } from './healthControllerCheck200Status.ts';
+import type { TerminusHealthCheckResult } from './terminusHealthCheckResult.ts';
 
 export type HealthControllerCheck200 = TerminusHealthCheckResult & {
   status?: HealthControllerCheck200Status;
