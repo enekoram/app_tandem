@@ -6,5 +6,6 @@ packages:
 allowBuilds:
   '@swc/core': true
   mongodb-memory-server: true
+  esbuild: true
   # Telemetría de swagger-ui: no
   '@scarf/scarf': false

@@ -8,7 +8,8 @@
     "dev": "nest start --watch",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "openapi": "nest build && node dist/openapi.js"
   },
   "dependencies": {
     "@nestjs/common": "^12.6.0",

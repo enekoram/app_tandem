@@ -11,7 +11,8 @@
     "format:check": "prettier --check .",
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:api": "pnpm --filter @tandems/api openapi && pnpm --filter @tandems/api-client generate"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
