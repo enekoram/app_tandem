@@ -82,7 +82,7 @@
 3. 🧑 Revisar las pantallas de acceso en el iPhone y pasar a «revisada» en PROGRESO las que estén bien.
 4. 🧑 Crear cuenta en **expo.dev** (para EAS más adelante) y decidir si se pide Apple Developer (¿programa educativo del centro?).
 5. 🧑 Sacar `docs/pwd_*.rtf` (Resend, GitHub, Atlas) de la carpeta del proyecto a un gestor de contraseñas; añadir a `~/.zshrc` las líneas de fnm si aún no están.
-6. 🧑 Visto bueno a la fase 1 → fusionar `fase-1-fundamentos` en `main`.
+6. ✅ Fase 1 aprobada («ok fase 1») y fusionada en `main` el 2026-11-24.
 7. Fase 2 (tareas y contactos) tras el visto bueno; empezar por `Sheet` y los modelos `contacts`/`tasks` con el límite de 5.
 
 ### Cosas a tener en cuenta

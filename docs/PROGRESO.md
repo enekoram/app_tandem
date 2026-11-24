@@ -201,3 +201,4 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-24 | Pruebas en iPhone con **Expo Go** (sin Apple Developer por ahora); el development build con EAS queda aplazado. |
 | 2026-11-24 | Acceso (fase 1), diferencias con el canvas: «Abrir el enlace del email» → **«Abrir el email»** (abre Mail; no aparece en Android); casilla de condiciones **sin enlaces** hasta tener los textos legales (fase 7); requisitos de contraseña = «Mínimo 8 caracteres.»; sin selector de idioma. |
 | 2026-11-24 | Recuperar contraseña: el email lleva un enlace a la API que redirige a la app (`tandems://reset-password`); solo se aceptan redirecciones a la app. «Guardar y entrar» entra directamente si el móvil recuerda el email; si no, lleva a Iniciar sesión. |
+| 2026-11-24 | Fase 1 aprobada y fusionada en `main`. «Recuperar contraseña» queda para pulir; para probar hay 5 cuentas en desarrollo (`seed:users`). |

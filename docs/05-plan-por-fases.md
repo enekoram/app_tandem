@@ -11,7 +11,7 @@
 - [ ] 🧑 Visto bueno final → fusionar en `main`
 
 ## Fase 1 · Fundamentos (`fase-1-fundamentos`)
-> Avance a 2026-11-24 (sesión 2): ✅ hecho · ⏳ pendiente · ⏸ aplazado. Detalle en `BITACORA.md`.
+> **Aprobada y fusionada en `main` el 2026-11-24.** ✅ hecho · ⏳ pendiente · ⏸ aplazado. Lo pendiente (conectar Render, `Sheet`, cuenta de Expo) pasa al inicio de la fase 2. Detalle en `BITACORA.md`.
 
 1. ✅ Monorepo pnpm 12 (workspaces, ajustes en `pnpm-workspace.yaml`), TypeScript 6, ESLint + Prettier, Husky + lint-staged + commitlint.
 2. ✅ `packages/shared`: tokens (`theme/`: colores, tipografía, radios, espacios, motion tokens), paleta de 8 personas **aprobada** + test de contraste AA.
