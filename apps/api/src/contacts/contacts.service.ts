@@ -170,13 +170,18 @@ export class ContactsService {
         { status: 'cancelled' },
         { session },
       );
+      // Mis tareas con esta persona: el acompañamiento termina («se fue»)
+      await this.endCompanionship(contact._id, session);
       if (contact.contact_user_id) {
         const other = await this.contacts.findOneAndUpdate(
           { owner_id: contact.contact_user_id, contact_user_id: me._id, status: LIVE },
           { status: 'cancelled' },
           { session },
         );
-        if (other) await this.refreshInitials(other.owner_id, session);
+        if (other) {
+          await this.endCompanionship(other._id, session);
+          await this.refreshInitials(other.owner_id, session);
+        }
       }
       await this.refreshInitials(me._id, session);
     });
@@ -252,6 +257,12 @@ export class ContactsService {
         { status: 'accepted' },
         { session },
       );
+      // Las tareas que ya esperaban a esta persona pasan a ser suyas para aceptarlas
+      await this.tasksCollection.updateMany(
+        { 'companion.contact_id': theirs._id },
+        { $set: { 'companion.user_id': me._id } },
+        { session },
+      );
 
       // Mi lado: si yo también la había invitado, se acepta ese contacto; si no, se crea
       const existing = await this.contacts.findOne(
@@ -295,6 +306,23 @@ export class ContactsService {
   }
 
   // ── Auxiliares ──────────────────────────────────────────────────────────────
+
+  private get tasksCollection() {
+    return this.connection.collection('tasks');
+  }
+
+  /** Tareas abiertas acompañadas por este contacto → acompañante «se fue» (TareaAbandonada). */
+  private async endCompanionship(contactId: Types.ObjectId, session: ClientSession): Promise<void> {
+    await this.tasksCollection.updateMany(
+      {
+        'companion.contact_id': contactId,
+        'companion.status': { $in: ['pending', 'accepted'] },
+        status: 'open',
+      },
+      { $set: { 'companion.status': 'left', 'companion.changed_at': new Date() } },
+      { session },
+    );
+  }
 
   private contactExists(existing: ContactDocument): DomainError {
     return new DomainError(

@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { ContactsModule } from './contacts/contacts.module.js';
 import { HealthModule } from './health/health.module.js';
 import { LinksModule } from './links/links.module.js';
+import { TasksModule } from './tasks/tasks.module.js';
 import { MailModule } from './mail/mail.module.js';
 import { UsersModule } from './users/users.module.js';
 
@@ -55,6 +56,7 @@ import { UsersModule } from './users/users.module.js';
     HealthModule,
     LinksModule,
     ContactsModule,
+    TasksModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
