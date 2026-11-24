@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio, deltaE2000, WCAG_AA, type Hex } from '../color/contrast';
-import { colors } from './colors';
-import { PERSON_COLOR_IDS, personColors, selfColor } from './persons';
-import { resolveMotionProfile } from './motion';
+import { contrastRatio, deltaE2000, WCAG_AA, type Hex } from '../color/contrast.ts';
+import { colors } from './colors.ts';
+import { PERSON_COLOR_IDS, personColors, selfColor } from './persons.ts';
+import { resolveMotionProfile } from './motion.ts';
 
 /** Diferencia mínima entre rellenos de avatar para distinguirlos de un vistazo. */
 const MIN_FILL_DELTA_E = 9;
