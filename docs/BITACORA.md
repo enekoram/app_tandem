@@ -72,10 +72,13 @@
 - pnpm 12 ignora `.npmrc`: se usa la instalación aislada (Expo la admite desde el SDK 54). Corregido docs/01.
 - Better Auth **desactiva la comprobación de origen en tests**; se fuerza siempre para que los tests cubran lo mismo que producción (test: no se aceptan redirecciones ajenas en recuperar contraseña).
 - El registro de Better Auth corre en una transacción que puede reintentarse (manda una cookie por intento): el perfil se crea en `GET /me` y no en un hook, para no dejar perfiles huérfanos.
+- **Hermes (iOS) no trae `Intl.PluralRules`**: «Crear cuenta» con campos vacíos rompía la pantalla. Plurales con `pluralEs` (regla en CLAUDE.md).
+- Con wifi débil se prueba con el **punto de acceso del iPhone** (Mac conectado por cable). En desarrollo, el enlace del email usa el host con el que llamó el móvil (la IP del Mac cambia con la red).
+- El enlace del email ya no va directo a Better Auth (que redirige a la app y en un ordenador deja la página en blanco): lleva a **/enlace/contrasena**, una página de la marca con «Abrir Tandems» y la indicación de abrirlo en el móvil. Los logs nunca guardan la query (tokens).
 
 ### Pendiente para la próxima sesión
 1. 🧑 **Conectar Render**: New → Blueprint con este repo (rama `main` tras fusionar la fase 1). En el panel, rellenar `MONGODB_URI` (otro usuario de Atlas para staging, p. ej. `tandems_staging`, y base `tandems_staging`) y `RESEND_API_KEY`. En Atlas → Network Access hay que permitir `0.0.0.0/0` (Render gratuito no tiene IP fija; la protección es el usuario y la contraseña).
-2. 🧑 **Probar «Recuperar contraseña»** con tu email real y revisar el email (asunto, enlace, que abra la app en Expo Go).
+2. 🧑 **Probar «Recuperar contraseña» hasta el final** desde el iPhone (el email llega; falta comprobar página intermedia → Expo Go → «Crear contraseña nueva» → entrar).
 3. 🧑 Revisar las pantallas de acceso en el iPhone y pasar a «revisada» en PROGRESO las que estén bien.
 4. 🧑 Crear cuenta en **expo.dev** (para EAS más adelante) y decidir si se pide Apple Developer (¿programa educativo del centro?).
 5. 🧑 Sacar `docs/pwd_*.rtf` (Resend, GitHub, Atlas) de la carpeta del proyecto a un gestor de contraseñas; añadir a `~/.zshrc` las líneas de fnm si aún no están.
