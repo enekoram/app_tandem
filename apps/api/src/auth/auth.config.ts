@@ -19,6 +19,19 @@ export interface AuthDeps {
   mailer: Mailer;
 }
 
+/**
+ * En desarrollo la IP del Mac cambia con la red (wifi, punto de acceso del iPhone…).
+ * El enlace del email usa el mismo host con el que el móvil acaba de llamar a la API,
+ * que sabemos que le llega. En producción se usa siempre BETTER_AUTH_URL.
+ */
+export function sameHostAsRequest(url: string, request?: Request): string {
+  const host = request?.headers.get('host');
+  if (!host || !/^[\w.-]+(:\d+)?$/.test(host)) return url;
+  const link = new URL(url);
+  link.host = host;
+  return link.toString();
+}
+
 /** Instancia de Better Auth (doc 01 §5 y doc 04 §A.1). */
 export function createAuth({ env, db, client, mailer }: AuthDeps) {
   const isDev = env.NODE_ENV !== 'production';
@@ -52,9 +65,10 @@ export function createAuth({ env, db, client, mailer }: AuthDeps) {
       requireEmailVerification: false,
       resetPasswordTokenExpiresIn: 60 * 60,
       revokeSessionsOnPasswordReset: true,
-      sendResetPassword: async ({ user, url }) => {
+      sendResetPassword: async ({ user, url }, request) => {
+        const link = isDev ? sameHostAsRequest(url, request) : url;
         // Sin await: el tiempo de respuesta no revela si el email existe
-        void mailer.send(resetPasswordEmail(user.email, user.name, url));
+        void mailer.send(resetPasswordEmail(user.email, user.name, link));
       },
     },
     databaseHooks: {
