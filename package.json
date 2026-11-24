@@ -14,12 +14,14 @@
     "prepare": "husky",
     "generate:api": "pnpm --filter @tandems/api openapi && pnpm --filter @tandems/api-client generate",
     "dev": "node scripts/dev.mjs",
-    "stop": "node scripts/stop.mjs"
+    "stop": "node scripts/stop.mjs",
+    "brand:assets": "node scripts/brand-assets.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "@eslint/js": "^10.0.1",
+    "@resvg/resvg-js": "^2.6.2",
     "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.14.0",
