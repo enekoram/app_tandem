@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import { InteractionManager } from 'react-native';
 import { router, Tabs } from 'expo-router';
 import { useMeControllerMe } from '@tandems/api-client';
 import { prefs } from '@/lib/prefs';
-import { colors } from '@/theme';
+import { colors, durations } from '@/theme';
 import { TabBar } from '@/ui';
 
 export default function TabsLayout() {
@@ -15,11 +14,11 @@ export default function TabsLayout() {
   useEffect(() => {
     const token = prefs.pendingInvite();
     if (!token) return;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const timer = setTimeout(() => {
       void prefs.clearPendingInvite();
       router.push({ pathname: '/invitacion', params: { token } });
-    });
-    return () => task.cancel();
+    }, durations.slow);
+    return () => clearTimeout(timer);
   }, []);
   return (
     <Tabs
