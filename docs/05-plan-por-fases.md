@@ -11,18 +11,20 @@
 - [ ] 🧑 Visto bueno final → fusionar en `main`
 
 ## Fase 1 · Fundamentos (`fase-1-fundamentos`)
-1. Monorepo pnpm (`.npmrc`, workspaces), TypeScript base, ESLint + Prettier, Husky + lint-staged + commitlint.
-2. `packages/shared`: tokens (`theme.ts`: colores, tipografía, radios, espacios, motion tokens), paleta de 8 personas + **test de contraste AA**.
-3. `apps/api`: NestJS, `@nestjs/config` con validación Zod de variables, Mongoose, pino, Helmet, throttler, `/health`, Swagger.
-4. Tests de la API con mongodb-memory-server en réplica; primer e2e de `/health`.
-5. Generación del cliente (`packages/api-client`) desde OpenAPI con orval.
-6. `apps/mobile`: Expo + expo-router, fuentes, `strings/es.ts`, componentes base (Button, Card con filo, Text con regla redonda/cursiva, Sheet, Toast, TabBar flotante), 4 pestañas + Perfil.
-7. Autenticación: Better Auth en la API con email + contraseña; pantallas Onboarding 1–4, Iniciar sesión, Crear cuenta («¿Cómo quieres que te llamemos?»), Recuperar contraseña, Revisa tu email, Crear contraseña nueva, ErrLogin, ErrRegistro. (Apple y Google en fase 2.)
-8. Scripts `pnpm dev` / `pnpm stop` con logs en `.logs/`.
-9. CI en GitHub Actions; `render.yaml` (api, worker, kv, cron, static) para staging.
-10. 🧑 Cuentas: Expo/EAS, Render, Atlas, Resend, Apple Developer, Google Play. (Google Cloud y verificación de OAuth quedan para cuando haya dominio propio; ver doc 04 §A.)
-11. Logo A1 · Rotunda como SVG + icono de app y splash.
-12. Development build con EAS para iOS y Android → 🧑 instalar y probar.
+> Avance a 2026-11-24 (sesión 2): ✅ hecho · ⏳ pendiente · ⏸ aplazado. Detalle en `BITACORA.md`.
+
+1. ✅ Monorepo pnpm 12 (workspaces, ajustes en `pnpm-workspace.yaml`), TypeScript 6, ESLint + Prettier, Husky + lint-staged + commitlint.
+2. ✅ `packages/shared`: tokens (`theme/`: colores, tipografía, radios, espacios, motion tokens), paleta de 8 personas **aprobada** + test de contraste AA.
+3. ✅ `apps/api`: NestJS 12, `@nestjs/config` con validación Zod, Mongoose, pino, Helmet, throttler, `/health`, Swagger.
+4. ✅ Tests de la API con mongodb-memory-server en réplica; e2e de `/health` y de autenticación.
+5. ✅ Cliente (`packages/api-client`) desde OpenAPI con orval (`pnpm generate:api`).
+6. ✅ `apps/mobile`: Expo SDK 58 + expo-router, fuentes, `strings/es.ts`, componentes base (Button, Card con filo, Text/EmphasisText, Toast, TabBar flotante, TextField, Checkbox…), 4 pestañas + Perfil. ⏳ `Sheet`: cuando la necesite la primera pantalla (fase 2).
+7. ✅ Autenticación: Better Auth con email + contraseña; pantallas Onboarding 1–4, Iniciar sesión, Crear cuenta, Recuperar contraseña, Revisa tu email, Crear contraseña nueva, ErrLogin, ErrRegistro. (Apple y Google en fase 2.)
+8. ✅ Scripts `pnpm dev` / `pnpm stop` con logs en `.logs/` y QR para Expo Go.
+9. ✅ CI en GitHub Actions; `render.yaml` con la API (worker, Key Value, cron y web estática se añaden en sus fases). ⏳ 🧑 Conectar el Blueprint en Render.
+10. Cuentas: ✅ Atlas, ✅ Resend, ✅ Render (falta conectar), ⏳ Expo, ⏸ Apple Developer y Google Play (de momento se prueba con Expo Go).
+11. ✅ Logo A1 · Rotunda como SVG + icono de app, splash y favicon (`pnpm brand:assets`).
+12. ⏸ Development build con EAS: aplazado hasta decidir la cuenta de Apple Developer; mientras, Expo Go.
 
 **Entregable:** app instalable con login, pestañas vacías con el look de la marca; API en staging respondiendo.
 
