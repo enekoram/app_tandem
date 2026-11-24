@@ -28,7 +28,7 @@ export class UsersService {
             email: identity.email.toLowerCase(),
           },
         },
-        { upsert: true, new: true, setDefaultsOnInsert: true, runValidators: true },
+        { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true, runValidators: true },
       )
       .orFail();
   }

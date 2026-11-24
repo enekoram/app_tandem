@@ -78,7 +78,7 @@
 
 ### Pendiente para la próxima sesión
 1. 🧑 **Conectar Render**: New → Blueprint con este repo (rama `main` tras fusionar la fase 1). En el panel, rellenar `MONGODB_URI` (otro usuario de Atlas para staging, p. ej. `tandems_staging`, y base `tandems_staging`) y `RESEND_API_KEY`. En Atlas → Network Access hay que permitir `0.0.0.0/0` (Render gratuito no tiene IP fija; la protección es el usuario y la contraseña).
-2. 🧑 **Probar «Recuperar contraseña» hasta el final** desde el iPhone (el email llega; falta comprobar página intermedia → Expo Go → «Crear contraseña nueva» → entrar).
+2. ⏸ **«Recuperar contraseña» queda para pulir más adelante** (decisión del 2026-11-24): el email llega y la página intermedia está hecha, pero el recorrido completo en el iPhone no se ha comprobado. Para probar la app hay **5 cuentas de prueba** en `tandems_dev` (Marta, Juan, Lucía, Javier, Ramón; `@example.com`), con las contraseñas en `docs/pwd_usuarios_prueba.txt` (ignorado por git). Se recrean con `pnpm --filter @tandems/api seed:users`.
 3. 🧑 Revisar las pantallas de acceso en el iPhone y pasar a «revisada» en PROGRESO las que estén bien.
 4. 🧑 Crear cuenta en **expo.dev** (para EAS más adelante) y decidir si se pide Apple Developer (¿programa educativo del centro?).
 5. 🧑 Sacar `docs/pwd_*.rtf` (Resend, GitHub, Atlas) de la carpeta del proyecto a un gestor de contraseñas; añadir a `~/.zshrc` las líneas de fnm si aún no están.
