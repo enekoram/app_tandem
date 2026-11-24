@@ -52,11 +52,16 @@ export default function RootLayout() {
           >
             <Stack.Protected guard={signedIn}>
               <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="perfil" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="perfil" />
+              <Stack.Screen name="contactos/index" />
+              <Stack.Screen name="contactos/[id]" />
+              <Stack.Screen name="contactos/nuevo" options={{ presentation: 'modal' }} />
             </Stack.Protected>
             <Stack.Protected guard={!signedIn}>
               <Stack.Screen name="(auth)" />
             </Stack.Protected>
+            {/* Enlace de invitación: con o sin sesión */}
+            <Stack.Screen name="invitacion" />
           </Stack>
         </ToastProvider>
       </QueryClientProvider>

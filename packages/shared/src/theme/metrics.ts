@@ -28,11 +28,16 @@ export const sizes = {
   iconButton: { large: 48, small: 40 },
   /** Botón «Mi perfil» de la cabecera (canvas). */
   profileButton: 44,
-  avatar: 52,
+  /** Avatar: lista 40 · fila 44 · kit 52 · detalle 76. */
+  avatar: { sm: 40, md: 44, kit: 52, lg: 76 },
   input: { height: 52 },
   textarea: { height: 104 },
   dateTimePill: { height: 40 },
   personPickerRow: { height: 60 },
+  listRow: { minHeight: 60 },
+  /** Hoja modal (ModalSheet): cabecera fija y asa para arrastrar. */
+  modalBar: { height: 68 },
+  grabber: { width: 36, height: 5 },
   tabBar: { height: 72 },
   modalHeader: { height: 68 },
   carousel: { arrow: { width: 40, height: 44 }, dot: { width: 18, height: 44 } },

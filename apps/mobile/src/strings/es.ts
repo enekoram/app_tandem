@@ -60,12 +60,111 @@ export const es = {
     emptyBody: 'Cuando alguien comparta una tarea contigo o te pida apoyo, aparecerá aquí.',
   },
   profile: {
+    back: 'Hoy',
     caption: 'Tu cuenta',
     title: { lead: 'Mi ', em: 'perfil' } satisfies Emphasis,
-    emptyBody:
-      'Aquí podrás cambiar tu nombre, tu foto, las notificaciones y el nivel de movimiento.',
+    myPeople: { lead: 'Tu ', em: 'gente' } satisfies Emphasis,
+    contacts: 'Mis contactos',
+    contactsCount: (n: number) =>
+      n === 0 ? 'Aún no tienes contactos' : pluralEs(n, '1 persona', `${n} personas`),
     signOut: 'Cerrar sesión',
     signedOut: 'Has cerrado sesión',
+  },
+  contacts: {
+    back: 'Mi perfil',
+    count: (n: number) => pluralEs(n, '1 persona', `${n} personas`),
+    title: { lead: 'Mis ', em: 'contactos' } satisfies Emphasis,
+    intro: 'Personas que pueden acompañar tus tareas.',
+    add: 'Añadir contacto',
+    accepted: 'Contacto aceptado',
+    pending: 'Pendiente de unirse',
+    emptyTitle: { lead: 'Aún no ', em: 'tienes contactos' } satisfies Emphasis,
+    emptyBody: 'Añade a personas de confianza para que puedan acompañar tus tareas.',
+    form: {
+      title: { lead: 'Añadir ', em: 'contacto' } satisfies Emphasis,
+      cancel: 'Cancelar',
+      send: 'Enviar',
+      intro: 'Invita a una persona de confianza para que pueda acompañar tus tareas.',
+      allRequired: 'Todos los campos son obligatorios.',
+      name: 'Nombre',
+      namePlaceholder: 'Ej.: Lucía',
+      email: 'Email',
+      emailPlaceholder: 'lucia@email.com',
+      note: 'La persona recibirá una invitación. Hasta que la acepte, aparecerá como «Pendiente de unirse».',
+      nameRequired: 'Escribe su nombre.',
+      emailInvalid: 'Escribe un email válido, por ejemplo: persona@email.com',
+      exists: (name: string) => `${name} ya está en tus contactos.`,
+      seeContacts: 'Ver mis contactos',
+      self: 'Ese es tu email: invita a otra persona.',
+    },
+    sent: (name: string) =>
+      `Invitación enviada. ${name} aparecerá como pendiente hasta que se una.`,
+    share: 'Compartir enlace',
+    shareMessage: (url: string) => `Te invito a mi red de apoyo en Tandems: ${url}`,
+    detail: {
+      back: 'Contactos',
+      pendingInfo: 'Le enviamos una invitación. Cuando cree su cuenta podrá acompañar tus tareas.',
+      waitingFor: (name: string): Emphasis => ({ lead: 'Esperando a ', em: name }),
+      accompaniesYou: { lead: 'Te ', em: 'acompaña' } satisfies Emphasis,
+      youAccompany: (name: string): Emphasis => ({ lead: 'Acompañas a ', em: name }),
+      waitingAccept: 'Pendiente de que acepte',
+      resend: 'Reenviar invitación',
+      resent: (email: string) => `Invitación reenviada a ${email}`,
+      resendLimit: 'Ya la has reenviado hace poco. Prueba más tarde.',
+      cancelInvite: 'Cancelar invitación',
+      remove: 'Eliminar contacto',
+    },
+    cancelSheet: {
+      title: (name: string): Emphasis => ({
+        lead: '¿Cancelar la invitación a ',
+        em: name,
+        tail: '?',
+      }),
+      body: (task?: string) =>
+        'El enlace que le enviamos dejará de funcionar.' +
+        (task ? ` «${task}» se quedará sin acompañante hasta que elijas a otra persona.` : ''),
+      confirm: 'Cancelar invitación',
+      back: 'Volver',
+      done: (name: string) => `Invitación a ${name} cancelada.`,
+    },
+    removeSheet: {
+      title: (name: string): Emphasis => ({
+        lead: '¿Eliminar a ',
+        em: name,
+        tail: ' de tus contactos?',
+      }),
+      body: (name: string, ownTask?: string, theirTask?: string) =>
+        [
+          ownTask && `«${ownTask}» se quedará sin acompañante hasta que elijas a otra persona.`,
+          theirTask && `Dejarás de ver «${theirTask}», que acompañas tú.`,
+          `${name} no recibirá ningún aviso.`,
+        ]
+          .filter(Boolean)
+          .join(' '),
+      confirm: 'Eliminar contacto',
+      cancel: 'Cancelar',
+      done: (name: string) => `${name} ya no está en tus contactos.`,
+    },
+    undo: 'Deshacer',
+  },
+  invitation: {
+    caption: 'Invitación',
+    title: (name: string): Emphasis => ({ lead: `${name} te invita a su `, em: 'red de apoyo' }),
+    body: 'En Tandems podrás acompañar sus tareas, uniros en sesiones en vivo y enviarle apoyo cuando lo necesite.',
+    invitedAs: 'Te ha invitado como contacto',
+    createAndAccept: 'Crear cuenta y aceptar',
+    haveAccount: 'Ya tengo cuenta',
+    accept: 'Aceptar invitación',
+    accepted: (name: string) => `Ya estás en la red de apoyo de ${name}.`,
+    invalidTitle: { lead: 'Esta invitación ', em: 'no funciona' } satisfies Emphasis,
+    invalidBody:
+      'Puede que haya caducado, que ya se haya aceptado o que la hayan cancelado. Pide a quien te invitó que te envíe otra.',
+    goHome: 'Ir a Hoy',
+  },
+  dates: {
+    noDate: 'sin fecha',
+    today: 'hoy',
+    tomorrow: 'mañana',
   },
   brand: {
     name: { lead: 'Tan', em: 'dems' } satisfies Emphasis,

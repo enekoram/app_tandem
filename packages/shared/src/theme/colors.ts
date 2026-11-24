@@ -35,6 +35,11 @@ export const colors = {
   action: {
     primary: '#211E1B',
     onPrimary: '#F5EFE4',
+    /** Botón y fila destructivos (eliminar contacto, cancelar invitación, borrar). */
+    destructive: '#A33A2B',
+    /** Botón «Enviar» deshabilitado en la cabecera de una hoja. */
+    disabledBg: '#E4DCCD',
+    disabledText: '#5A524A',
   },
   status: {
     /** Punto «en vivo» (decorativo, con pulso). */

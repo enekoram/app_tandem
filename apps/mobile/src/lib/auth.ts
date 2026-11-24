@@ -19,7 +19,11 @@ configureApiClient({
   baseUrl: API_URL,
   getHeaders: async (): Promise<Record<string, string>> => {
     const cookie = await authClient.getCookie();
-    return cookie ? { Cookie: cookie } : {};
+    return {
+      ...(cookie ? { Cookie: cookie } : {}),
+      // Para que los enlaces de invitación abran esta app (en desarrollo, Expo Go)
+      'x-app-link': Linking.createURL('/invitacion'),
+    };
   },
 });
 
