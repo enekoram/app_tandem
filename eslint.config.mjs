@@ -35,5 +35,10 @@ export default tseslint.config(
       parserOptions: { emitDecoratorMetadata: true, experimentalDecorators: true },
     },
   },
+  {
+    // Scripts de terminal: su salida es para la persona que los ejecuta
+    files: ['scripts/**/*.mjs'],
+    rules: { 'no-console': 'off' },
+  },
   prettier,
 );
