@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'fase-*']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  comprobar:
+    name: Lint, tipos y tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Activar pnpm (versión de package.json)
+        run: corepack enable
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Formato
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Tipos
+        run: pnpm typecheck
+
+      - name: Tests
+        run: pnpm test
+
+      - name: OpenAPI y cliente generado al día
+        run: |
+          pnpm generate:api
+          git diff --exit-code -- apps/api/openapi.json packages/api-client/src/generated \
+            || (echo "::error::Ejecuta pnpm generate:api y sube los cambios" && exit 1)

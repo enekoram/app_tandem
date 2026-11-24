@@ -1,0 +1,43 @@
+# Blueprint de Render (staging). Se aplica desde el panel de Render: New → Blueprint.
+# Los secretos (sync: false) se rellenan en el panel; nunca en este archivo.
+# Worker, Key Value, cron y web estática se añaden en las fases que los necesiten.
+services:
+  - type: web
+    name: tandems-api
+    runtime: node
+    region: frankfurt
+    plan: free
+    branch: main
+    autoDeploy: true
+    # Solo se redespliega si cambia algo que afecta a la API
+    buildFilter:
+      paths:
+        - apps/api/**
+        - packages/shared/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+    # NODE_ENV=development solo para instalar: hacen falta las devDependencies para compilar.
+    # MONGOMS_DISABLE_POSTINSTALL: no descargar MongoDB de los tests en el servidor.
+    buildCommand: >-
+      corepack enable &&
+      NODE_ENV=development MONGOMS_DISABLE_POSTINSTALL=1
+      pnpm install --frozen-lockfile --filter "@tandems/api..." &&
+      pnpm --filter @tandems/api build
+    startCommand: node apps/api/dist/main.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: '24'
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: MONGODB_URI
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: Tandems <avisos@tandems.minucampoy.com>

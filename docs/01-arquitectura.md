@@ -45,8 +45,8 @@ Regla de oro: **la app solo habla con la API**. Nunca con MongoDB, Redis ni S3 d
 └─ CLAUDE.md
 ```
 
-- **pnpm workspaces** con `node-linker=hoisted` en `.npmrc`: es la configuración que menos problemas da con Metro y los módulos nativos de React Native.
-- **Node 24 LTS** fijado en `.nvmrc` y en Render. (En este equipo está instalado Node 26, que no es LTS y ya no incluye corepack: pnpm se instalará aparte.)
+- **pnpm 12 workspaces** con la instalación **aislada** (la de por defecto), que Expo admite desde el SDK 54; la configuración de pnpm va en `pnpm-workspace.yaml` (pnpm 12 ya no lee `.npmrc`). Si Metro diera problemas con algún módulo nativo, la alternativa es `nodeLinker: hoisted`. *(Corregido el 2026-11-24: antes decía `node-linker=hoisted` en `.npmrc`.)*
+- **Node 24 LTS** fijado en `.nvmrc` y en Render. En el equipo de desarrollo se usa con `fnm` (instalado en la carpeta de usuario, sin administrador) y pnpm llega por corepack.
 - Worker y API son **el mismo proyecto NestJS con dos `main`** (`main.ts` y `worker.ts`): comparten módulos, esquemas y configuración, y se despliegan como dos servicios en Render.
 
 ## 3. App móvil

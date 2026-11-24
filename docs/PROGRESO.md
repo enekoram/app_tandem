@@ -18,20 +18,20 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [Onboarding1KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding1KV) | Onboarding 1 de 4 · LF | 1 | pendiente |
-| [Onboarding2KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding2KV) | Onboarding 2 de 4 · LF | 1 | pendiente |
-| [Onboarding3KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding3KV) | Onboarding 3 de 4 · LF | 1 | pendiente |
-| [Onboarding4KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding4KV) | Onboarding 4 de 4 · LF | 1 | pendiente |
+| [Onboarding1KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding1KV) | Onboarding 1 de 4 · LF | 1 | hecha |
+| [Onboarding2KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding2KV) | Onboarding 2 de 4 · LF | 1 | hecha |
+| [Onboarding3KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding3KV) | Onboarding 3 de 4 · LF | 1 | hecha |
+| [Onboarding4KV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-Onboarding4KV) | Onboarding 4 de 4 · LF | 1 | hecha |
 
 ### Acceso
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [LoginKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-LoginKV) | Iniciar sesión · LF | 1 | pendiente |
-| [RegistroKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroKV) | Crear cuenta · LF | 1 | pendiente |
-| [RecuperarPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarPassKV) | Recuperar contraseña · LF | 1 | pendiente |
-| [RecuperarEnviadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarEnviadoKV) | Revisa tu email · LF | 1 | pendiente |
-| [NuevaPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NuevaPassKV) | Crear contraseña nueva · LF | 1 | pendiente |
+| [LoginKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-LoginKV) | Iniciar sesión · LF | 1 | hecha |
+| [RegistroKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroKV) | Crear cuenta · LF | 1 | hecha |
+| [RecuperarPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarPassKV) | Recuperar contraseña · LF | 1 | hecha |
+| [RecuperarEnviadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarEnviadoKV) | Revisa tu email · LF | 1 | hecha |
+| [NuevaPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NuevaPassKV) | Crear contraseña nueva · LF | 1 | hecha |
 | [InvitacionAppKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionAppKV) | Invitación a la app · LF | 2 | pendiente |
 | [RegistroInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroInvitadoKV) | Crear cuenta con invitación · LF | 2 | pendiente |
 | [PermisoNotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PermisoNotificacionesKV) | Activar notificaciones · nuevo | 5 | pendiente |
@@ -41,8 +41,8 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [ErrLoginKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrLoginKV) | Iniciar sesión: datos incorrectos · LF | 1 | pendiente |
-| [ErrRegistroKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrRegistroKV) | Crear cuenta: errores · LF | 1 | pendiente |
+| [ErrLoginKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrLoginKV) | Iniciar sesión: datos incorrectos · LF | 1 | hecha |
+| [ErrRegistroKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrRegistroKV) | Crear cuenta: errores · LF | 1 | hecha |
 
 ### Hoy y Mis tareas
 
@@ -197,3 +197,8 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-23 | Soluciones a las dudas del canvas aprobadas (docs/04). |
 | 2026-11-23 | Email transaccional: **Resend** (plan gratuito, región UE) sobre un subdominio de un dominio existente en OVHcloud. La web y el correo del dominio principal no se tocan. Proyecto académico: se priorizan planes gratuitos. |
 | 2026-11-23 | Decisiones abiertas delegadas: se aplican las propuestas de docs/04 §B (con ajustes tras leer el canvas). |
+| 2026-11-24 | Paleta de 8 personas aprobada (docs/06). Nombres escritos en el tono `text` de cada persona (≥ 4,5:1), no en el base del kit. |
+| 2026-11-24 | Pruebas en iPhone con **Expo Go** (sin Apple Developer por ahora); el development build con EAS queda aplazado. |
+| 2026-11-24 | Acceso (fase 1), diferencias con el canvas: «Abrir el enlace del email» → **«Abrir el email»** (abre Mail; no aparece en Android); casilla de condiciones **sin enlaces** hasta tener los textos legales (fase 7); requisitos de contraseña = «Mínimo 8 caracteres.»; sin selector de idioma. |
+| 2026-11-24 | Recuperar contraseña: el email lleva un enlace a la API que redirige a la app (`tandems://reset-password`); solo se aceptan redirecciones a la app. «Guardar y entrar» entra directamente si el móvil recuerda el email; si no, lleva a Iniciar sesión. |
+| 2026-11-24 | Fase 1 aprobada y fusionada en `main`. «Recuperar contraseña» queda para pulir; para probar hay 5 cuentas en desarrollo (`seed:users`). |
