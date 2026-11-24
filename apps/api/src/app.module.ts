@@ -7,6 +7,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { validateEnv, type Env } from './config/env.js';
 import { AuthModule } from './auth/auth.module.js';
 import { HealthModule } from './health/health.module.js';
+import { LinksModule } from './links/links.module.js';
 import { MailModule } from './mail/mail.module.js';
 import { UsersModule } from './users/users.module.js';
 
@@ -24,11 +25,11 @@ import { UsersModule } from './users/users.module.js';
             remove: true,
           },
           autoLogging: { ignore: (req) => req.url === '/health' },
-          // Nunca registrar la query de las rutas de auth (lleva tokens de un solo uso)
+          // Nunca registrar la query (los enlaces de email llevan tokens de un solo uso)
           serializers: {
             req: (req: { method: string; url: string }) => ({
               method: req.method,
-              url: req.url.startsWith('/api/auth') ? req.url.split('?')[0] : req.url,
+              url: req.url.split('?')[0],
             }),
           },
           transport:
@@ -51,6 +52,7 @@ import { UsersModule } from './users/users.module.js';
     UsersModule,
     AuthModule,
     HealthModule,
+    LinksModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

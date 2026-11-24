@@ -5,6 +5,7 @@ import { expo } from '@better-auth/expo';
 import type { Db, MongoClient } from 'mongodb';
 import type { Env } from '../config/env.js';
 import type { Mailer } from '../mail/mailer.js';
+import { landingUrlFrom, publicOrigin } from '../links/reset-link.js';
 import { resetPasswordEmail } from '../mail/templates.js';
 import { DISPLAY_NAME_MAX } from '../users/user.schema.js';
 
@@ -17,19 +18,6 @@ export interface AuthDeps {
   db: Db;
   client: MongoClient;
   mailer: Mailer;
-}
-
-/**
- * En desarrollo la IP del Mac cambia con la red (wifi, punto de acceso del iPhone…).
- * El enlace del email usa el mismo host con el que el móvil acaba de llamar a la API,
- * que sabemos que le llega. En producción se usa siempre BETTER_AUTH_URL.
- */
-export function sameHostAsRequest(url: string, request?: Request): string {
-  const host = request?.headers.get('host');
-  if (!host || !/^[\w.-]+(:\d+)?$/.test(host)) return url;
-  const link = new URL(url);
-  link.host = host;
-  return link.toString();
 }
 
 /** Instancia de Better Auth (doc 01 §5 y doc 04 §A.1). */
@@ -66,7 +54,8 @@ export function createAuth({ env, db, client, mailer }: AuthDeps) {
       resetPasswordTokenExpiresIn: 60 * 60,
       revokeSessionsOnPasswordReset: true,
       sendResetPassword: async ({ user, url }, request) => {
-        const link = isDev ? sameHostAsRequest(url, request) : url;
+        const origin = publicOrigin(env.BETTER_AUTH_URL, isDev, request?.headers.get('host'));
+        const link = landingUrlFrom(url, origin);
         // Sin await: el tiempo de respuesta no revela si el email existe
         void mailer.send(resetPasswordEmail(user.email, user.name, link));
       },

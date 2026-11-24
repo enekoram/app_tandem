@@ -100,8 +100,17 @@ describe('Autenticación (e2e)', () => {
     await new Promise((r) => setTimeout(r, 50));
     const mail = t.mailer.lastTo(email);
     expect(mail?.subject).toMatch(/contraseña nueva/);
-    const link = mail!.text.match(/https?:\/\/\S+/)![0];
-    const token = new URL(link).pathname.split('/').at(-1)!;
+    const link = new URL(mail!.text.match(/https?:\/\/\S+/)![0]);
+    expect(link.pathname).toBe('/enlace/contrasena');
+    const token = link.searchParams.get('token')!;
+
+    // Página intermedia (HTML) con el botón «Abrir Tandems» → Better Auth → la app
+    const page = await http.get(link.pathname + link.search).expect(200);
+    expect(page.headers['content-type']).toMatch(/text\/html/);
+    const button = page.text.match(/href="([^"]+)"/)![1]!.replaceAll('&amp;', '&');
+    const toApp = await http.get(new URL(button).pathname + new URL(button).search).redirects(0);
+    expect(toApp.status).toBe(302);
+    expect(toApp.headers.location).toBe(`tandems://reset-password?token=${token}`);
 
     await http
       .post('/api/auth/reset-password')
@@ -113,6 +122,12 @@ describe('Autenticación (e2e)', () => {
       .post('/api/auth/sign-in/email')
       .send({ email, password: 'otra-frase-larga-y-nueva' })
       .expect(200);
+  });
+
+  it('la página intermedia con un token roto muestra «Enlace no válido»', async () => {
+    const res = await http.get('/enlace/contrasena?token=%22%3E%3Cscript%3E').expect(200);
+    expect(res.text).toContain('Enlace no válido');
+    expect(res.text).not.toContain('<script>');
   });
 
   it('pedir recuperación de un email que no existe responde igual y no envía nada', async () => {
