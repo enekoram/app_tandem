@@ -1,7 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
-  SUPPORT_REQUEST_TTL_MS,
   SUPPORT_SEND_MAX_MS,
   THINKING_INTERVAL_MS,
   type SendSupportInput,
@@ -41,7 +40,7 @@ export class SupportService {
 
   // ── Pedir apoyo (dueña → acompañante) ───────────────────────────────────────
 
-  /** PedirApoyo: una petición viva por tarea (si ya hay una, se devuelve esa). */
+  /** PedirApoyo: una petición abierta por tarea (si ya hay una, se devuelve esa). No caduca. */
   async request(me: UserDocument, input: SupportRequestInput, now = Date.now()) {
     const task = await this.ownTaskWithCompanion(me, input.taskId);
     const existing = await this.events.findOne({
@@ -49,7 +48,6 @@ export class SupportService {
       task_id: task._id,
       from_user: me._id,
       status: 'open',
-      expires_at: { $gt: new Date(now) },
     });
     if (existing) return { event: existing, task };
     const event = await this.events.create({
@@ -59,12 +57,11 @@ export class SupportService {
       type: 'request',
       message: input.message,
       started_at: new Date(now),
-      expires_at: new Date(now + SUPPORT_REQUEST_TTL_MS),
     });
     return { event, task };
   }
 
-  /** «Ahora no»: solo quien la recibe, mientras siga viva. */
+  /** «Ahora no»: solo quien la recibe, mientras siga abierta. */
   async decline(me: UserDocument, id: string, now = Date.now()) {
     const event = await this.liveEvent(id, { type: 'request', to_user: me._id }, now);
     event.status = 'declined';
@@ -96,7 +93,6 @@ export class SupportService {
         task_id: task._id,
         to_user: me._id,
         status: 'open',
-        expires_at: { $gt: new Date(now) },
       },
       { status: 'accepted', ended_at: new Date(now) },
     );
@@ -179,10 +175,12 @@ export class SupportService {
 
   async state(me: UserDocument, now = Date.now()): Promise<SupportState> {
     const live = await this.events.find({
-      $or: [{ to_user: me._id }, { from_user: me._id }],
-      type: { $in: ['request', 'sending'] },
+      $and: [
+        { $or: [{ to_user: me._id }, { from_user: me._id }] },
+        // Peticiones abiertas (no caducan) y envíos en vivo dentro de sus 5 min
+        { $or: [{ type: 'request' }, { type: 'sending', expires_at: { $gt: new Date(now) } }] },
+      ],
       status: 'open',
-      expires_at: { $gt: new Date(now) },
     });
     const tasks = await this.tasks.find({
       _id: { $in: live.map((e) => e.task_id).filter((id) => id) },
@@ -236,7 +234,8 @@ export class SupportService {
     if (!Types.ObjectId.isValid(id)) throw notFound('Apoyo');
     const event = await this.events.findOne({ _id: id, ...filter });
     if (!event) throw notFound('Apoyo');
-    if (event.status !== 'open' || event.expires_at.getTime() <= now) {
+    const expired = !!event.expires_at && event.expires_at.getTime() <= now;
+    if (event.status !== 'open' || expired) {
       if (endIfExpired && event.status === 'open') {
         event.status = 'ended';
         event.ended_at = new Date(now);

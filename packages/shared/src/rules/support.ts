@@ -6,8 +6,10 @@ export type SupportType = (typeof SUPPORT_TYPES)[number];
 export const SUPPORT_STATUSES = ['open', 'accepted', 'declined', 'expired', 'ended'] as const;
 export type SupportStatus = (typeof SUPPORT_STATUSES)[number];
 
-/** Una petición de apoyo caduca a los 15 min sin respuesta. */
-export const SUPPORT_REQUEST_TTL_MS = 15 * 60 * 1000;
+/**
+ * Una petición de apoyo NO caduca (decisión del 2026-11-25): sigue abierta hasta que la otra
+ * persona envía apoyo o dice «Ahora no» (o la tarea se cierra).
+ */
 /** Un envío de apoyo en vivo dura como mucho 5 min (o hasta soltar). */
 export const SUPPORT_SEND_MAX_MS = 5 * 60 * 1000;
 /** La app manda un latido cada 3 s mientras se mantiene pulsado. */

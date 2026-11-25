@@ -7,7 +7,7 @@ export class SupportRequestDto {
   @ApiProperty() taskId!: string;
   @ApiProperty({ example: 'Estudiar inglés' }) taskTitle!: string;
   @ApiProperty({ type: String, nullable: true }) message!: string | null;
-  @ApiProperty({ description: 'Caduca a los 15 min sin respuesta' }) expiresAt!: string;
+  @ApiProperty({ description: 'Cuándo se pidió (no caduca: espera respuesta)' }) createdAt!: string;
 
   @ApiProperty({ type: TaskPersonDto, nullable: true })
   person!: TaskPersonDto | null;

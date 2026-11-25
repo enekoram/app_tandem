@@ -13,8 +13,8 @@ export interface SupportRequestDto {
   taskTitle: string;
   /** @nullable */
   message: string | null;
-  /** Caduca a los 15 min sin respuesta */
-  expiresAt: string;
+  /** Cuándo se pidió (no caduca: espera respuesta) */
+  createdAt: string;
   /** @nullable */
   person: TaskPersonDto | null;
 }

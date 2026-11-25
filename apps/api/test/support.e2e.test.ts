@@ -136,6 +136,20 @@ describe('Apoyo (e2e)', () => {
     marta.disconnect();
   });
 
+  it('una petición no caduca: un día después sigue esperando respuesta', async () => {
+    const { SupportService } = await import('../src/support/support.service.js');
+    const { UsersService } = await import('../src/users/users.service.js');
+    const users = t.app.get(UsersService);
+    const support = t.app.get(SupportService);
+    const marta = await users.findById((await as('Marta').get('/me').expect(200)).body.id);
+    const juan = await users.findById((await as('Juan').get('/me').expect(200)).body.id);
+    const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    const { event } = await support.request(marta!, { taskId: renta }, dayAgo);
+    const state = await support.state(juan!);
+    expect(state.incoming.map((x) => x.event.id)).toContain(event.id);
+    await as('Juan').post(`/support/requests/${event.id}/decline`).expect(204);
+  });
+
   it('«Ahora no»: solo quien la recibe', async () => {
     const req = (await as('Marta').post('/support/requests', { taskId: renta }).expect(201)).body;
     await as('Marta').post(`/support/requests/${req.id}/decline`).expect(404);

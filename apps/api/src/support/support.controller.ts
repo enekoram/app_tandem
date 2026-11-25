@@ -33,7 +33,7 @@ export class SupportController {
     private readonly views: SupportViews,
   ) {}
 
-  /** PedirApoyo: avisa a quien acompaña la tarea (caduca a los 15 min). */
+  /** PedirApoyo: avisa a quien acompaña la tarea (queda abierta hasta que responda). */
   @Post('requests')
   @ApiBody({ schema: openApiSchema(supportRequestSchema) })
   @ApiCreatedResponse({ type: SupportRequestDto })
@@ -66,7 +66,7 @@ export class SupportController {
   ): Promise<SendingDto> {
     const me = await this.users.ensureProfile(auth.user);
     const event = await this.support.startSending(me, body);
-    return { id: event.id as string, expiresAt: event.expires_at.toISOString() };
+    return { id: event.id as string, expiresAt: event.expires_at!.toISOString() };
   }
 
   /** Latido mientras se mantiene pulsado (cada 3 s). */

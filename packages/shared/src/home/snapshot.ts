@@ -105,7 +105,7 @@ export function toHomeSnapshot(dto: HomeDtoLike): HomeSnapshot {
     }),
     // «Te piden»: invitaciones a sesión de la otra persona y tareas que me comparten
     requests: [
-      // Apoyo primero: es lo más urgente (caduca a los 15 min)
+      // Apoyo primero: es lo más urgente
       ...(dto.support?.incoming ?? []).flatMap((r): HomeRequest[] => {
         const person = r.person ? personOf(r.person) : null;
         return person

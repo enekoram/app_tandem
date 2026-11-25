@@ -2202,9 +2202,9 @@
             "type": "string",
             "nullable": true
           },
-          "expiresAt": {
+          "createdAt": {
             "type": "string",
-            "description": "Caduca a los 15 min sin respuesta"
+            "description": "Cuándo se pidió (no caduca: espera respuesta)"
           },
           "person": {
             "nullable": true,
@@ -2221,7 +2221,7 @@
           "taskId",
           "taskTitle",
           "message",
-          "expiresAt",
+          "createdAt",
           "person"
         ]
       },

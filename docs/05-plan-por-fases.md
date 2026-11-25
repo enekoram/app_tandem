@@ -63,7 +63,7 @@
 ## Fase 5 · Apoyo y notificaciones (`fase-5-apoyo`)
 > Estado 2026-11-25: hecho y con tests en la API; **sin probar en el móvil** (🧑). Sale de `fase-4-sesiones`.
 
-1. ✅ Pedir apoyo (ApoyoPedido), responder (enviar / ahora no), caducidad de 15 min.
+1. ✅ Pedir apoyo (ApoyoPedido), responder (enviar / ahora no); la petición no caduca (2026-11-25).
 2. ✅ Enviar apoyo (mantener pulsado) con corazón en tiempo real (ApoyoRecibido).
 3. ✅ «Pensé en ti», ¡hurra! (HurraRecibido). ⏸ «Gracias» (respuesta al ¡hurra!).
 4. ✅ Push: PermisoNotificaciones, tokens, catálogo, idempotencia, NotificacionesKV, recordatorio de sesión. ⏸ Categorías/acciones rápidas, agrupación, horario de silencio. 🧑 `eas init` para el projectId.

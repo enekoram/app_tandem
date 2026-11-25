@@ -59,7 +59,7 @@ export class SupportViews {
       taskId: task.id as string,
       taskTitle: task.title,
       message: event.message ?? null,
-      expiresAt: event.expires_at.toISOString(),
+      createdAt: event.started_at.toISOString(),
       person: personFrom(contact),
     };
   }

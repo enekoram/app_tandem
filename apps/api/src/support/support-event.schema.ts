@@ -34,8 +34,9 @@ export class SupportEvent {
   @Prop()
   ended_at?: Date;
 
-  @Prop({ required: true })
-  expires_at!: Date;
+  /** Solo el envío en vivo tiene límite (5 min); las peticiones esperan a que respondan. */
+  @Prop({ type: Date, default: null })
+  expires_at!: Date | null;
 }
 
 export type SupportEventDocument = HydratedDocument<SupportEvent>;
@@ -43,5 +44,5 @@ export const SupportEventSchema = SchemaFactory.createForClass(SupportEvent);
 
 SupportEventSchema.index({ to_user: 1, started_at: -1 });
 SupportEventSchema.index({ from_user: 1, type: 1, started_at: -1 });
-// Se borran solos a los 30 días (doc 02)
-SupportEventSchema.index({ started_at: 1 }, { expireAfterSeconds: 30 * 24 * 60 * 60 });
+// Se borran solos 30 días después de cerrarse (doc 02); las peticiones abiertas, nunca
+SupportEventSchema.index({ ended_at: 1 }, { expireAfterSeconds: 30 * 24 * 60 * 60 });
