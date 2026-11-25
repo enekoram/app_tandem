@@ -81,7 +81,8 @@ describe('homeMachine', () => {
       }),
       now: NOW,
     });
-    expect(home().base.kind).toBe('empty');
+    // Sin tareas propias: sesión aceptada más adelante (aún no «por empezar»)
+    expect(home().base.kind).toBe('upcomingSession');
     actor.send({ type: 'TICK', now: NOW + 15 * 60_000 - SOON_WINDOW_MS });
     expect(home().base.kind).toBe('sessionSoon');
   });

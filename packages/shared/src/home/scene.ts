@@ -67,7 +67,9 @@ export type BaseState =
   | { kind: 'contactsNoTasks' }
   | { kind: 'nextTask'; task: HomeTask }
   | { kind: 'sessionSoon'; session: HomeSession }
-  | { kind: 'sessionLive'; session: HomeSession };
+  | { kind: 'sessionLive'; session: HomeSession }
+  /** Sin tareas propias pero con una sesión aceptada más adelante (p. ej. quien acompaña). */
+  | { kind: 'upcomingSession'; session: HomeSession };
 
 const time = (value: string | Date) => new Date(value).getTime();
 
@@ -111,6 +113,10 @@ export function deriveBase(snapshot: HomeSnapshot | null, now: number): BaseStat
   if (soon) return { kind: 'sessionSoon', session: soon };
   const task = pickNextTask(snapshot.tasks);
   if (task) return { kind: 'nextTask', task };
+  const upcoming = snapshot.sessions
+    .filter((s) => s.status === 'scheduled' && time(s.scheduledAt) > now)
+    .sort((a, b) => time(a.scheduledAt) - time(b.scheduledAt))[0];
+  if (upcoming) return { kind: 'upcomingSession', session: upcoming };
   if (snapshot.contacts.length) return { kind: 'contactsNoTasks' };
   return { kind: 'empty' };
 }
@@ -246,6 +252,12 @@ export function describeScene(
       scene.cards.push({ kind: 'nextTask', task: base.task });
       break;
     }
+    case 'upcomingSession':
+      scene.people.push(personOf(base.session.person, { italic: true, dim: false }));
+      scene.layout = 'joined';
+      scene.a11y = { kind: 'joined', name: base.session.person.name, live: false, support: false };
+      scene.cards.push({ kind: 'session', session: base.session, live: false });
+      break;
     case 'sessionSoon':
     case 'sessionLive': {
       const live = base.kind === 'sessionLive';

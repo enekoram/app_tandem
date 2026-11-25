@@ -34,7 +34,7 @@ import {
   type Scene,
   type ShapeTarget,
 } from '@tandems/shared';
-import { colors, drift, durations, goo, gradients, motionProfiles, sizes } from '@/theme';
+import { colors, drift, durations, goo, gradients, motionProfiles, orbit, sizes } from '@/theme';
 import { usePersonStyle } from '@/ui';
 import { useDrift, useHeartbeat } from '@/ui/art/motion';
 import { es } from '@/strings/es';
@@ -108,11 +108,52 @@ function useSlot(target: ShapeTarget | undefined, motion: MotionProfile): SlotVa
   return { cx, cy, r, opacity };
 }
 
-/** Posición con respiración: el destino + la deriva (se suma, no es un estado). */
-function useBreathing(v: SlotValues, p: SharedValue<number>, amp: number, me: boolean) {
+/** Ángulo de la órbita (radianes): vaivén suave en bucle; 0 en el perfil mínimo. */
+function useOrbit(motion: MotionProfile, factor: number): SharedValue<number> {
+  const q = useSharedValue(0);
+  useEffect(() => {
+    if (motion === 'minimal') {
+      q.value = 0;
+      return;
+    }
+    q.value = 0;
+    q.value = withRepeat(withTiming(1, { duration: orbit.duration, easing: Easing.linear }), -1);
+  }, [motion, q]);
+  const max = motion === 'minimal' ? 0 : orbit.maxAngle * (motion === 'gentle' ? 0.5 : 1) * factor;
+  return useDerivedValue(() => max * Math.sin(q.value * 2 * Math.PI));
+}
+
+/**
+ * Posición con respiración: el destino + la deriva (se suma, no es un estado). Las formas
+ * que no son «tú» además orbitan a tu alrededor (`center`), sin cambiar la distancia.
+ */
+function useBreathing(
+  v: SlotValues,
+  p: SharedValue<number>,
+  amp: number,
+  me: boolean,
+  center?: SlotValues,
+  angle?: SharedValue<number>,
+) {
   const m = me ? drift.self : drift.other;
-  const x = useDerivedValue(() => v.cx.value + m.dx * p.value * amp);
-  const y = useDerivedValue(() => v.cy.value + m.dy * p.value * amp);
+  const x = useDerivedValue(() => {
+    const bx = v.cx.value + m.dx * p.value * amp;
+    if (!center || !angle) return bx;
+    const by = v.cy.value + m.dy * p.value * amp;
+    const a = angle.value;
+    return (
+      center.cx.value + (bx - center.cx.value) * Math.cos(a) - (by - center.cy.value) * Math.sin(a)
+    );
+  });
+  const y = useDerivedValue(() => {
+    const by = v.cy.value + m.dy * p.value * amp;
+    if (!center || !angle) return by;
+    const bx = v.cx.value + m.dx * p.value * amp;
+    const a = angle.value;
+    return (
+      center.cy.value + (bx - center.cx.value) * Math.sin(a) + (by - center.cy.value) * Math.cos(a)
+    );
+  });
   const r = useDerivedValue(() => v.r.value * (1 + (m.scale - 1) * p.value * amp));
   return { x, y, r };
 }
@@ -175,10 +216,13 @@ export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfi
   const s2 = useSlot(shapes[2], motion);
   const s3 = useSlot(shapes[3], motion);
   const slots = [s0, s1, s2, s3];
+  // El «amigo» orbita a tu alrededor; con las formas separadas, menos (no se sale del lienzo)
+  const together = scene.layout === 'joined' || scene.layout === 'fused';
+  const angle = useOrbit(motion, together ? 1 : orbit.apartFactor);
   const b0 = useBreathing(s0, p, amp, true);
-  const b1 = useBreathing(s1, p, amp, false);
-  const b2 = useBreathing(s2, p, amp, false);
-  const b3 = useBreathing(s3, p, amp, false);
+  const b1 = useBreathing(s1, p, amp, false, s0, angle);
+  const b2 = useBreathing(s2, p, amp, false, s0, angle);
+  const b3 = useBreathing(s3, p, amp, false, s0, angle);
   const breathing = [b0, b1, b2, b3];
 
   // Radio dentro de la máscara: solo las formas unidas

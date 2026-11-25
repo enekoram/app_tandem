@@ -81,8 +81,6 @@ export default function RootLayout() {
               <Stack.Screen name="tarea/terminada" options={{ gestureEnabled: false }} />
               <Stack.Screen name="tarea/terminadas" />
               <Stack.Screen name="tarea/hurra" options={{ gestureEnabled: false }} />
-              <Stack.Screen name="acompano/tareas" />
-              <Stack.Screen name="acompano/terminadas" />
               <Stack.Screen name="sesion/nueva" options={{ presentation: 'modal' }} />
               <Stack.Screen name="sesion/[id]" />
               <Stack.Screen name="sesion/[id]/hora" options={{ presentation: 'modal' }} />

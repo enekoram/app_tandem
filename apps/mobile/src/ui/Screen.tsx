@@ -16,12 +16,23 @@ export interface ScreenProps {
   kind?: 'tab' | 'inner';
   /** «‹ Mi perfil»: vuelta atrás con texto (pantallas interiores). */
   back?: { label: string; onPress: () => void };
+  /** Pantalla interior que vive dentro de una pestaña: deja sitio a la barra flotante. */
+  underTabBar?: boolean;
   children: ReactNode;
 }
 
 /** Pantalla con cabecera fija (caption + titular) y contenido desplazable que se funde bajo la barra. */
-export function Screen({ caption, title, action, kind = 'tab', back, children }: ScreenProps) {
+export function Screen({
+  caption,
+  title,
+  action,
+  kind = 'tab',
+  back,
+  underTabBar = false,
+  children,
+}: ScreenProps) {
   const tab = kind === 'tab';
+  const floatingBar = tab || underTabBar;
   const insets = useSafeAreaInsets();
   const t = sizes.screenTitle;
   const c = sizes.screenContent;
@@ -62,13 +73,13 @@ export function Screen({ caption, title, action, kind = 'tab', back, children }:
         contentContainerStyle={{
           paddingHorizontal: c.paddingHorizontal,
           paddingTop: c.paddingTop,
-          paddingBottom: (tab ? c.paddingBottom : spacing.xxl) + insets.bottom,
+          paddingBottom: (floatingBar ? c.paddingBottom : spacing.xxl) + insets.bottom,
           gap: c.gap,
         }}
       >
         {children}
       </ScrollView>
-      {tab && (
+      {floatingBar && (
         <LinearGradient
           pointerEvents="none"
           colors={[colors.bg.groundTransparent, colors.bg.ground]}

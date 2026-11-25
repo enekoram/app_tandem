@@ -49,6 +49,7 @@ export default function AccompaniedTasksScreen() {
   return (
     <Screen
       kind="inner"
+      underTabBar
       caption={query.isSuccess ? t.list.count(tasks.length) : undefined}
       title={t.list.title}
       back={{ label: t.list.back, onPress: () => router.back() }}
