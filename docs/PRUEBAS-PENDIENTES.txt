@@ -80,3 +80,23 @@ CÓMO PREPARARLO
         se llega a los botones de las tarjetas, las flechas anuncian «Tarjeta 2 de 3»
 [ ] 5.9 Mandar la app a segundo plano y volver: se actualiza
 [ ] 5.10 Capturas de lo que no se parezca al canvas (para ajustarlo)
+
+─────────────────────────────────────────────
+6. SESIONES (fase 4) · dos móviles; la tarea tiene que estar aceptada por quien acompaña
+─────────────────────────────────────────────
+[ ] 6.1 Mis sesiones vacía -> «Programar sesión»
+[ ] 6.2 Programar: elegir tarea, fecha y hora; una hora pasada da
+        «Esa hora ya ha pasado»; con y sin enlace de Meet; toast «Invitación enviada a…»
+[ ] 6.3 Móvil B: la invitación aparece SOLA en Mis sesiones («Por confirmar») y en la Home
+        («Te piden», con ondas en la forma)
+[ ] 6.4 Móvil B: abrir la invitación (ConfirmarSesion) -> Aceptar sesión
+[ ] 6.5 Móvil B: Rechazar -> hoja con «Rechazar invitación» / «Proponer otra hora» / «Volver»
+[ ] 6.6 Proponer otra hora con mensaje -> en el móvil A pasa a «Por confirmar» con
+        «Antes: …»
+[ ] 6.7 Reprogramar una aceptada («Elegir») y cancelarla (hoja con «Elegir otra hora»)
+[ ] 6.8 Programar una sesión a 5–10 min: la Home cambia a «Tu sesión empieza pronto ·
+        Empieza en N min», las formas laten suave y aparece «Unirse a la sesión»
+[ ] 6.9 Unirse: SesionActiva; el otro móvil ve «En curso» y la forma fusionada con
+        «EN VIVO»; «Abrir Google Meet» abre el enlace (o crea una videollamada si no hay)
+[ ] 6.10 Marcar la tarea como hecha: su sesión desaparece en los dos móviles
+[ ] 6.11 VoiceOver en las tarjetas de sesión y en las hojas

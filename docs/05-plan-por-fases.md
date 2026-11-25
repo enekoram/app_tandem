@@ -52,11 +52,13 @@
 7. ⏳ 🧑 Probar en el móvil (animaciones, VoiceOver) · ⏸ medición de fps.
 
 ## Fase 4 · Sesiones (`fase-4-sesiones`)
-1. Proponer, aceptar, rechazar, contraproponer, reprogramar, cancelar; zonas horarias; ErrProgramarSesion.
-2. Conectar Google (OAuth en la app, refresh token cifrado en la API).
-3. Cola `calendar`: crear/actualizar/borrar evento con Meet; enlace manual como alternativa.
-4. Recordatorios como trabajos retrasados + cron de seguridad.
-5. SesionPorEmpezar, SesionActiva, modo «presencia sin vídeo», estado `live`.
+> Estado 2026-11-25: hecho y con tests en la API; pantallas **sin probar en el móvil** (🧑). Empezada sobre `fase-3-home` (aún sin fusionar).
+
+1. ✅ Proponer, aceptar, rechazar, contraproponer, reprogramar, cancelar; zonas horarias (UTC en la API, hora local en la app); ErrProgramarSesion.
+2. ⏸ Conectar Google (OAuth en la app, refresh token cifrado en la API): necesita Google verificado y dominio propio.
+3. ⏸ Cola `calendar` (evento con Meet): necesita Google y Redis. Mientras, **enlace de Meet a mano** (opcional) y «Crear videollamada en Meet».
+4. ⏸ Recordatorios como trabajos retrasados: necesitan Redis/BullMQ; el aviso push llega con la fase 5. La Home ya entra sola en «por empezar» 10 min antes.
+5. ✅ SesionPorEmpezar (titular de la Home), SesionActiva, estado `live`. ⏸ Modo «presencia sin vídeo» como opción explícita (hoy: sesión sin enlace).
 
 ## Fase 5 · Apoyo y notificaciones (`fase-5-apoyo`)
 1. Pedir apoyo (ApoyoPedido), responder (aceptar / ahora no), caducidad.

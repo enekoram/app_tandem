@@ -156,3 +156,9 @@
 1. 🧑 **Subir**: `git push origin main && git push -u origin fase-3-home` desde Terminal (el llavero ya no tiene la credencial vieja; la primera vez pide usuario `enekoram` y el token).
 2. 🧑 **Probar la Home en el móvil con Expo Go** (lista de casos en la respuesta de la sesión) y ajustar posiciones, tamaños y muelles.
 3. Con el visto bueno de la fase 3: fusionar y seguir con la fase 4 (sesiones).
+
+### Sesión 3 (continuación) — fase 4 (sesiones)
+- `docs/PRUEBAS-PENDIENTES.txt`: todo lo que falta probar en el móvil (fases 1–4), para ir punto por punto.
+- Rama `fase-4-sesiones` (sale de `fase-3-home`). API de sesiones con tests (programar, aceptar/rechazar, proponer otra hora/reprogramar, cancelar, unirse; persona ajena → 404), sesiones en `/me/home` y en tiempo real. App: Mis sesiones, Programar, ConfirmarSesion, hojas de rechazar/cancelar, Proponer/Reprogramar, SesionActiva y tarjetas en la Home. La app empaqueta para iOS sin errores.
+- Aplazado de la fase 4: Google OAuth, Calendar y recordatorios en cola (ver docs/05).
+- Tests: 192 en shared y 82 en la API.
