@@ -42,7 +42,8 @@ export interface HomeSession {
 /** Algo que otra persona espera que respondas («Te piden»). */
 export interface HomeRequest {
   id: string;
-  kind: 'session' | 'support';
+  /** task = te comparten una tarea; session = te invitan a una sesión; support = te piden apoyo. */
+  kind: 'task' | 'session' | 'support';
   person: HomePerson;
   taskTitle: string;
   /** Sesión propuesta (solo `session`). */
@@ -218,8 +219,9 @@ export function describeScene(
 
   switch (base.kind) {
     case 'loading':
+      // Sin instantánea aún; lo que llegue en tiempo real («Te piden», apoyo) sí se muestra
       scene.a11y = { kind: 'loading' };
-      return scene;
+      break;
     case 'empty':
       scene.a11y = { kind: 'empty' };
       break;

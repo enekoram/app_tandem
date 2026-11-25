@@ -258,4 +258,10 @@ describe('describeScene', () => {
   it('cargando: solo tú, sin tarjetas', () => {
     expect(scene(null)).toMatchObject({ layout: 'alone', cards: [], a11y: { kind: 'loading' } });
   });
+
+  it('cargando, pero ya llega una petición en tiempo real: se muestra', () => {
+    const sc = scene(null, { incoming: [request(juan)] });
+    expect(sc.cards.map((c) => c.kind)).toEqual(['request']);
+    expect(sc.approach).toBe('c-juan');
+  });
 });

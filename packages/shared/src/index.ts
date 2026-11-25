@@ -5,3 +5,5 @@ export * from './rules/tasks.ts';
 export * from './rules/users.ts';
 export * from './schemas/index.ts';
 export * from './home/scene.ts';
+export * from './home/machine.ts';
+export * from './home/snapshot.ts';
