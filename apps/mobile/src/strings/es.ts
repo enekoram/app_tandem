@@ -564,6 +564,12 @@ export const es = {
       received: (name: string) => `${name} pensó en ti`,
     },
   },
+  hurra: {
+    caption: '¡Hurra! · ahora',
+    title: (name: string): Emphasis => ({ lead: `${name} celebra `, em: 'contigo' }),
+    body: (title: string, name: string) =>
+      `Terminaste «${title}» y ${name} te ha enviado un ¡hurra!`,
+  },
   notifications: {
     back: 'Mi perfil',
     row: 'Notificaciones',

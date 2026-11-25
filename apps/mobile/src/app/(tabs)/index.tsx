@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import {
@@ -17,6 +18,7 @@ import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
 import { formatDue, formatLongDay } from '@/lib/dates';
+import { prefs } from '@/lib/prefs';
 import { invalidateSessions } from '@/lib/queries';
 import { es } from '@/strings/es';
 import { colors, spacing } from '@/theme';
@@ -59,6 +61,25 @@ export default function TodayScreen() {
   const hurras = (finished.data?.status === 200 ? finished.data.data : []).filter(
     (x) => x.hurraAt && Date.now() - new Date(x.hurraAt).getTime() < RECENT_MS,
   );
+
+  // HurraRecibido: un ¡hurra! nuevo se celebra una vez (pantalla + brillo en la forma)
+  const { send } = home;
+  const celebrated = useRef(new Set<string>());
+  // Se vuelve a mirar solo cuando cambia la lista de ¡hurras! (no en cada render)
+  const hurraIds = hurras.map((x) => x.id).join(',');
+  useEffect(() => {
+    const seen = [...prefs.hurrasSeen(), ...celebrated.current];
+    const fresh = hurras.find((x) => !seen.includes(x.id));
+    if (!fresh) return;
+    // Todas las de ahora cuentan como vistas: una sola pantalla aunque lleguen varias
+    hurras.forEach((x) => celebrated.current.add(x.id));
+    void prefs.setHurrasSeen([...new Set([...seen, ...hurras.map((x) => x.id)])]);
+    send({ type: 'HURRA' });
+    router.push({
+      pathname: '/tarea/hurra',
+      params: { title: fresh.title, name: fresh.person?.name ?? '' },
+    });
+  }, [hurraIds, send]);
   const byId = new Map<string, TaskDto>(
     [...(dto?.tasks ?? []), ...(dto?.shared ?? [])].map((x) => [x.id, x]),
   );
