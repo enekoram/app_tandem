@@ -29,6 +29,8 @@
 **Entregable:** app instalable con login, pestañas vacías con el look de la marca; API en staging respondiendo.
 
 ## Fase 2 · Tareas y contactos (`fase-2-tareas`)
+> **Aprobada y fusionada en `main` el 2026-11-25** (sin probar en el iPhone). Foto de perfil aplazada (sin almacenamiento); deep links y Maestro aplazados. Detalle en `BITACORA.md`.
+
 1. `users`: perfil, preferencias, foto (URL prefirmada S3).
 2. `contacts` + asignación de color e iniciales (`usePersonStyle` / `PersonToken`), con tests de colisión de iniciales y emojis.
 3. `invitations`: crear, email (plantilla de marca + texto plano), hoja de compartir nativa, reenviar, cancelar, caducidad; asociación por email al registrarse.
