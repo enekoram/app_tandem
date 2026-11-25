@@ -982,6 +982,338 @@
           "me"
         ]
       }
+    },
+    "/sessions": {
+      "get": {
+        "operationId": "SessionsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      },
+      "post": {
+        "operationId": "SessionsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  },
+                  "scheduledAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "durationMin": {
+                    "type": "number"
+                  },
+                  "meetUrl": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "taskId",
+                  "scheduledAt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "SESSION_IN_PAST: esa hora ya ha pasado"
+          },
+          "409": {
+            "description": "NO_COMPANION · SESSION_EXISTS"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}": {
+      "get": {
+        "operationId": "SessionsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/accept": {
+      "post": {
+        "operationId": "SessionsController_accept",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/reject": {
+      "post": {
+        "operationId": "SessionsController_reject",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/propose": {
+      "post": {
+        "operationId": "SessionsController_propose",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scheduledAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "message": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "scheduledAt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/cancel": {
+      "post": {
+        "operationId": "SessionsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/join": {
+      "post": {
+        "operationId": "SessionsController_join",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "NOT_STARTED: aún no se puede entrar"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
     }
   },
   "info": {
@@ -1368,6 +1700,108 @@
           "createdAt"
         ]
       },
+      "SessionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskTitle": {
+            "type": "string",
+            "example": "Hacer la renta"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "description": "ISO 8601 (UTC)"
+          },
+          "durationMin": {
+            "type": "number",
+            "enum": [
+              15,
+              25,
+              45,
+              60
+            ]
+          },
+          "endsAt": {
+            "type": "string",
+            "description": "ISO 8601 (UTC)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "accepted",
+              "rejected",
+              "cancelled",
+              "live",
+              "ended"
+            ],
+            "description": "Estado efectivo (terminada si ya pasó)"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "companion"
+            ],
+            "description": "Mi papel en la tarea"
+          },
+          "proposedByMe": {
+            "type": "boolean",
+            "description": "La propuesta actual es mía (la otra persona tiene que responder)"
+          },
+          "previousScheduledAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Hora anterior si se reprogramó"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "meetUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "person": {
+            "nullable": true,
+            "description": "La otra persona, en mi paleta",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskPersonDto"
+              }
+            ]
+          },
+          "joinedByMe": {
+            "type": "boolean"
+          },
+          "otherJoined": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "taskId",
+          "taskTitle",
+          "scheduledAt",
+          "durationMin",
+          "endsAt",
+          "status",
+          "role",
+          "proposedByMe",
+          "previousScheduledAt",
+          "message",
+          "meetUrl",
+          "person",
+          "joinedByMe",
+          "otherJoined"
+        ]
+      },
       "HomeDto": {
         "type": "object",
         "properties": {
@@ -1398,13 +1832,21 @@
             "items": {
               "type": "string"
             }
+          },
+          "sessions": {
+            "description": "Sesiones por confirmar, aceptadas y en curso (por hora)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionDto"
+            }
           }
         },
         "required": [
           "tasks",
           "contacts",
           "shared",
-          "presentContactIds"
+          "presentContactIds",
+          "sessions"
         ]
       }
     }

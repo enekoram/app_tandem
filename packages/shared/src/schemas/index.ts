@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { CONTACT_NAME_MAX } from '../rules/contacts.ts';
 import { TASK_DESCRIPTION_MAX, TASK_TITLE_MAX } from '../rules/tasks.ts';
 import { DISPLAY_NAME_MAX } from '../rules/users.ts';
+import { SESSION_DURATIONS, SESSION_MESSAGE_MAX } from '../rules/sessions.ts';
 
 export const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, 'identificador no válido');
 
@@ -53,3 +54,30 @@ export const updateProfileSchema = z.object({
   displayName: z.string().trim().min(1).max(DISPLAY_NAME_MAX),
 });
 export type UpdateProfileInput = z.input<typeof updateProfileSchema>;
+
+const futureIso = z.iso.datetime({ offset: true });
+const sessionMessage = optionalText(SESSION_MESSAGE_MAX);
+const meetUrlSchema = z
+  .url({ protocol: /^https$/, error: 'enlace no válido' })
+  .max(300)
+  .optional();
+
+/** Programar sesión: sobre una tarea; la otra persona es quien la acompaña (o su dueña). */
+export const createSessionSchema = z.object({
+  taskId: objectIdSchema,
+  scheduledAt: futureIso,
+  durationMin: z
+    .number()
+    .refine((n) => (SESSION_DURATIONS as readonly number[]).includes(n))
+    .optional(),
+  /** Enlace de videollamada (Meet) pegado a mano mientras Google no está verificado. */
+  meetUrl: meetUrlSchema,
+});
+export type CreateSessionInput = z.input<typeof createSessionSchema>;
+
+/** Proponer otra hora / reprogramar. */
+export const proposeTimeSchema = z.object({
+  scheduledAt: futureIso,
+  message: sessionMessage,
+});
+export type ProposeTimeInput = z.input<typeof proposeTimeSchema>;

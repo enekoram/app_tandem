@@ -10,6 +10,7 @@ type Id = Types.ObjectId | null | undefined;
 const AFFECTED: Record<string, (doc: Document) => Id[]> = {
   tasks: (d) => [d.owner_id as Id, (d.companion as { user_id?: Id } | undefined)?.user_id],
   contacts: (d) => [d.owner_id as Id, d.contact_user_id as Id],
+  sessions: (d) => [d.owner_id as Id, d.companion_user_id as Id],
 };
 
 const RETRY_MS = 5_000;

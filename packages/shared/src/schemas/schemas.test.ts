@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
-import { createContactSchema, createTaskSchema, updateProfileSchema } from './index.ts';
+import {
+  createContactSchema,
+  createSessionSchema,
+  createTaskSchema,
+  proposeTimeSchema,
+  updateProfileSchema,
+} from './index.ts';
+import { effectiveSessionStatus } from '../rules/sessions.ts';
 
 describe('createContactSchema', () => {
   it('normaliza el email y recorta el nombre', () => {
@@ -44,5 +51,45 @@ describe('updateProfileSchema', () => {
     expect(updateProfileSchema.safeParse({ displayName: '   ' }).success).toBe(false);
     expect(updateProfileSchema.safeParse({ displayName: 'a'.repeat(41) }).success).toBe(false);
     expect(updateProfileSchema.safeParse({ displayName: 'a'.repeat(40) }).success).toBe(true);
+  });
+});
+
+describe('sesiones', () => {
+  const id = '665f1c2e8b3a4d0012345678';
+  it('programar: tarea, hora con zona, duración permitida y enlace https opcional', () => {
+    expect(
+      createSessionSchema.safeParse({ taskId: id, scheduledAt: '2026-11-26T15:00:00+01:00' })
+        .success,
+    ).toBe(true);
+    expect(
+      createSessionSchema.safeParse({ taskId: id, scheduledAt: '2026-11-26T15:00:00' }).success,
+    ).toBe(false);
+    expect(
+      createSessionSchema.safeParse({
+        taskId: id,
+        scheduledAt: '2026-11-26T15:00:00Z',
+        durationMin: 30,
+      }).success,
+    ).toBe(false);
+    expect(
+      createSessionSchema.safeParse({
+        taskId: id,
+        scheduledAt: '2026-11-26T15:00:00Z',
+        meetUrl: 'http://meet.google.com/abc',
+      }).success,
+    ).toBe(false);
+  });
+
+  it('proponer hora: mensaje opcional, vacío = sin mensaje', () => {
+    expect(proposeTimeSchema.parse({ scheduledAt: '2026-11-26T15:00:00Z', message: '  ' })).toEqual(
+      { scheduledAt: '2026-11-26T15:00:00Z' },
+    );
+  });
+
+  it('estado efectivo: pasada la hora de fin, terminada', () => {
+    const s = { status: 'accepted' as const, scheduledAt: '2026-11-26T15:00:00Z', durationMin: 45 };
+    expect(effectiveSessionStatus(s, Date.parse('2026-11-26T15:44:00Z'))).toBe('accepted');
+    expect(effectiveSessionStatus(s, Date.parse('2026-11-26T15:45:00Z'))).toBe('ended');
+    expect(effectiveSessionStatus({ ...s, status: 'cancelled' }, 0)).toBe('cancelled');
   });
 });

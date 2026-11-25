@@ -3,7 +3,7 @@
  * Tipos estructurales: shared no depende del cliente generado.
  */
 import type { PersonColorId } from '../theme/persons.ts';
-import type { HomePerson, HomeSnapshot, HomeTask } from './scene.ts';
+import type { HomePerson, HomeRequest, HomeSession, HomeSnapshot, HomeTask } from './scene.ts';
 
 interface PersonLike {
   contactId: string | null;
@@ -28,8 +28,19 @@ interface ContactLike {
   initials: string;
 }
 
+interface SessionLike {
+  id: string;
+  taskId: string;
+  taskTitle: string;
+  scheduledAt: string;
+  status: string;
+  proposedByMe: boolean;
+  person: PersonLike | null;
+}
+
 export interface HomeDtoLike {
   tasks: TaskLike[];
+  sessions?: SessionLike[];
   contacts: ContactLike[];
   shared: TaskLike[];
   /** Contactos con la app abierta ahora. */
@@ -71,13 +82,40 @@ export function toHomeSnapshot(dto: HomeDtoLike): HomeSnapshot {
       color: c.color,
       present: dto.presentContactIds?.includes(c.id) ?? false,
     })),
-    // Sesiones y apoyo llegan en las fases 4 y 5
-    sessions: [],
-    requests: dto.shared.flatMap((t) => {
-      const person = t.person ? personOf(t.person) : null;
-      return person
-        ? [{ id: `task:${t.id}`, kind: 'task' as const, person, taskTitle: t.title }]
-        : [];
+    sessions: (dto.sessions ?? []).flatMap((s): HomeSession[] => {
+      const person = s.person ? personOf(s.person) : null;
+      if (!person || (s.status !== 'accepted' && s.status !== 'live')) return [];
+      return [
+        {
+          id: s.id,
+          taskId: s.taskId,
+          taskTitle: s.taskTitle,
+          scheduledAt: s.scheduledAt,
+          status: s.status === 'live' ? 'live' : 'scheduled',
+          person,
+        },
+      ];
     }),
+    // «Te piden»: invitaciones a sesión de la otra persona y tareas que me comparten
+    // (el apoyo llega en la fase 5)
+    requests: [
+      ...(dto.sessions ?? []).flatMap((s): HomeRequest[] => {
+        const person = s.person ? personOf(s.person) : null;
+        if (!person || s.status !== 'proposed' || s.proposedByMe) return [];
+        return [
+          {
+            id: `session:${s.id}`,
+            kind: 'session',
+            person,
+            taskTitle: s.taskTitle,
+            scheduledAt: s.scheduledAt,
+          },
+        ];
+      }),
+      ...dto.shared.flatMap((t): HomeRequest[] => {
+        const person = t.person ? personOf(t.person) : null;
+        return person ? [{ id: `task:${t.id}`, kind: 'task', person, taskTitle: t.title }] : [];
+      }),
+    ],
   };
 }

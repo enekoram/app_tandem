@@ -212,6 +212,42 @@ describe('homeMachine', () => {
   });
 });
 
+describe('toHomeSnapshot · sesiones', () => {
+  const person = { contactId: 'c-marta', name: 'Marta', color: 'lilac' as const, initials: 'M' };
+  const session = (status: string, proposedByMe: boolean) => ({
+    id: `s-${status}-${proposedByMe}`,
+    taskId: 't',
+    taskTitle: 'Hacer el CV',
+    scheduledAt: '2026-11-26T14:00:00.000Z',
+    status,
+    proposedByMe,
+    person,
+  });
+  it('aceptada o en vivo → sesiones; propuesta ajena → «Te piden»; la mía, ni una ni otra', () => {
+    const s = toHomeSnapshot({
+      tasks: [],
+      contacts: [],
+      shared: [],
+      sessions: [
+        session('accepted', false),
+        session('live', true),
+        session('proposed', false),
+        session('proposed', true),
+      ],
+    });
+    expect(s.sessions.map((x) => x.status)).toEqual(['scheduled', 'live']);
+    expect(s.requests).toEqual([
+      {
+        id: 'session:s-proposed-false',
+        kind: 'session',
+        person: { id: 'c-marta', name: 'Marta', initials: 'M', color: 'lilac' },
+        taskTitle: 'Hacer el CV',
+        scheduledAt: '2026-11-26T14:00:00.000Z',
+      },
+    ]);
+  });
+});
+
 describe('toHomeSnapshot', () => {
   it('convierte la respuesta de /me/home; lo compartido pasa a «Te piden»', () => {
     const s = toHomeSnapshot({

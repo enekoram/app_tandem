@@ -77,7 +77,7 @@ export class TaskDto {
   createdAt!: string;
 }
 
-function personFrom(contact: ContactDocument | undefined): TaskPersonDto | null {
+export function personFrom(contact: ContactDocument | undefined): TaskPersonDto | null {
   if (!contact) return null;
   return {
     contactId: contact.id as string,

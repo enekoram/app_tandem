@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { ContactDto } from './contactDto.ts';
+import type { SessionDto } from './sessionDto.ts';
 import type { TaskDto } from './taskDto.ts';
 
 export interface HomeDto {
@@ -17,4 +18,6 @@ export interface HomeDto {
   shared: TaskDto[];
   /** Contactos aceptados con la app abierta ahora («está contigo») */
   presentContactIds: string[];
+  /** Sesiones por confirmar, aceptadas y en curso (por hora) */
+  sessions: SessionDto[];
 }

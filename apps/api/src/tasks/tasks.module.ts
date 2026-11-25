@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ContactsModule } from '../contacts/contacts.module.js';
 import { User, UserSchema } from '../users/user.schema.js';
 import { RealtimeModule } from '../realtime/realtime.module.js';
+import { SessionsModule } from '../sessions/sessions.module.js';
 import { UsersModule } from '../users/users.module.js';
 import { HomeController } from './home.controller.js';
 import { TaskViews } from './task-views.js';
@@ -15,6 +16,7 @@ import { TasksService } from './tasks.service.js';
     UsersModule,
     ContactsModule,
     RealtimeModule,
+    SessionsModule,
     MongooseModule.forFeature([
       { name: Task.name, schema: TaskSchema },
       { name: User.name, schema: UserSchema },
