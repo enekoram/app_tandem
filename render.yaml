@@ -1,6 +1,7 @@
 # Blueprint de Render (staging). Se aplica desde el panel de Render: New → Blueprint.
 # Los secretos (sync: false) se rellenan en el panel; nunca en este archivo.
-# Worker, Key Value, cron y web estática se añaden en las fases que los necesiten.
+# Pasos completos en docs/DESPLIEGUE.md. Sin worker ni Key Value: los recordatorios se
+# comprueban dentro de la API y la presencia va en memoria (una instancia).
 services:
   - type: web
     name: tandems-api

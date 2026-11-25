@@ -15,7 +15,7 @@ CÓMO PREPARARLO
 [ ] 0.1 Subir el código desde Terminal (una vez, guarda la credencial):
         cd ~/Documents/proyectos/app_tandem && git push origin main && git push -u origin fase-3-home
         Usuario: enekoram · Contraseña: el token
-[ ] 0.2 Conectar el Blueprint de Render y comprobar /health en staging
+[ ] 0.2 Conectar el Blueprint de Render y comprobar /health en staging (pasos en docs/DESPLIEGUE.md)
 [ ] 0.3 Sacar docs/pwd_*.rtf de la carpeta del proyecto a un gestor de contraseñas
 [ ] 0.4 (Opcional) Añadir fnm a ~/.zshrc para que "pnpm dev" funcione en cualquier Terminal
 
