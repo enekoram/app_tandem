@@ -183,8 +183,8 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [SinConexionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SinConexionKV) | Sin conexión · LF | 6 | pendiente |
-| [ErrGuardarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrGuardarKV) | Error al guardar · LF | 6 | pendiente |
+| [SinConexionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SinConexionKV) | Sin conexión · LF | 6 | hecha |
+| [ErrGuardarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrGuardarKV) | Error al guardar · LF | 6 | hecha |
 
 ## Decisiones
 

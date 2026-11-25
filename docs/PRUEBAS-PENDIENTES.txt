@@ -124,3 +124,12 @@ CÓMO PREPARARLO
 [ ] 7.10 Perfil › Notificaciones: desactivar un tipo y comprobar que ya no llega
 [ ] 7.11 Tocar un aviso abre la pantalla que toca
 [ ] 7.12 Recordatorio de sesión 10 min antes (con la app cerrada)
+
+─────────────────────────────────────────────
+8. PULIDO (fase 6)
+─────────────────────────────────────────────
+[ ] 8.1 Modo avión con la app abierta: franja «Sin conexión» arriba; se sigue viendo lo
+        que había; «Pedir apoyo» y «Enviar apoyo» no se pueden usar; «Reintentar» al
+        volver la red quita la franja y refresca
+[ ] 8.2 Editar una tarea sin conexión y Guardar: «No se han podido guardar los cambios.
+        Siguen en el formulario.» con «Reintentar»; lo escrito no se pierde

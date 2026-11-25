@@ -122,6 +122,8 @@ export const es = {
     },
     created: (name: string) => `Tarea creada. Hemos pedido a ${name} que te acompañe.`,
     saved: 'Cambios guardados',
+    saveFailed: 'No se han podido guardar los cambios. Siguen en el formulario.',
+    retry: 'Reintentar',
     deleted: 'Tarea borrada',
     undo: 'Deshacer',
     undoExpired: 'Ya no se puede deshacer.',
@@ -609,6 +611,12 @@ export const es = {
       denied: 'Sin permiso: puedes activarlas en los Ajustes del móvil.',
       unavailable: 'En este móvil aún no se pueden recibir avisos (lo verás al abrir la app).',
     },
+  },
+  offline: {
+    title: 'Sin conexión',
+    body: 'No puedes pedir ni enviar apoyo hasta que vuelvas a tener conexión.',
+    retry: 'Reintentar',
+    supportNeedsConnection: 'Necesitas conexión para pedir o enviar apoyo.',
   },
   carousel: {
     previous: 'Tarjeta anterior',

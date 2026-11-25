@@ -44,7 +44,7 @@ export default function EditTaskScreen() {
           router.back();
           toast(es.tasks.saved, { kind: 'ok' });
         },
-        onError: () => setServerError(es.auth.errors.network),
+        onError: () => setServerError(es.tasks.saveFailed),
       },
     );
   };
@@ -105,6 +105,7 @@ export default function EditTaskScreen() {
           submitRef={submitRef}
           onValid={save}
           serverError={serverError}
+          onRetry={() => submitRef.current?.()}
           footer={
             <ListCard>
               <ListRow

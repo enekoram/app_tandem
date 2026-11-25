@@ -10,10 +10,13 @@ import { SendSupportButton } from './SendSupportButton';
 export function SupportRequestCard({
   request,
   motion,
+  online = true,
   onDecline,
 }: {
   request: SupportRequestDto;
   motion: MotionProfile;
+  /** Sin conexión no se puede enviar apoyo (las acciones no se encolan). */
+  online?: boolean;
   onDecline: () => void;
 }) {
   const t = es.support.request;
@@ -55,7 +58,13 @@ export function SupportRequestCard({
       <Text variant="body" color={colors.text.secondary}>
         {t.body}
       </Text>
-      <SendSupportButton taskId={request.taskId} name={name} motion={motion} />
+      {online ? (
+        <SendSupportButton taskId={request.taskId} name={name} motion={motion} />
+      ) : (
+        <Text variant="label" color={colors.text.caption}>
+          {es.offline.supportNeedsConnection}
+        </Text>
+      )}
       <View style={styles.actions}>
         <CardAction label={t.notNow} variant="link" onPress={onDecline} />
       </View>

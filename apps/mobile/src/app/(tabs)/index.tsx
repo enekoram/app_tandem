@@ -18,6 +18,7 @@ import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
 import { formatDue, formatLongDay } from '@/lib/dates';
+import { useOnline } from '@/lib/online';
 import { prefs } from '@/lib/prefs';
 import { invalidateSessions } from '@/lib/queries';
 import { es } from '@/strings/es';
@@ -54,6 +55,7 @@ export default function TodayScreen() {
   const sessionActions = useSessionActions();
   const queryClient = useQueryClient();
   const toast = useToast();
+  const online = useOnline();
   const decline = useSupportControllerDecline();
   const finished = useTasksControllerList({ status: 'done' });
   const { scene, dto } = home;
@@ -123,7 +125,7 @@ export default function TodayScreen() {
             featured
             supportAsked={asked.has(task.id)}
             onAskSupport={
-              task.companionStatus === 'accepted'
+              online && task.companionStatus === 'accepted'
                 ? () => router.push({ pathname: '/apoyo/pedir', params: { taskId: task.id } })
                 : undefined
             }
@@ -174,6 +176,7 @@ export default function TodayScreen() {
           <SupportRequestCard
             request={request}
             motion={home.motion}
+            online={online}
             onDecline={() =>
               decline.mutate(
                 { id: request.id },

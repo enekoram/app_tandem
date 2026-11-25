@@ -13,7 +13,8 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 import { authClient } from '@/lib/auth';
 import { colors, fontFamilies } from '@/theme';
-import { ToastProvider } from '@/ui';
+import { OfflineBanner, ToastProvider } from '@/ui';
+import '@/lib/online';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -93,6 +94,8 @@ export default function RootLayout() {
             {/* Enlace de invitación: con o sin sesión */}
             <Stack.Screen name="invitacion" />
           </Stack>
+          {/* Encima de todo: SinConexion */}
+          <OfflineBanner />
         </ToastProvider>
       </QueryClientProvider>
     </SafeAreaProvider>

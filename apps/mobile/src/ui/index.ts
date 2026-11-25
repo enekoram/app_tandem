@@ -18,3 +18,4 @@ export * from './TextField';
 export * from './Toast';
 export * from './Carousel';
 export * from './OptionPicker';
+export * from './OfflineBanner';
