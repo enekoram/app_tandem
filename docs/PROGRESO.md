@@ -32,7 +32,7 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [RecuperarPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarPassKV) | Recuperar contraseña · LF | 1 | hecha |
 | [RecuperarEnviadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarEnviadoKV) | Revisa tu email · LF | 1 | hecha |
 | [NuevaPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NuevaPassKV) | Crear contraseña nueva · LF | 1 | hecha |
-| [InvitacionAppKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionAppKV) | Invitación a la app · LF | 2 | pendiente |
+| [InvitacionAppKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionAppKV) | Invitación a la app · LF | 2 | hecha |
 | [RegistroInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroInvitadoKV) | Crear cuenta con invitación · LF | 2 | pendiente |
 | [PermisoNotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PermisoNotificacionesKV) | Activar notificaciones · nuevo | 5 | pendiente |
 | [BienvenidaInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BienvenidaInvitadoKV) | Bienvenida persona invitada · nuevo | 2 | pendiente |
@@ -49,36 +49,36 @@ Estados: `pendiente` · `hecha` · `revisada`
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
 | [HoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HoyKV) | Hoy · LF | 3 | pendiente |
-| [TareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasKV) | Mis tareas · LF | 2 | pendiente |
-| [TareasVacioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasVacioKV) | Mis tareas (vacío) · LF | 2 | pendiente |
-| [CrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CrearTareaKV) | Nueva tarea · LF | 2 | pendiente |
-| [TareaCreadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaCreadaKV) | Tarea creada · LF | 2 | pendiente |
-| [LimiteTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-LimiteTareasKV) | Aviso de límite · LF | 2 | pendiente |
-| [EditarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarTareaKV) | Editar tarea · LF | 2 | pendiente |
-| [BorrarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarTareaKV) | Borrar tarea · LF | 2 | pendiente |
-| [TareaBorradaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaKV) | Tarea borrada · LF | 2 | pendiente |
+| [TareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasKV) | Mis tareas · LF | 2 | hecha |
+| [TareasVacioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasVacioKV) | Mis tareas (vacío) · LF | 2 | hecha |
+| [CrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CrearTareaKV) | Nueva tarea · LF | 2 | hecha |
+| [TareaCreadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaCreadaKV) | Tarea creada · LF | 2 | hecha |
+| [LimiteTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-LimiteTareasKV) | Aviso de límite · LF | 2 | hecha |
+| [EditarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarTareaKV) | Editar tarea · LF | 2 | hecha |
+| [BorrarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarTareaKV) | Borrar tarea · LF | 2 | hecha |
+| [TareaBorradaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaKV) | Tarea borrada · LF | 2 | hecha |
 | [PedirApoyoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoKV) | Pedir apoyo · LF | 5 | pendiente |
-| [TareaTerminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaKV) | Tarea terminada · LF | 2 | pendiente |
-| [TareasTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasKV) | Tareas terminadas · LF | 2 | pendiente |
-| [TareasLimiteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasLimiteKV) | Mis tareas (5 de 5) · LF | 2 | pendiente |
+| [TareaTerminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaKV) | Tarea terminada · LF | 2 | hecha |
+| [TareasTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasKV) | Tareas terminadas · LF | 2 | hecha |
+| [TareasLimiteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasLimiteKV) | Mis tareas (5 de 5) · LF | 2 | hecha |
 | [ApoyoPedidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoKV) | Apoyo pedido · LF | 5 | pendiente |
 | [ApoyoRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoKV) | Apoyo recibido · LF | 5 | pendiente |
 | [HurraRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HurraRecibidoKV) | ¡Hurra! recibido · nuevo | 5 | pendiente |
-| [CambiosGuardadosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiosGuardadosKV) | Cambios guardados · nuevo | 2 | pendiente |
-| [EditarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarGymKV) | Editar tarea · gym · nuevo | 2 | pendiente |
-| [BorrarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarGymKV) | Borrar tarea · gym · nuevo | 2 | pendiente |
-| [TareaBorradaGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaGymKV) | Tarea borrada · gym · nuevo | 2 | pendiente |
-| [EditarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPortfolioKV) | Editar tarea · acompañante pendiente · nuevo | 2 | pendiente |
-| [BorrarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarPortfolioKV) | Borrar tarea · acompañante pendiente · nuevo | 2 | pendiente |
-| [TareaBorradaPortKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaPortKV) | Tarea borrada · portfolio · nuevo | 2 | pendiente |
+| [CambiosGuardadosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiosGuardadosKV) | Cambios guardados · nuevo | 2 | hecha |
+| [EditarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarGymKV) | Editar tarea · gym · nuevo | 2 | hecha |
+| [BorrarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarGymKV) | Borrar tarea · gym · nuevo | 2 | hecha |
+| [TareaBorradaGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaGymKV) | Tarea borrada · gym · nuevo | 2 | hecha |
+| [EditarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPortfolioKV) | Editar tarea · acompañante pendiente · nuevo | 2 | hecha |
+| [BorrarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarPortfolioKV) | Borrar tarea · acompañante pendiente · nuevo | 2 | hecha |
+| [TareaBorradaPortKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaPortKV) | Tarea borrada · portfolio · nuevo | 2 | hecha |
 | [PedirApoyoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoGymKV) | Pedir apoyo · Juan · nuevo | 5 | pendiente |
 | [ApoyoPedidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoGymKV) | Apoyo pedido · Juan · nuevo | 5 | pendiente |
 | [ApoyoRecibidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoGymKV) | Apoyo recibido · Juan · nuevo | 5 | pendiente |
-| [TareaTerminadaGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaGymKV) | Tarea terminada · Juan · nuevo | 2 | pendiente |
-| [TareasTerminadasGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasGymKV) | Terminadas · tras el gym · nuevo | 2 | pendiente |
-| [TareaTerminadaSoloKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaSoloKV) | Tarea terminada · sin acompañante · nuevo | 2 | pendiente |
-| [TareasTerminadasSoloKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasSoloKV) | Terminadas · tras el portfolio · nuevo | 2 | pendiente |
-| [TareasTerminadasAntesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasAntesKV) | Terminadas · antes de hoy · nuevo | 2 | pendiente |
+| [TareaTerminadaGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaGymKV) | Tarea terminada · Juan · nuevo | 2 | hecha |
+| [TareasTerminadasGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasGymKV) | Terminadas · tras el gym · nuevo | 2 | hecha |
+| [TareaTerminadaSoloKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaSoloKV) | Tarea terminada · sin acompañante · nuevo | 2 | hecha |
+| [TareasTerminadasSoloKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasSoloKV) | Terminadas · tras el portfolio · nuevo | 2 | hecha |
+| [TareasTerminadasAntesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasAntesKV) | Terminadas · antes de hoy · nuevo | 2 | hecha |
 
 ### Hoy y Mis tareas · vacíos y variantes
 
@@ -86,39 +86,39 @@ Estados: `pendiente` · `hecha` · `revisada`
 |---|---|---|---|
 | [VacioHoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyKV) | Hoy (vacío, sin contactos) · LF | 3 | pendiente |
 | [VacioHoyContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyContactosKV) | Hoy (vacío, con contactos) · LF | 3 | pendiente |
-| [ErrCrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrCrearTareaKV) | Crear tarea: campos sin rellenar · LF | 2 | pendiente |
-| [TareaRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaRechazadaKV) | Acompañante no acepta la tarea · LF | 2 | pendiente |
-| [CambiarAcompananteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiarAcompananteKV) | Cambiar acompañante · LF | 2 | pendiente |
-| [VacioTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioTerminadasKV) | Tareas terminadas (vacío) · LF | 2 | pendiente |
-| [CambiarAcompGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiarAcompGymKV) | Cambiar acompañante (gym) · nuevo | 2 | pendiente |
-| [AcompananteCambiadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompananteCambiadoKV) | Acompañante cambiado · nuevo | 2 | pendiente |
-| [AcompGymCambiadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompGymCambiadoKV) | Acompañante cambiado · gym · nuevo | 2 | pendiente |
-| [CrearPrimeraTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CrearPrimeraTareaKV) | Primera tarea · sin contactos · nuevo | 2 | pendiente |
-| [InvitarDesdeTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitarDesdeTareaKV) | Primera tarea · invitar · nuevo | 2 | pendiente |
-| [PrimeraTareaListaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PrimeraTareaListaKV) | Primera tarea · lista · nuevo | 2 | pendiente |
-| [PrimeraTareaCreadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PrimeraTareaCreadaKV) | Primera tarea · creada · nuevo | 2 | pendiente |
+| [ErrCrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrCrearTareaKV) | Crear tarea: campos sin rellenar · LF | 2 | hecha |
+| [TareaRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaRechazadaKV) | Acompañante no acepta la tarea · LF | 2 | hecha |
+| [CambiarAcompananteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiarAcompananteKV) | Cambiar acompañante · LF | 2 | hecha |
+| [VacioTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioTerminadasKV) | Tareas terminadas (vacío) · LF | 2 | hecha |
+| [CambiarAcompGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiarAcompGymKV) | Cambiar acompañante (gym) · nuevo | 2 | hecha |
+| [AcompananteCambiadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompananteCambiadoKV) | Acompañante cambiado · nuevo | 2 | hecha |
+| [AcompGymCambiadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompGymCambiadoKV) | Acompañante cambiado · gym · nuevo | 2 | hecha |
+| [CrearPrimeraTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CrearPrimeraTareaKV) | Primera tarea · sin contactos · nuevo | 2 | hecha |
+| [InvitarDesdeTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitarDesdeTareaKV) | Primera tarea · invitar · nuevo | 2 | hecha |
+| [PrimeraTareaListaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PrimeraTareaListaKV) | Primera tarea · lista · nuevo | 2 | hecha |
+| [PrimeraTareaCreadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PrimeraTareaCreadaKV) | Primera tarea · creada · nuevo | 2 | hecha |
 
 ### Acompaño
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [AcompanamientoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompanamientoKV) | Acompaño · LF | 2 | pendiente |
-| [AcompTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompTareasKV) | Tareas que acompaño · LF | 2 | pendiente |
-| [AcompTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompTerminadasKV) | Terminadas (acompaño) · LF | 2 | pendiente |
-| [RechazarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RechazarTareaKV) | Rechazar tarea compartida · LF | 2 | pendiente |
-| [DejarAcompanarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DejarAcompanarKV) | Dejar de acompañar · LF | 2 | pendiente |
-| [TareaAbandonadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaAbandonadaKV) | Acompañante deja la tarea · LF | 2 | pendiente |
-| [TareaAceptadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaAceptadaKV) | Tarea compartida aceptada · nuevo | 2 | pendiente |
-| [DejasteAcompanarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DejasteAcompanarKV) | Ya no acompañas · nuevo | 2 | pendiente |
-| [TareaCompRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaCompRechazadaKV) | Tarea compartida rechazada · nuevo | 2 | pendiente |
+| [AcompanamientoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompanamientoKV) | Acompaño · LF | 2 | hecha |
+| [AcompTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompTareasKV) | Tareas que acompaño · LF | 2 | hecha |
+| [AcompTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AcompTerminadasKV) | Terminadas (acompaño) · LF | 2 | hecha |
+| [RechazarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RechazarTareaKV) | Rechazar tarea compartida · LF | 2 | hecha |
+| [DejarAcompanarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DejarAcompanarKV) | Dejar de acompañar · LF | 2 | hecha |
+| [TareaAbandonadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaAbandonadaKV) | Acompañante deja la tarea · LF | 2 | hecha |
+| [TareaAceptadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaAceptadaKV) | Tarea compartida aceptada · nuevo | 2 | hecha |
+| [DejasteAcompanarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DejasteAcompanarKV) | Ya no acompañas · nuevo | 2 | hecha |
+| [TareaCompRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaCompRechazadaKV) | Tarea compartida rechazada · nuevo | 2 | hecha |
 
 ### Acompaño · vacíos
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [VacioAcompanamientoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompanamientoKV) | Acompaño (vacío) · LF | 2 | pendiente |
-| [VacioAcompTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompTareasKV) | Tareas que acompaño (vacío) · LF | 2 | pendiente |
-| [VacioAcompTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompTerminadasKV) | Terminadas, acompaño (vacío) · LF | 2 | pendiente |
+| [VacioAcompanamientoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompanamientoKV) | Acompaño (vacío) · LF | 2 | hecha |
+| [VacioAcompTareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompTareasKV) | Tareas que acompaño (vacío) · LF | 2 | hecha |
+| [VacioAcompTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioAcompTerminadasKV) | Terminadas, acompaño (vacío) · LF | 2 | hecha |
 
 ### Sesiones
 
@@ -152,32 +152,32 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [PerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PerfilKV) | Mi perfil · LF | 2 | pendiente |
+| [PerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PerfilKV) | Mi perfil · LF | 2 | hecha |
 | [NotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NotificacionesKV) | Configurar notificaciones · LF | 5 | pendiente |
-| [ContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactosKV) | Mis contactos · LF | 2 | pendiente |
-| [AnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AnadirContactoKV) | Añadir contacto · LF | 2 | pendiente |
-| [DetalleContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoKV) | Detalle de contacto · LF | 2 | pendiente |
-| [EliminarContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarContactoKV) | Eliminar contacto · LF | 2 | pendiente |
+| [ContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactosKV) | Mis contactos · LF | 2 | hecha |
+| [AnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AnadirContactoKV) | Añadir contacto · LF | 2 | hecha |
+| [DetalleContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoKV) | Detalle de contacto · LF | 2 | hecha |
+| [EliminarContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarContactoKV) | Eliminar contacto · LF | 2 | hecha |
 | [EditarPerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPerfilKV) | Editar perfil · LF | 2 | pendiente |
 | [EliminarCuentaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarCuentaKV) | Eliminar cuenta · LF | 2 | pendiente |
-| [DetalleContactoPendienteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoPendienteKV) | Contacto pendiente · nuevo | 2 | pendiente |
-| [DetalleJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleJuanKV) | Detalle de contacto: Juan · nuevo | 2 | pendiente |
+| [DetalleContactoPendienteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoPendienteKV) | Contacto pendiente · nuevo | 2 | hecha |
+| [DetalleJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleJuanKV) | Detalle de contacto: Juan · nuevo | 2 | hecha |
 | [CerrarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CerrarSesionKV) | Cerrar sesión · nuevo | 2 | pendiente |
-| [EliminarJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarJuanKV) | Eliminar contacto: Juan · nuevo | 2 | pendiente |
-| [CancelarInvitacionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CancelarInvitacionKV) | Cancelar invitación · nuevo | 2 | pendiente |
-| [ContactoEliminadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoKV) | Contacto eliminado · nuevo | 2 | pendiente |
-| [ContactoEliminadoJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoJuanKV) | Contacto eliminado · Juan · nuevo | 2 | pendiente |
-| [InvitacionCanceladaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionCanceladaKV) | Invitación cancelada · nuevo | 2 | pendiente |
-| [ContactoInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoInvitadoKV) | Contacto invitado · nuevo | 2 | pendiente |
+| [EliminarJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarJuanKV) | Eliminar contacto: Juan · nuevo | 2 | hecha |
+| [CancelarInvitacionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CancelarInvitacionKV) | Cancelar invitación · nuevo | 2 | hecha |
+| [ContactoEliminadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoKV) | Contacto eliminado · nuevo | 2 | hecha |
+| [ContactoEliminadoJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoJuanKV) | Contacto eliminado · Juan · nuevo | 2 | hecha |
+| [InvitacionCanceladaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionCanceladaKV) | Invitación cancelada · nuevo | 2 | hecha |
+| [ContactoInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoInvitadoKV) | Contacto invitado · nuevo | 2 | hecha |
 | [CuentaEliminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CuentaEliminadaKV) | Cuenta eliminada · nuevo | 2 | pendiente |
 
 ### Contactos · vacíos y errores
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [VacioContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioContactosKV) | Mis contactos (vacío) · LF | 2 | pendiente |
-| [ErrAnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrAnadirContactoKV) | Añadir contacto: email no válido · LF | 2 | pendiente |
-| [ErrContactoExisteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrContactoExisteKV) | Añadir contacto: ya es contacto · LF | 2 | pendiente |
+| [VacioContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioContactosKV) | Mis contactos (vacío) · LF | 2 | hecha |
+| [ErrAnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrAnadirContactoKV) | Añadir contacto: email no válido · LF | 2 | hecha |
+| [ErrContactoExisteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrContactoExisteKV) | Añadir contacto: ya es contacto · LF | 2 | hecha |
 
 ### Generales: errores y estados
 

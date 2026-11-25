@@ -89,3 +89,29 @@
 - En Expo Go no se ven el icono ni el splash propios (solo en un development build).
 - La API en Render gratuito se duerme tras 15 min sin uso: la primera petición tarda ~1 min.
 - La wifi del centro puede bloquear el acceso del iPhone al Mac; alternativa: punto de acceso del iPhone.
+
+---
+
+## 2026-11-24 · Sesión 2 (tarde) — Fase 2 (tareas y contactos), primera parte
+
+> Entrada escrita el 2026-11-25 a partir de los commits: la sesión terminó sin actualizar la bitácora.
+
+### Hecho (rama `fase-2-tareas`, subida)
+- `packages/shared` se ejecuta como TypeScript en Node 24 (imports con `.ts`, `erasableSyntaxOnly`); reglas de color e iniciales de contactos y esquemas Zod de contactos y tareas.
+- **API · contactos e invitaciones**: token de un solo uso (solo se guarda el hash), email y enlace para compartir, ErrContactoExiste (409, índice único, también en concurrencia), reenviar con límite (3 cada 10 min), aceptar en transacción, cancelar / eliminar en los dos sentidos, página `/enlace/invitacion`.
+- **API · tareas**: límite de 5 con `$inc` condicional en transacción (test: 10 creaciones simultáneas con 4 abiertas → 1), editar, cambiar acompañante, terminar, borrar y deshacer (8 s), aceptar/rechazar/dejar de acompañar, «Acompaño», `POST /tasks/:id/hurra`. «Persona ajena → 404» en todas las acciones.
+- **App**: Perfil, Mis contactos, Añadir contacto, detalle (aceptado y pendiente), cancelar invitación / eliminar contacto con «Deshacer», pantalla de invitación (`tandems://invitacion`); Mis tareas, Nueva/Editar tarea, terminadas, borrar, límite, cambiar acompañante; Acompaño (te comparten, lo que acompaño, terminadas, ¡hurra!); Hoy provisional con la siguiente tarea (la Home viva es la fase 3).
+- Componentes: ConfirmSheet (el `Sheet` pendiente de la fase 1), ModalHeader, ListCard, ListRow, TaskCard, CardAction, PersonPicker, DateTimePill.
+- Arreglos: sin caché HTTP en la API (los 304 dejaban listas viejas), no se envían emails a dominios de prueba (`example.com`, `.test`), `InteractionManager` ya no existe en RN 0.88; el pre-commit también comprueba tipos.
+- Tests: 139 en shared y 55 en la API, en verde (comprobado el 2026-11-25).
+
+### Decisiones
+- La invitación se acepta **solo con el enlace**; la asociación automática por email espera a que haya verificación de email.
+- Los textos dicen «lo verá en su lista» en vez de «recibirá un aviso» hasta que lleguen los push (fase 5).
+
+### Pendiente de la fase 2
+1. Editar perfil (nombre, foto con URL prefirmada, preferencias), confirmación de Cerrar sesión, Eliminar cuenta y Cuenta eliminada.
+2. Crear cuenta con invitación y Bienvenida de la persona invitada (onboarding de invitada).
+3. Deep links: AASA + assetlinks.json + web de aterrizaje (`apps/web`); Install Referrer en Android.
+4. E2E con Maestro (crear tarea e invitar; aceptar invitación).
+5. 🧑 Conectar el Blueprint de Render (sigue abierto desde la fase 1) y probar en el iPhone lo hecho.
