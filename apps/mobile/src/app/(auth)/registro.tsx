@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useInvitationsControllerPreview } from '@tandems/api-client';
 import { authClient } from '@/lib/auth';
 import {
   describeAuthError,
@@ -9,12 +10,14 @@ import {
   PASSWORD_MIN,
   type AuthField,
 } from '@/lib/authErrors';
+import { prefs } from '@/lib/prefs';
 import { es } from '@/strings/es';
-import { colors, spacing } from '@/theme';
+import { colors, gradients, selfColor, sizes, radii, spacing } from '@/theme';
 import {
   AuthLayout,
   BackLink,
   Button,
+  Card,
   Checkbox,
   EmphasisText,
   FormAlert,
@@ -37,7 +40,16 @@ function validate(name: string, email: string, password: string, terms: boolean)
   return errors;
 }
 
+/**
+ * Crear cuenta. Con `token` es RegistroInvitado: el email es el de la invitación (solo
+ * lectura), el nombre viene rellenado y al entrar la invitación se acepta sola.
+ */
 export default function RegisterScreen() {
+  const { token } = useLocalSearchParams<{ token?: string }>();
+  const preview = useInvitationsControllerPreview(token ?? '', {
+    query: { enabled: !!token, retry: false },
+  });
+  const invite = preview.data?.status === 200 ? preview.data.data : undefined;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,12 +59,22 @@ export default function RegisterScreen() {
   const emailRef = useRef<TextInputRef>(null);
   const passwordRef = useRef<TextInputRef>(null);
   const t = es.auth.register;
+  const ti = t.invited;
+
+  // Datos de la invitación: el nombre se puede cambiar; el email, no
+  useEffect(() => {
+    if (!invite) return;
+    setName((current) => current || invite.invitedName);
+    setEmail(invite.email);
+  }, [invite]);
 
   const submit = async () => {
     const found = validate(name, email, password, terms);
     setErrors(found);
     if (Object.keys(found).length) return;
     setBusy(true);
+    // Antes de crear la cuenta: al cambiar de pila, Hoy la acepta (BienvenidaInvitado)
+    if (invite && token) await prefs.setPendingInviteAuto(token);
     const { error } = await authClient.signUp.email({
       name: name.trim(),
       email: email.trim(),
@@ -60,6 +82,7 @@ export default function RegisterScreen() {
     });
     setBusy(false);
     if (error) {
+      if (invite) await prefs.clearPendingInvite();
       const { field, message } = describeAuthError(error);
       setErrors({ [field]: message });
     }
@@ -69,13 +92,45 @@ export default function RegisterScreen() {
   const count = Object.keys(errors).filter((k) => k !== 'form').length;
 
   return (
-    <AuthLayout top={<BackLink label={t.back} onPress={() => router.replace('/login')} />}>
+    <AuthLayout
+      top={
+        token ? (
+          <BackLink
+            label={ti.back}
+            onPress={() => router.replace({ pathname: '/invitacion', params: { token } })}
+          />
+        ) : (
+          <BackLink label={t.back} onPress={() => router.replace('/login')} />
+        )
+      }
+    >
       <View style={styles.header}>
         <Text variant="caption" color={colors.text.caption}>
-          {t.caption}
+          {invite ? ti.caption(invite.inviterName) : t.caption}
         </Text>
         <EmphasisText text={t.title} variant="title" accessibilityRole="header" />
       </View>
+      {invite && (
+        <Card edge={gradients.edgeInvite} style={styles.inviteCard} accessible>
+          <View
+            style={styles.inviteAvatar}
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            <Text variant="avatarSmall">
+              {invite.inviterName.charAt(0).toLocaleUpperCase('es')}
+            </Text>
+          </View>
+          <View style={styles.flex}>
+            <Text variant="caption" color={colors.text.caption}>
+              {ti.cardCaption}
+            </Text>
+            <Text variant="body" color={colors.text.secondary}>
+              {ti.cardBody(invite.inviterName)}
+            </Text>
+          </View>
+        </Card>
+      )}
       {count > 0 && <FormAlert title={t.summary(count)} body={t.allRequired} />}
       {errors.form && <FormAlert title={errors.form} />}
       {count === 0 && !errors.form && (
@@ -101,6 +156,8 @@ export default function RegisterScreen() {
           placeholder={es.auth.emailPlaceholder}
           value={email}
           onChangeText={setEmail}
+          editable={!invite}
+          hint={invite ? ti.emailHint : undefined}
           autoCapitalize="none"
           autoComplete="email"
           keyboardType="email-address"
@@ -129,7 +186,12 @@ export default function RegisterScreen() {
         error={errors.password}
       />
       <Checkbox label={t.terms} checked={terms} onChange={setTerms} error={errors.terms} />
-      <Button label={t.submit} onPress={submit} disabled={busy} accessibilityState={{ busy }} />
+      <Button
+        label={invite ? ti.submit : t.submit}
+        onPress={submit}
+        disabled={busy || (!!token && !invite)}
+        accessibilityState={{ busy }}
+      />
     </AuthLayout>
   );
 }
@@ -138,4 +200,14 @@ const styles = StyleSheet.create({
   header: { gap: spacing.sm, paddingHorizontal: spacing.sm },
   help: { paddingHorizontal: spacing.sm },
   group: { gap: spacing.xxs },
+  flex: { flex: 1 },
+  inviteCard: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  inviteAvatar: {
+    width: sizes.avatar.sm,
+    height: sizes.avatar.sm,
+    borderRadius: radii.round,
+    backgroundColor: selfColor.base,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

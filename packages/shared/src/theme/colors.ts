@@ -85,6 +85,8 @@ export const colors = {
 export const gradients = {
   /** Forma unida de la home y animación del onboarding. */
   energy: ['#F3B58E', '#F2DFA6', '#E9CFC4', '#A98BC2'],
+  /** Filo de la tarjeta de invitación (melocotón, canvas: RegistroInvitado). */
+  edgeInvite: ['#D98A5F', '#F3C4A0', '#F8DCC5'],
   /** Filo de una tarea sin acompañante (gris cálido, canvas). */
   edgeNeutral: ['#B5AA9C', '#D9CFC0', '#EDE3D4'],
   /** Forma «tú + amig@» del onboarding (paradas 0 · .42 · .62 · 1). */

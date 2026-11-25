@@ -127,7 +127,11 @@ describe('Contactos e invitaciones (e2e)', () => {
 
   it('vista previa pública de la invitación y página intermedia', async () => {
     const preview = await http.get(`/invitations/${luciaToken}`).expect(200);
-    expect(preview.body).toEqual({ inviterName: 'Marta' });
+    expect(preview.body).toEqual({
+      inviterName: 'Marta',
+      invitedName: 'Lucía',
+      email: 'lucia@example.com',
+    });
     await http.get('/invitations/no-es-un-token').expect(404);
 
     const page = await http.get(`/enlace/invitacion?token=${luciaToken}`).expect(200);

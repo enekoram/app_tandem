@@ -243,6 +243,12 @@ export class ContactsService {
     return { invitation, inviter };
   }
 
+  /** Nombre que puso quien invita a la persona invitada. */
+  async invitedName(invitation: InvitationDocument): Promise<string> {
+    const contact = await this.contacts.findById(invitation.contact_id, { name: 1 });
+    return contact?.name ?? '';
+  }
+
   async markOpened(invitation: InvitationDocument): Promise<void> {
     if (invitation.status === 'sent') {
       invitation.status = 'opened';

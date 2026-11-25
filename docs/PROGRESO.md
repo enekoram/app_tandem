@@ -33,9 +33,9 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [RecuperarEnviadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RecuperarEnviadoKV) | Revisa tu email · LF | 1 | hecha |
 | [NuevaPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NuevaPassKV) | Crear contraseña nueva · LF | 1 | hecha |
 | [InvitacionAppKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionAppKV) | Invitación a la app · LF | 2 | hecha |
-| [RegistroInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroInvitadoKV) | Crear cuenta con invitación · LF | 2 | pendiente |
+| [RegistroInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroInvitadoKV) | Crear cuenta con invitación · LF | 2 | hecha |
 | [PermisoNotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PermisoNotificacionesKV) | Activar notificaciones · nuevo | 5 | pendiente |
-| [BienvenidaInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BienvenidaInvitadoKV) | Bienvenida persona invitada · nuevo | 2 | pendiente |
+| [BienvenidaInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BienvenidaInvitadoKV) | Bienvenida persona invitada · nuevo | 2 | hecha |
 
 ### Acceso · errores
 
@@ -204,3 +204,4 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-24 | Fase 1 aprobada y fusionada en `main`. «Recuperar contraseña» queda para pulir; para probar hay 5 cuentas en desarrollo (`seed:users`). |
 | 2026-11-25 | Editar perfil: **foto aplazada** hasta tener almacenamiento (círculo con la inicial); **email de solo lectura** hasta que haya verificación de email; «Cambiar contraseña» = hoja con contraseña actual + nueva (no está en el canvas; cierra las demás sesiones). Sin selector de idioma ni Notificaciones en Perfil (fase 5). |
 | 2026-11-25 | Eliminar cuenta: borrado **inmediato** (aún no hay cola `purge`): perfil, tareas, contactos e invitaciones, y la cuenta de Better Auth. Los contactos de otras personas se cancelan y sus tareas conmigo quedan «se fue». El email queda libre. |
+| 2026-11-25 | Persona invitada: «Crear cuenta y aceptar» lleva a RegistroInvitado (nombre rellenado con el que puso quien invita, email de la invitación de solo lectura); al entrar la invitación se acepta sola y se abre Acompaño con «Ya formas parte de la red de apoyo de…» (BienvenidaInvitado). Sin onboarding aparte para la persona invitada. |

@@ -45,9 +45,12 @@ export default function InvitationScreen() {
     );
   }
 
-  const goAuth = (to: '/registro' | '/login') => {
+  // Crear cuenta → RegistroInvitado (la acepta sola al entrar); ya tengo cuenta → al entrar
+  // vuelve aquí para aceptarla
+  const createAccount = () => router.replace({ pathname: '/registro', params: { token } });
+  const signIn = () => {
     void prefs.setPendingInvite(token);
-    router.replace(to);
+    router.replace('/login');
   };
 
   const doAccept = () =>
@@ -99,17 +102,8 @@ export default function InvitationScreen() {
         />
       ) : (
         <View style={styles.cta}>
-          <Button
-            label={t.createAndAccept}
-            onPress={() => goAuth('/registro')}
-            disabled={!inviter}
-          />
-          <Button
-            label={t.haveAccount}
-            variant="secondary"
-            onPress={() => goAuth('/login')}
-            disabled={!inviter}
-          />
+          <Button label={t.createAndAccept} onPress={createAccount} disabled={!inviter} />
+          <Button label={t.haveAccount} variant="secondary" onPress={signIn} disabled={!inviter} />
         </View>
       )}
     </AuthLayout>

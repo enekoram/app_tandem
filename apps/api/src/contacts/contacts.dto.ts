@@ -62,4 +62,12 @@ export class ResendResultDto {
 export class InvitationPreviewDto {
   @ApiProperty({ example: 'Marta' })
   inviterName!: string;
+
+  /** Cómo llamó a la persona invitada (para rellenar «¿Cómo quieres que te llamemos?»). */
+  @ApiProperty({ example: 'Lucía' })
+  invitedName!: string;
+
+  /** Email al que llegó la invitación (RegistroInvitado lo muestra de solo lectura). */
+  @ApiProperty({ example: 'lucia@example.com' })
+  email!: string;
 }

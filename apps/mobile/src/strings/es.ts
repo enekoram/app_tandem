@@ -373,6 +373,9 @@ export const es = {
     invalidBody:
       'Puede que haya caducado, que ya se haya aceptado o que la hayan cancelado. Pide a quien te invitó que te envíe otra.',
     goHome: 'Ir a Hoy',
+    /** BienvenidaInvitado */
+    welcome: (name: string) => `Ya formas parte de la red de apoyo de ${name}`,
+    welcomeOk: 'Vale',
   },
   dates: {
     noDate: 'sin fecha',
@@ -462,6 +465,16 @@ export const es = {
       summary: (n: number) =>
         pluralEs(n, 'Revisa 1 campo para continuar', `Revisa ${n} campos para continuar`),
       signInWithEmail: 'Iniciar sesión con este email',
+      /** RegistroInvitado */
+      invited: {
+        back: 'Invitación',
+        caption: (name: string) => `Te ha invitado ${name}`,
+        cardCaption: 'Invitación',
+        cardBody: (name: string) =>
+          `Al crear la cuenta formarás parte de la red de apoyo de ${name} y verás las tareas que comparta contigo.`,
+        emailHint: 'Es el email al que llegó la invitación.',
+        submit: 'Crear cuenta y unirme',
+      },
     },
     forgot: {
       back: 'Iniciar sesión',

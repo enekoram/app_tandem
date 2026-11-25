@@ -8,4 +8,6 @@
 
 export interface InvitationPreviewDto {
   inviterName: string;
+  invitedName: string;
+  email: string;
 }

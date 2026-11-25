@@ -41,7 +41,9 @@ export class InvitationsController {
     checkToken(token);
     const { invitation, inviter } = await this.contacts.findInvitation(token);
     await this.contacts.markOpened(invitation);
-    return { inviterName: inviter.display_name };
+    const invitedName = await this.contacts.invitedName(invitation);
+    // Quien tiene el enlace ya conoce el email (le llegó ahí): no se revela nada nuevo
+    return { inviterName: inviter.display_name, invitedName, email: invitation.email };
   }
 
   @Post('invitations/:token/accept')

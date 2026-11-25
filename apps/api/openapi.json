@@ -1199,10 +1199,20 @@
           "inviterName": {
             "type": "string",
             "example": "Marta"
+          },
+          "invitedName": {
+            "type": "string",
+            "example": "Lucía"
+          },
+          "email": {
+            "type": "string",
+            "example": "lucia@example.com"
           }
         },
         "required": [
-          "inviterName"
+          "inviterName",
+          "invitedName",
+          "email"
         ]
       },
       "TaskPersonDto": {
