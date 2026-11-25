@@ -8,6 +8,6 @@ import { RealtimeGateway } from './realtime.gateway.js';
 @Module({
   imports: [UsersModule, ContactsModule],
   providers: [RealtimeGateway, ChangeFeed, Presence],
-  exports: [Presence, RealtimeGateway],
+  exports: [Presence, RealtimeGateway, ChangeFeed],
 })
 export class RealtimeModule {}

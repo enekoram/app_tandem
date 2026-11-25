@@ -101,3 +101,10 @@ export type ThinkingInput = z.input<typeof thinkingSchema>;
 /** Preferencias de avisos: solo las que cambian. */
 export const notificationPrefsSchema = z.partialRecord(z.enum(NOTIFICATION_KINDS), z.boolean());
 export type NotificationPrefsInput = z.input<typeof notificationPrefsSchema>;
+
+/** Registrar un dispositivo para avisos push (token de Expo). */
+export const deviceSchema = z.object({
+  token: z.string().regex(/^Expo(nent)?PushToken\[[^\]]+\]$/, 'token no válido'),
+  platform: z.enum(['ios', 'android']),
+});
+export type DeviceInput = z.input<typeof deviceSchema>;

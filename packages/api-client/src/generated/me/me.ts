@@ -25,6 +25,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  DevicesControllerRegisterBody,
+  DevicesControllerUnregisterBody,
   HomeDto,
   MeControllerNotificationsBody,
   MeControllerUpdateBody,
@@ -545,3 +547,161 @@ export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeCont
 
 
 
+export type devicesControllerRegisterResponse204 = {
+  data: void
+  status: 204
+}
+
+export type devicesControllerRegisterResponseSuccess = (devicesControllerRegisterResponse204) & {
+  headers: Headers;
+};
+;
+
+export type devicesControllerRegisterResponse = (devicesControllerRegisterResponseSuccess)
+
+export const getDevicesControllerRegisterUrl = () => {
+
+
+
+
+  return `/me/devices`
+}
+
+export const devicesControllerRegister = async (devicesControllerRegisterBody: DevicesControllerRegisterBody, options?: Parameters<typeof apiFetch>[1]): Promise<devicesControllerRegisterResponse> => {
+
+  return apiFetch<devicesControllerRegisterResponse>(getDevicesControllerRegisterUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(devicesControllerRegisterBody)
+  }
+);}
+
+
+
+
+
+export const getDevicesControllerRegisterMutationKey = () => ['devicesControllerRegister'] as const;
+
+export const getDevicesControllerRegisterMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext> => {
+
+const mutationKey = getDevicesControllerRegisterMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof devicesControllerRegister>>, DevicesControllerRegisterMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  devicesControllerRegister(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DevicesControllerRegisterMutationResult = NonNullable<Awaited<ReturnType<typeof devicesControllerRegister>>>
+    export type DevicesControllerRegisterMutationBody = DevicesControllerRegisterBody
+    export type DevicesControllerRegisterMutationError = unknown
+    export type DevicesControllerRegisterMutationVariables = {data: DevicesControllerRegisterBody}
+
+    export const useDevicesControllerRegister = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof devicesControllerRegister>>,
+        TError,
+        DevicesControllerRegisterMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDevicesControllerRegisterMutationOptions(options), queryClient);
+    }
+    export type devicesControllerUnregisterResponse204 = {
+  data: void
+  status: 204
+}
+
+export type devicesControllerUnregisterResponseSuccess = (devicesControllerUnregisterResponse204) & {
+  headers: Headers;
+};
+;
+
+export type devicesControllerUnregisterResponse = (devicesControllerUnregisterResponseSuccess)
+
+export const getDevicesControllerUnregisterUrl = () => {
+
+
+
+
+  return `/me/devices/unregister`
+}
+
+export const devicesControllerUnregister = async (devicesControllerUnregisterBody: DevicesControllerUnregisterBody, options?: Parameters<typeof apiFetch>[1]): Promise<devicesControllerUnregisterResponse> => {
+
+  return apiFetch<devicesControllerUnregisterResponse>(getDevicesControllerUnregisterUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(devicesControllerUnregisterBody)
+  }
+);}
+
+
+
+
+
+export const getDevicesControllerUnregisterMutationKey = () => ['devicesControllerUnregister'] as const;
+
+export const getDevicesControllerUnregisterMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext> => {
+
+const mutationKey = getDevicesControllerUnregisterMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof devicesControllerUnregister>>, DevicesControllerUnregisterMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  devicesControllerUnregister(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DevicesControllerUnregisterMutationResult = NonNullable<Awaited<ReturnType<typeof devicesControllerUnregister>>>
+    export type DevicesControllerUnregisterMutationBody = DevicesControllerUnregisterBody
+    export type DevicesControllerUnregisterMutationError = unknown
+    export type DevicesControllerUnregisterMutationVariables = {data: DevicesControllerUnregisterBody}
+
+    export const useDevicesControllerUnregister = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof devicesControllerUnregister>>,
+        TError,
+        DevicesControllerUnregisterMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDevicesControllerUnregisterMutationOptions(options), queryClient);
+    }

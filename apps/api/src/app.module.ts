@@ -14,6 +14,7 @@ import { SessionsModule } from './sessions/sessions.module.js';
 import { SupportModule } from './support/support.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 import { MailModule } from './mail/mail.module.js';
+import { NotificationsModule } from './notifications/notifications.module.js';
 import { RealtimeModule } from './realtime/realtime.module.js';
 import { UsersModule } from './users/users.module.js';
 
@@ -65,6 +66,7 @@ import { UsersModule } from './users/users.module.js';
     SupportModule,
     AccountModule,
     RealtimeModule,
+    NotificationsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
