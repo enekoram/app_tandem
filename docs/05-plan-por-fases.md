@@ -32,11 +32,11 @@
 1. `users`: perfil, preferencias, foto (URL prefirmada S3).
 2. `contacts` + asignación de color e iniciales (`usePersonStyle` / `PersonToken`), con tests de colisión de iniciales y emojis.
 3. `invitations`: crear, email (plantilla de marca + texto plano), hoja de compartir nativa, reenviar, cancelar, caducidad; asociación por email al registrarse.
-4. Deep links: AASA + assetlinks.json + web de aterrizaje; Install Referrer en Android.
+4. ⏸ Deep links: AASA + assetlinks.json + web de aterrizaje; Install Referrer en Android. **Aplazado** (2026-11-25) hasta tener development build (EAS) y Apple Developer; mientras, página intermedia de la API con «Abrir Tandems».
 5. `tasks`: CRUD con límite de 5 (contador condicional + test de concurrencia), acompañante, aceptar/rechazar/dejar, deshacer.
 6. Pantallas: Mis tareas, formulario, detalle, Contactos, DetalleContactoPendiente, CancelarInvitacion, ErrContactoExiste, LimiteTareas, TareaAbandonada, CambiarAcompanante, InvitacionApp, BienvenidaInvitado, onboarding de invitada.
 7. Eliminar cuenta (en la app) y tests de autorización por recurso.
-8. E2E Maestro: happy path «crear tarea e invitar a alguien» y «aceptar invitación».
+8. ⏸ E2E Maestro: happy path «crear tarea e invitar a alguien» y «aceptar invitación». **Aplazado** (2026-11-25): sin simulador ni Java en el equipo; los dos recorridos están cubiertos por los e2e de la API.
 
 ## Fase 3 · Home viva (`fase-3-home`)
 1. Shader SkSL de metaballs + componente `UnitedShape` (Storybook con todas las escenas).

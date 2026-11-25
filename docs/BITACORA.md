@@ -138,5 +138,5 @@
 ### Pendiente
 1. 🧑 **Arreglar el `push`**: GitHub responde 403 con la credencial del llavero. Crear un token *fine-grained* solo para `enekoram/app_tandem` con *Contents: Read and write*, borrar el antiguo del llavero (Acceso a Llaveros → buscar «github.com» → eliminar) y hacer `git push` desde Terminal (usuario `enekoram`, contraseña = token).
 2. 🧑 Probar en el iPhone: editar perfil, cambiar contraseña, cerrar sesión, eliminar cuenta, y el recorrido de invitación con una cuenta nueva.
-3. Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro: bloqueados por entorno y cuentas (ver decisión pendiente).
+3. Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro: **aplazados** hasta el development build (decisión de hoy). Con eso, la fase 2 está completa a falta de tu prueba y visto bueno («ok fase 2» → fusionar en `main`).
 4. 🧑 Conectar el Blueprint de Render.
