@@ -115,3 +115,28 @@
 3. Deep links: AASA + assetlinks.json + web de aterrizaje (`apps/web`); Install Referrer en Android.
 4. E2E con Maestro (crear tarea e invitar; aceptar invitación).
 5. 🧑 Conectar el Blueprint de Render (sigue abierto desde la fase 1) y probar en el iPhone lo hecho.
+
+---
+
+## 2026-11-25 · Sesión 3 — Fase 2: perfil, cuenta y persona invitada
+
+### Hecho (rama `fase-2-tareas`; **sin subir**: el `push` da 403, ver pendientes)
+- Bitácora y PROGRESO puestos al día con lo hecho el 24 por la tarde; prompt de retomar corregido.
+- **API**: `PATCH /me` (nombre, también en Better Auth) y `DELETE /me` (borrado inmediato: perfil, tareas, contactos, invitaciones y cuenta de Better Auth; los contactos ajenos se cancelan y sus tareas conmigo quedan «se fue»; el email queda libre). La vista previa de la invitación trae `invitedName` y `email`. `DISPLAY_NAME_MAX` y `updateProfileSchema` en `packages/shared`.
+- **App**: Perfil con «Editar perfil» y hoja «¿Cerrar sesión?»; Editar perfil (nombre; email de solo lectura; foto aplazada); Cambiar contraseña (actual + nueva, cierra las otras sesiones); Eliminar cuenta + «Hasta pronto»; RegistroInvitado (email de la invitación fijo, nombre rellenado) y BienvenidaInvitado (la invitación se acepta sola al entrar y se abre Acompaño con el aviso).
+- Tests: 140 en shared y 64 en la API, en verde. **Nada de esto se ha probado aún en el iPhone.**
+
+### Decisiones (detalle en PROGRESO → Decisiones)
+- Foto de perfil aplazada; email de solo lectura; «Cambiar contraseña» con hoja propia.
+- Eliminar cuenta borra al momento (aún no hay cola `purge`).
+- Sin onboarding aparte para la persona invitada.
+
+### Hallazgos
+- Los tipos de rutas de expo-router (`apps/mobile/.expo/types/router.d.ts`, ignorado) solo se regeneran al arrancar Metro: tras añadir pantallas, `pnpm dev mobile` (o `expo start` un momento) antes de `pnpm typecheck`. En la CI no existen y las rutas no se comprueban.
+- En este equipo no hay Xcode completo, simulador, Java ni Android: Maestro no se puede ejecutar aquí.
+
+### Pendiente
+1. 🧑 **Arreglar el `push`**: GitHub responde 403 con la credencial del llavero. Crear un token *fine-grained* solo para `enekoram/app_tandem` con *Contents: Read and write*, borrar el antiguo del llavero (Acceso a Llaveros → buscar «github.com» → eliminar) y hacer `git push` desde Terminal (usuario `enekoram`, contraseña = token).
+2. 🧑 Probar en el iPhone: editar perfil, cambiar contraseña, cerrar sesión, eliminar cuenta, y el recorrido de invitación con una cuenta nueva.
+3. Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro: bloqueados por entorno y cuentas (ver decisión pendiente).
+4. 🧑 Conectar el Blueprint de Render.
