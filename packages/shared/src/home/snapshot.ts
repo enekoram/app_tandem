@@ -38,8 +38,15 @@ interface SessionLike {
   person: PersonLike | null;
 }
 
+interface SupportRequestLike {
+  id: string;
+  taskTitle: string;
+  person: PersonLike | null;
+}
+
 export interface HomeDtoLike {
   tasks: TaskLike[];
+  support?: { incoming: SupportRequestLike[] };
   sessions?: SessionLike[];
   contacts: ContactLike[];
   shared: TaskLike[];
@@ -97,8 +104,14 @@ export function toHomeSnapshot(dto: HomeDtoLike): HomeSnapshot {
       ];
     }),
     // «Te piden»: invitaciones a sesión de la otra persona y tareas que me comparten
-    // (el apoyo llega en la fase 5)
     requests: [
+      // Apoyo primero: es lo más urgente (caduca a los 15 min)
+      ...(dto.support?.incoming ?? []).flatMap((r): HomeRequest[] => {
+        const person = r.person ? personOf(r.person) : null;
+        return person
+          ? [{ id: `support:${r.id}`, kind: 'support', person, taskTitle: r.taskTitle }]
+          : [];
+      }),
       ...(dto.sessions ?? []).flatMap((s): HomeRequest[] => {
         const person = s.person ? personOf(s.person) : null;
         if (!person || s.status !== 'proposed' || s.proposedByMe) return [];

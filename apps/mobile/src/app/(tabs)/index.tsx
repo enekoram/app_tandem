@@ -1,15 +1,23 @@
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useTasksControllerList, type SessionDto, type TaskDto } from '@tandems/api-client';
+import {
+  useSupportControllerDecline,
+  useTasksControllerList,
+  type SessionDto,
+  type TaskDto,
+} from '@tandems/api-client';
+import { useQueryClient } from '@tanstack/react-query';
 import type { SceneCard } from '@tandems/shared';
 import { presenceLine } from '@/features/home/a11y';
 import { HomeScene } from '@/features/home/HomeScene';
 import { SessionCard } from '@/features/sessions/SessionCard';
+import { SupportRequestCard } from '@/features/support/SupportRequestCard';
 import { useSessionActions } from '@/features/sessions/useSessionActions';
 import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
 import { formatDue, formatLongDay } from '@/lib/dates';
+import { invalidateSessions } from '@/lib/queries';
 import { es } from '@/strings/es';
 import { colors, spacing } from '@/theme';
 import {
@@ -25,6 +33,7 @@ import {
   Screen,
   TaskCard,
   Text,
+  useToast,
   type CarouselItem,
 } from '@/ui';
 
@@ -41,6 +50,9 @@ export default function TodayScreen() {
   const done = useCompleteTask();
   const respond = useRespondShared();
   const sessionActions = useSessionActions();
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  const decline = useSupportControllerDecline();
   const finished = useTasksControllerList({ status: 'done' });
   const { scene, dto } = home;
 
@@ -50,6 +62,8 @@ export default function TodayScreen() {
   const byId = new Map<string, TaskDto>(
     [...(dto?.tasks ?? []), ...(dto?.shared ?? [])].map((x) => [x.id, x]),
   );
+  const asked = new Set((dto?.support?.outgoing ?? []).map((r) => r.taskId));
+  const supportById = new Map((dto?.support?.incoming ?? []).map((r) => [r.id, r]));
   const sessionsById = new Map<string, SessionDto>((dto?.sessions ?? []).map((x) => [x.id, x]));
   const sessionItem = (session: SessionDto | undefined): CarouselItem | null =>
     session
@@ -86,6 +100,12 @@ export default function TodayScreen() {
           <TaskCard
             task={task}
             featured
+            supportAsked={asked.has(task.id)}
+            onAskSupport={
+              task.companionStatus === 'accepted'
+                ? () => router.push({ pathname: '/apoyo/pedir', params: { taskId: task.id } })
+                : undefined
+            }
             onDone={() => done.ask(task)}
             onEdit={() => router.push({ pathname: '/tarea/[id]', params: { id: task.id } })}
           />
@@ -122,6 +142,30 @@ export default function TodayScreen() {
         ),
       };
     }
+    if (card.kind === 'request' && card.request.kind === 'support') {
+      const request = supportById.get(card.request.id.replace(/^support:/, ''));
+      if (!request) return null;
+      const name = request.person?.name ?? '';
+      return {
+        key: `support:${request.id}`,
+        label: t.cardSupport(name, request.taskTitle),
+        node: (
+          <SupportRequestCard
+            request={request}
+            motion={home.motion}
+            onDecline={() =>
+              decline.mutate(
+                { id: request.id },
+                {
+                  onSettled: () => void invalidateSessions(queryClient),
+                  onSuccess: () => toast(es.support.request.declined(name)),
+                },
+              )
+            }
+          />
+        ),
+      };
+    }
     if (card.kind === 'request' && card.request.kind === 'session') {
       return sessionItem(sessionsById.get(card.request.id.replace(/^session:/, '')));
     }
@@ -141,10 +185,26 @@ export default function TodayScreen() {
       ? Math.max(0, Math.ceil((new Date(soon.session.scheduledAt).getTime() - Date.now()) / 60_000))
       : 0;
 
+  // ApoyoRecibido manda sobre todo; después, ApoyoPedido de tu siguiente tarea
+  const supporterName = home.supporter?.name;
+  const next = scene.cards.find((c) => c.kind === 'nextTask');
+  const waitingFor =
+    next?.kind === 'nextTask' && asked.has(next.task.id) ? next.task.companion?.name : undefined;
+  const header = supporterName
+    ? { caption: es.support.receiving.caption, title: es.support.receiving.title(supporterName) }
+    : soon
+      ? { caption: t.startsIn(minutesLeft), title: t.soonTitle }
+      : waitingFor
+        ? { caption: es.support.waiting.caption, title: es.support.waiting.title(waitingFor) }
+        : {
+            caption: formatLongDay(new Date()),
+            title: dto && !cards.length && empty ? t.title : t.liveTitle,
+          };
+
   return (
     <Screen
-      caption={soon ? t.startsIn(minutesLeft) : formatLongDay(new Date())}
-      title={soon ? t.soonTitle : dto && !cards.length && empty ? t.title : t.liveTitle}
+      caption={header.caption}
+      title={header.title}
       action={
         <IconButton
           icon="profile"
@@ -154,6 +214,15 @@ export default function TodayScreen() {
       }
     >
       <HomeScene scene={scene} motion={home.motion} />
+      {supporterName ? (
+        <Text variant="lead" color={colors.text.secondary} style={styles.pad}>
+          {es.support.receiving.body(supporterName)}
+        </Text>
+      ) : waitingFor ? (
+        <Text variant="body" color={colors.text.secondary} style={styles.pad}>
+          {es.support.waiting.body}
+        </Text>
+      ) : null}
 
       {scene.a11y.kind === 'empty' && (
         <Text variant="body" color={colors.text.secondary} style={styles.pad}>

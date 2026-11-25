@@ -42,6 +42,7 @@ export const es = {
     cardNextTask: (title: string) => `Tu siguiente tarea, ${title}`,
     cardShared: (name: string, title: string) => `${name} te comparte ${title}`,
     cardSession: (name: string, title: string) => `Sesión con ${name}: ${title}`,
+    cardSupport: (name: string, title: string) => `${name} te pide apoyo: ${title}`,
     soonTitle: { lead: 'Tu sesión ', em: 'empieza pronto' } satisfies Emphasis,
     startsIn: (min: number) =>
       min === 0 ? 'Empieza ahora' : pluralEs(min, 'Empieza en 1 min', `Empieza en ${min} min`),
@@ -517,6 +518,78 @@ export const es = {
     /** BienvenidaInvitado */
     welcome: (name: string) => `Ya formas parte de la red de apoyo de ${name}`,
     welcomeOk: 'Vale',
+  },
+  support: {
+    send: {
+      label: 'Enviar apoyo',
+      sending: 'Enviando apoyo…',
+      sent: 'Apoyo enviado',
+      knows: (name: string) => `${name} ya sabe que estás ahí.`,
+      hint: 'Mantén pulsado mientras quieras acompañar',
+      hintScreenReader: 'Toca para empezar a enviar apoyo y otra vez para parar',
+    },
+    request: {
+      caption: 'Apoyo · ahora',
+      asks: ' te pide apoyo',
+      body: 'Un empujón tuyo ahora le ayuda a seguir.',
+      notNow: 'Ahora no',
+      declined: (name: string) => `Le diremos a ${name} que ahora no puedes.`,
+    },
+    ask: {
+      action: 'Pedir apoyo',
+      asked: 'Pedido',
+      title: { lead: 'Pedir ', em: 'apoyo' } satisfies Emphasis,
+      heading: (name: string): Emphasis => ({ lead: `Pide a ${name} que `, em: 'esté contigo' }),
+      body: (name: string) =>
+        `${name} verá que estás trabajando en esta tarea y que quieres sentir su apoyo.`,
+      message: 'Mensaje (opcional)',
+      send: (name: string) => `Enviar petición a ${name}`,
+      cancel: 'Cancelar',
+      sent: (name: string) => `Petición enviada a ${name}`,
+    },
+    waiting: {
+      caption: 'Apoyo · pedido',
+      title: (name: string): Emphasis => ({ lead: 'Esperando el apoyo ', em: `de ${name}` }),
+      body: 'Mientras tanto, empieza por un paso pequeño. Te avisaremos cuando llegue.',
+    },
+    receiving: {
+      caption: 'Apoyo · ahora',
+      title: (name: string): Emphasis => ({ lead: `${name} te está `, em: 'enviando apoyo' }),
+      body: (name: string) => `${name} está contigo mientras trabajas.`,
+    },
+    thinking: {
+      action: 'Pensé en ti',
+      sent: (name: string) => `${name} sabrá que te has acordado.`,
+      limit: 'Ya se lo has dicho hace poco. Prueba más tarde.',
+      received: (name: string) => `${name} pensó en ti`,
+    },
+  },
+  notifications: {
+    back: 'Mi perfil',
+    row: 'Notificaciones',
+    title: { lead: 'Tus ', em: 'avisos' } satisfies Emphasis,
+    fromAccompanied: { lead: 'De quien ', em: 'acompañas' } satisfies Emphasis,
+    fromCompanions: { lead: 'De quien ', em: 'te acompaña' } satisfies Emphasis,
+    reminders: { lead: 'Tus ', em: 'recordatorios' } satisfies Emphasis,
+    kinds: {
+      supportRequests: { title: 'Peticiones de apoyo', body: 'Cuando alguien te pide apoyo' },
+      sharedTasks: {
+        title: 'Tareas compartidas',
+        body: 'Cuando alguien comparte una tarea contigo',
+      },
+      sessionInvites: {
+        title: 'Invitaciones a sesiones',
+        body: 'Cuando alguien te invita a una sesión',
+      },
+      tasksDone: {
+        title: 'Tareas terminadas',
+        body: 'Cuando alguien a quien acompañas termina una tarea',
+      },
+      supportReceived: { title: 'Apoyo recibido', body: 'Cuando alguien te envía apoyo' },
+      hurras: { title: '¡Hurras!', body: 'Cuando celebran tus tareas terminadas' },
+      sessionReminders: { title: 'Sesiones', body: 'Antes de que empiece una sesión' },
+    },
+    pushLater: 'Los avisos en el móvil llegarán más adelante. Mientras, lo verás al abrir la app.',
   },
   carousel: {
     previous: 'Tarjeta anterior',

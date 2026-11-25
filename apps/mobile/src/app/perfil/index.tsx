@@ -71,6 +71,13 @@ export default function ProfileScreen() {
       </ListCard>
       <ListCard>
         <ListRow
+          icon="bell"
+          title={es.notifications.row}
+          onPress={() => router.push('/perfil/notificaciones')}
+        />
+      </ListCard>
+      <ListCard>
+        <ListRow
           icon="userMinus"
           title={es.profile.signOut}
           destructive

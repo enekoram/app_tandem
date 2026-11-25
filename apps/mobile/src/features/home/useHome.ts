@@ -13,6 +13,7 @@ import {
   toHomeSnapshot,
   type MotionProfile,
 } from '@tandems/shared';
+import { onRealtime } from '@/lib/realtime';
 
 /**
  * Home viva (doc 03): instantánea de GET /me/home → máquina → escena.
@@ -27,8 +28,28 @@ export function useHome() {
   const snapshot = useMemo(() => (dto ? toHomeSnapshot(dto) : null), [dto]);
 
   useEffect(() => {
-    if (snapshot) send({ type: 'SNAPSHOT', snapshot, now: Date.now() });
-  }, [snapshot, send]);
+    if (!snapshot) return;
+    send({ type: 'SNAPSHOT', snapshot, now: Date.now() });
+    // Al reconectar: si alguien me está enviando apoyo, el corazón vuelve a latir
+    const from = dto?.support?.sendingContactIds?.[0];
+    if (from) send({ type: 'SUPPORT_HEARTBEAT', from });
+  }, [snapshot, dto, send]);
+
+  // Apoyo en vivo: cada evento mueve la región `support` (sin latido en 6 s, se apaga)
+  useEffect(
+    () =>
+      onRealtime((e) => {
+        if (e.type !== 'support') return;
+        const type =
+          e.state === 'started'
+            ? 'SUPPORT_STARTED'
+            : e.state === 'beat'
+              ? 'SUPPORT_HEARTBEAT'
+              : 'SUPPORT_ENDED';
+        send({ type, from: e.contactId });
+      }),
+    [send],
+  );
 
   // Reevaluar la base al cruzar la ventana de «sesión por empezar» (sin pedir nada)
   useEffect(() => {
@@ -44,13 +65,19 @@ export function useHome() {
     reduceMotion,
   );
   const initials = (profile?.displayName ?? '').trim().charAt(0).toLocaleUpperCase('es');
-  const scene = describeScene(selectHomeState(state), snapshot, { initials });
+  const homeState = selectHomeState(state);
+  const scene = describeScene(homeState, snapshot, { initials });
+  const supporter = homeState.supportFrom
+    ? dto?.contacts.find((c) => c.id === homeState.supportFrom)
+    : undefined;
 
   return {
     scene,
     dto,
     motion,
     toast: selectToast(state),
+    /** Quién me está enviando apoyo ahora (ApoyoRecibido). */
+    supporter,
     send,
     isLoading: query.isLoading,
     isError: query.isError,

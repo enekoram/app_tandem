@@ -212,6 +212,31 @@ describe('homeMachine', () => {
   });
 });
 
+describe('toHomeSnapshot · apoyo', () => {
+  it('las peticiones de apoyo van las primeras en «Te piden»', () => {
+    const person = { contactId: 'c-juan', name: 'Juan', color: 'sage' as const, initials: 'J' };
+    const s = toHomeSnapshot({
+      tasks: [],
+      contacts: [],
+      shared: [
+        {
+          id: 't1',
+          title: 'Ir a correr',
+          dueAt: null,
+          createdAt: '2026-11-25T08:00:00.000Z',
+          companionStatus: 'pending',
+          person,
+        },
+      ],
+      support: { incoming: [{ id: 'r1', taskTitle: 'Estudiar inglés', person }] },
+    });
+    expect(s.requests.map((r) => [r.kind, r.id])).toEqual([
+      ['support', 'support:r1'],
+      ['task', 'task:t1'],
+    ]);
+  });
+});
+
 describe('toHomeSnapshot · sesiones', () => {
   const person = { contactId: 'c-marta', name: 'Marta', color: 'lilac' as const, initials: 'M' };
   const session = (status: string, proposedByMe: boolean) => ({
