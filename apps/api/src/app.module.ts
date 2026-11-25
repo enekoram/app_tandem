@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 import { validateEnv, type Env } from './config/env.js';
+import { AccountModule } from './account/account.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ContactsModule } from './contacts/contacts.module.js';
 import { HealthModule } from './health/health.module.js';
@@ -57,6 +58,7 @@ import { UsersModule } from './users/users.module.js';
     LinksModule,
     ContactsModule,
     TasksModule,
+    AccountModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

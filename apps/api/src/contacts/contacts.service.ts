@@ -187,6 +187,27 @@ export class ContactsService {
     });
   }
 
+  /**
+   * Eliminar cuenta (dentro de la transacción de AccountService): los contactos de otras
+   * personas que apuntan a `me` se cancelan y sus tareas conmigo quedan «se fue»
+   * (TareaAbandonada). Mis contactos e invitaciones se borran: los enlaces dejan de valer.
+   */
+  async purgeAccount(me: UserDocument, session: ClientSession): Promise<void> {
+    const theirs = await this.contacts.find(
+      { contact_user_id: me._id, status: LIVE },
+      { _id: 1, owner_id: 1 },
+      { session },
+    );
+    for (const contact of theirs) {
+      await this.contacts.updateOne({ _id: contact._id }, { status: 'cancelled' }, { session });
+      await this.endCompanionship(contact._id, session);
+    }
+    const owners = new Map(theirs.map((c) => [c.owner_id.toHexString(), c.owner_id]));
+    for (const owner of owners.values()) await this.refreshInitials(owner, session);
+    await this.invitations.deleteMany({ inviter_id: me._id }, { session });
+    await this.contacts.deleteMany({ owner_id: me._id }, { session });
+  }
+
   // ── Invitaciones (lado de la persona invitada) ──────────────────────────────
 
   /** Invitación vigente por token (404/410 si no). No requiere sesión. */

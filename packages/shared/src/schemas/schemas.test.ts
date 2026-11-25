@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
-import { createContactSchema, createTaskSchema } from './index.ts';
+import { createContactSchema, createTaskSchema, updateProfileSchema } from './index.ts';
 
 describe('createContactSchema', () => {
   it('normaliza el email y recorta el nombre', () => {
@@ -35,5 +35,14 @@ describe('createTaskSchema', () => {
   it('se puede convertir a JSON Schema para OpenAPI', () => {
     const schema = z.toJSONSchema(createTaskSchema, { target: 'openapi-3.0', io: 'input' });
     expect(schema).toMatchObject({ type: 'object', required: ['title', 'companionContactId'] });
+  });
+});
+
+describe('updateProfileSchema', () => {
+  it('recorta espacios y exige de 1 a 40 caracteres', () => {
+    expect(updateProfileSchema.parse({ displayName: '  Ana  ' })).toEqual({ displayName: 'Ana' });
+    expect(updateProfileSchema.safeParse({ displayName: '   ' }).success).toBe(false);
+    expect(updateProfileSchema.safeParse({ displayName: 'a'.repeat(41) }).success).toBe(false);
+    expect(updateProfileSchema.safeParse({ displayName: 'a'.repeat(40) }).success).toBe(true);
   });
 });

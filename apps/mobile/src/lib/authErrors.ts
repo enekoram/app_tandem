@@ -45,4 +45,4 @@ export function isEmail(value: string): boolean {
 }
 
 export const PASSWORD_MIN = 8;
-export const DISPLAY_NAME_MAX = 40;
+export { DISPLAY_NAME_MAX } from '@tandems/shared';

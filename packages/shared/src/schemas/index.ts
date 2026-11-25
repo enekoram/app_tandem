@@ -5,6 +5,7 @@
 import { z } from 'zod';
 import { CONTACT_NAME_MAX } from '../rules/contacts.ts';
 import { TASK_DESCRIPTION_MAX, TASK_TITLE_MAX } from '../rules/tasks.ts';
+import { DISPLAY_NAME_MAX } from '../rules/users.ts';
 
 export const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, 'identificador no válido');
 
@@ -46,3 +47,9 @@ export const updateTaskSchema = z.object({
   companionContactId: objectIdSchema.optional(),
 });
 export type UpdateTaskInput = z.input<typeof updateTaskSchema>;
+
+/** Editar perfil: de momento solo el nombre (el email es de solo lectura, la foto se aplaza). */
+export const updateProfileSchema = z.object({
+  displayName: z.string().trim().min(1).max(DISPLAY_NAME_MAX),
+});
+export type UpdateProfileInput = z.input<typeof updateProfileSchema>;

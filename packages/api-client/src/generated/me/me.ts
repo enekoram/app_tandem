@@ -6,21 +6,26 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
+  MeControllerUpdateBody,
   MeDto
 } from '../model';
 
@@ -33,6 +38,26 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+
+const getHeaders = (...sources: (RequestInit['headers'] | Record<string, string | number | boolean | bigint | readonly string[] | undefined>)[]) => {
+  const seen = new Set<string>();
+  const layers: [string, string | readonly string[]][][] = [];
+  for (const source of sources.reverse()) {
+    if (!source) continue;
+    const entries = source instanceof Headers
+      ? source.entries()
+      : Symbol.iterator in source
+        ? Array.from(source as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string])
+        : Object.entries<string | number | boolean | bigint | readonly string[] | undefined>(source);
+    const layer: [string, string | readonly string[]][] = [];
+    for (const [name, value] of entries) {
+      if (value !== undefined && !seen.has(name.toLowerCase())) layer.push([name, typeof value === 'object' ? value : String(value)]);
+    }
+    for (const [name] of layer) seen.add(name.toLowerCase());
+    layers.push(layer);
+  }
+  return Object.fromEntries(layers.reverse().flat()) as Extract<RequestInit['headers'], Record<string, unknown>>;
+};
 
 
 const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
@@ -162,3 +187,175 @@ export function useMeControllerMe<TData = Awaited<ReturnType<typeof meController
 
 
 
+export type meControllerUpdateResponse200 = {
+  data: MeDto
+  status: 200
+}
+
+export type meControllerUpdateResponse400 = {
+  data: void
+  status: 400
+}
+
+export type meControllerUpdateResponseSuccess = (meControllerUpdateResponse200) & {
+  headers: Headers;
+};
+export type meControllerUpdateResponseError = (meControllerUpdateResponse400) & {
+  headers: Headers;
+};
+
+export type meControllerUpdateResponse = (meControllerUpdateResponseSuccess | meControllerUpdateResponseError)
+
+export const getMeControllerUpdateUrl = () => {
+
+
+
+
+  return `/me`
+}
+
+export const meControllerUpdate = async (meControllerUpdateBody: MeControllerUpdateBody, options?: Parameters<typeof apiFetch>[1]): Promise<meControllerUpdateResponse> => {
+
+  return apiFetch<meControllerUpdateResponse>(getMeControllerUpdateUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(meControllerUpdateBody)
+  }
+);}
+
+
+
+
+
+export const getMeControllerUpdateMutationKey = () => ['meControllerUpdate'] as const;
+
+export const getMeControllerUpdateMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerUpdate>>, TError,MeControllerUpdateMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof meControllerUpdate>>, TError,MeControllerUpdateMutationVariables, TContext> => {
+
+const mutationKey = getMeControllerUpdateMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof meControllerUpdate>>, MeControllerUpdateMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  meControllerUpdate(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MeControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof meControllerUpdate>>>
+    export type MeControllerUpdateMutationBody = MeControllerUpdateBody
+    export type MeControllerUpdateMutationError = void
+    export type MeControllerUpdateMutationVariables = {data: MeControllerUpdateBody}
+
+    export const useMeControllerUpdate = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerUpdate>>, TError,MeControllerUpdateMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof meControllerUpdate>>,
+        TError,
+        MeControllerUpdateMutationVariables,
+        TContext
+      > => {
+      return useMutation(getMeControllerUpdateMutationOptions(options), queryClient);
+    }
+    export type accountControllerDeleteResponse204 = {
+  data: void
+  status: 204
+}
+
+export type accountControllerDeleteResponse401 = {
+  data: void
+  status: 401
+}
+
+export type accountControllerDeleteResponseSuccess = (accountControllerDeleteResponse204) & {
+  headers: Headers;
+};
+export type accountControllerDeleteResponseError = (accountControllerDeleteResponse401) & {
+  headers: Headers;
+};
+
+export type accountControllerDeleteResponse = (accountControllerDeleteResponseSuccess | accountControllerDeleteResponseError)
+
+export const getAccountControllerDeleteUrl = () => {
+
+
+
+
+  return `/me`
+}
+
+export const accountControllerDelete = async ( options?: Parameters<typeof apiFetch>[1]): Promise<accountControllerDeleteResponse> => {
+
+  return apiFetch<accountControllerDeleteResponse>(getAccountControllerDeleteUrl(),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+
+
+export const getAccountControllerDeleteMutationKey = () => ['accountControllerDelete'] as const;
+
+export const getAccountControllerDeleteMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerDelete>>, TError,void, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof accountControllerDelete>>, TError,void, TContext> => {
+
+const mutationKey = getAccountControllerDeleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof accountControllerDelete>>, void> = () => {
+
+
+          return  accountControllerDelete(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AccountControllerDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof accountControllerDelete>>>
+
+    export type AccountControllerDeleteMutationError = void
+
+
+    export const useAccountControllerDelete = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof accountControllerDelete>>, TError,void, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof accountControllerDelete>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getAccountControllerDeleteMutationOptions(options), queryClient);
+    }

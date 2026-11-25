@@ -16,6 +16,7 @@ export * from './healthControllerCheck503.ts';
 export * from './healthControllerCheck503Status.ts';
 export * from './invitationPreviewDto.ts';
 export * from './inviteResultDto.ts';
+export * from './meControllerUpdateBody.ts';
 export * from './meDto.ts';
 export * from './meDtoStimulus.ts';
 export * from './resendResultDto.ts';
