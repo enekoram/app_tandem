@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Headers, HttpCode, Param, Post } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import {
   ApiBody,
   ApiConflictResponse,
@@ -47,6 +48,7 @@ export class ContactsController {
 
   /** Añadir contacto: crea la invitación y la envía por email. */
   @Post()
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @ApiBody({ schema: openApiSchema(createContactSchema) })
   @ApiCreatedResponse({ type: InviteResultDto })
   @ApiConflictResponse({ description: 'CONTACT_EXISTS: ya está en tus contactos' })

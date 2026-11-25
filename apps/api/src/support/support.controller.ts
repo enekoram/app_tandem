@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, Param, Post } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import {
   ApiBody,
   ApiConflictResponse,
@@ -58,6 +59,7 @@ export class SupportController {
 
   /** Empezar a enviar apoyo (mantener pulsado). */
   @Post('sending')
+  @Throttle({ default: { limit: 30, ttl: 60_000 } })
   @ApiBody({ schema: openApiSchema(sendSupportSchema) })
   @ApiCreatedResponse({ type: SendingDto })
   async start(
@@ -90,6 +92,7 @@ export class SupportController {
 
   /** «Pensé en ti» (uno cada 10 min a la misma persona). */
   @Post('thinking')
+  @Throttle({ default: { limit: 30, ttl: 60_000 } })
   @HttpCode(204)
   @ApiBody({ schema: openApiSchema(thinkingSchema) })
   @ApiNoContentResponse()
