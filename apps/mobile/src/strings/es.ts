@@ -398,6 +398,8 @@ export const es = {
       emailHint: 'Por ahora el email no se puede cambiar.',
       saved: 'Cambios guardados',
       changePassword: 'Cambiar contraseña',
+      exportData: 'Descargar mis datos',
+      exportTitle: 'Mis datos de Tandems',
       deleteAccount: 'Eliminar cuenta',
     },
     password: {

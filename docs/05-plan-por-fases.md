@@ -70,6 +70,8 @@
 5. ✅ Email: las invitaciones ya van por email (fase 2). ⏸ Fallback por email de avisos críticos.
 
 ## Fase 6 · Pulido (`fase-6-pulido`)
+> Estado 2026-11-25: ✅ SinConexion, ErrGuardar y exportar mis datos. Lo demás necesita el móvil (motion fino, auditoría de accesibilidad, pruebas en dispositivos) o cuentas (Sentry, analítica): pendiente 🧑. Live Activity, fuera (sin development build).
+
 Motion fino en todos los componentes, auditoría de accesibilidad (VoiceOver, TalkBack, teclado externo, Dynamic Type máximo), todos los estados vacíos y de error del canvas, Sentry, analítica sin contenido, Live Activity (si hay tiempo), exportar datos, pruebas en dispositivos reales.
 
 ## Fase 7 · Lanzamiento (`fase-7-lanzamiento`)

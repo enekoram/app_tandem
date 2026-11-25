@@ -167,3 +167,8 @@
 - Rama `fase-5-apoyo` (sale de `fase-4-sesiones`). API: support_events (pedir, ahora no, enviar en vivo con latidos, «Pensé en ti»), preferencias de avisos, device_tokens, avisos push con reglas sobre los change streams y recordatorio de sesión. App: Pedir apoyo, Apoyo pedido/recibido con el corazón, «Enviar apoyo» manteniendo pulsado (háptica), «Pensé en ti», HurraRecibido, Notificaciones y PermisoNotificaciones.
 - Tests: 193 en shared y 94 en la API. La app empaqueta para iOS sin errores. Nada probado en el móvil.
 - 🧑 Para recibir push: `npx eas login` + `npx eas init` en apps/mobile (projectId). En Expo Go solo iPhone.
+
+### Sesión 3 (continuación) — fase 6 (pulido, lo que se puede sin móvil)
+- Rama `fase-6-pulido` (sale de `fase-5-apoyo`): SinConexion (NetInfo + onlineManager; apoyo desactivado sin red), ErrGuardar con «Reintentar», exportar mis datos (GET /me/export + hoja de compartir).
+- Tests: 193 en shared y 95 en la API. Empaqueta para iOS.
+- Lo que queda del proyecto ya depende de probar en el móvil (`docs/PRUEBAS-PENDIENTES.txt`) y de cuentas (EAS para push, Render para staging).

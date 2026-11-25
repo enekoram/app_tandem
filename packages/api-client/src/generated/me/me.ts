@@ -547,6 +547,111 @@ export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeCont
 
 
 
+export type exportControllerExportResponse200 = {
+  data: void
+  status: 200
+}
+
+export type exportControllerExportResponseSuccess = (exportControllerExportResponse200) & {
+  headers: Headers;
+};
+;
+
+export type exportControllerExportResponse = (exportControllerExportResponseSuccess)
+
+export const getExportControllerExportUrl = () => {
+
+
+
+
+  return `/me/export`
+}
+
+export const exportControllerExport = async ( options?: Parameters<typeof apiFetch>[1]): Promise<exportControllerExportResponse> => {
+
+  return apiFetch<exportControllerExportResponse>(getExportControllerExportUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getExportControllerExportQueryKey = () => {
+    return [
+    `/me/export`
+    ] as const;
+    }
+
+
+export const getExportControllerExportQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExport>>> = ({ signal }) => exportControllerExport({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ExportControllerExportQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExport>>>
+export type ExportControllerExportQueryError = unknown
+
+
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof exportControllerExport>>,
+          TError,
+          Awaited<ReturnType<typeof exportControllerExport>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof exportControllerExport>>,
+          TError,
+          Awaited<ReturnType<typeof exportControllerExport>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getExportControllerExportQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 export type devicesControllerRegisterResponse204 = {
   data: void
   status: 204

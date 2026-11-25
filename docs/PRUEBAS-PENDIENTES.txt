@@ -133,3 +133,5 @@ CÓMO PREPARARLO
         volver la red quita la franja y refresca
 [ ] 8.2 Editar una tarea sin conexión y Guardar: «No se han podido guardar los cambios.
         Siguen en el formulario.» con «Reintentar»; lo escrito no se pierde
+[ ] 8.3 Perfil › Editar perfil › «Descargar mis datos»: se abre la hoja de compartir con
+        un JSON con perfil, contactos, tareas, sesiones y apoyo (sin contraseñas)

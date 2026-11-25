@@ -1579,6 +1579,25 @@
         ]
       }
     },
+    "/me/export": {
+      "get": {
+        "operationId": "ExportController_export",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "JSON con todos mis datos"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
     "/me/devices": {
       "post": {
         "operationId": "DevicesController_register",

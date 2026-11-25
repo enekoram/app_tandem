@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, Share, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { useQueryClient } from '@tanstack/react-query';
 import {
+  exportControllerExport,
   getMeControllerMeQueryKey,
   useAccountControllerDelete,
   useMeControllerMe,
@@ -79,6 +80,17 @@ export default function EditProfileScreen() {
     });
   };
 
+  // Exportar mis datos (RGPD): JSON por la hoja de compartir del sistema
+  const exportData = async () => {
+    try {
+      const res = await exportControllerExport();
+      if (res.status !== 200) throw new Error();
+      await Share.share({ title: t.exportTitle, message: JSON.stringify(res.data, null, 2) });
+    } catch {
+      toast(es.auth.errors.network, { kind: 'err' });
+    }
+  };
+
   const sheet = es.profile.deleteSheet;
   return (
     <ModalScreen
@@ -132,6 +144,7 @@ export default function EditProfileScreen() {
             title={t.changePassword}
             onPress={() => router.push('/perfil/contrasena')}
           />
+          <ListRow icon="share" title={t.exportData} onPress={() => void exportData()} />
           <ListRow
             icon="trash"
             title={t.deleteAccount}
