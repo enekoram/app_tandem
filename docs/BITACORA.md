@@ -140,3 +140,12 @@
 2. 🧑 Probar en el iPhone: editar perfil, cambiar contraseña, cerrar sesión, eliminar cuenta, y el recorrido de invitación con una cuenta nueva.
 3. Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro: **aplazados** hasta el development build (decisión de hoy). Con eso, la fase 2 está completa a falta de tu prueba y visto bueno («ok fase 2» → fusionar en `main`).
 4. 🧑 Conectar el Blueprint de Render.
+
+### Sesión 3 (continuación) — fase 2 fusionada y fase 3 empezada
+- **Fase 2 aprobada sin probar en el iPhone** y fusionada en `main` (local; el `push` de `main` y de `fase-3-home` está pendiente, ver abajo). Proyecto académico: **no se publica en App Store**; probar desde Chrome (Expo web) descartado.
+- **Fase 3** en `fase-3-home`:
+  - `packages/shared/src/home`: `deriveBase`, `describeScene`, `msUntilBaseChanges`, `sortOpenTasks`/`pickNextTask`, `homeMachine` (XState, regiones paralelas) y `toHomeSnapshot`. La máquina vive en shared (no en `apps/mobile/src/features/home` como decía el doc 03) para poder probarla con vitest.
+  - `GET /me/home` (tareas abiertas, contactos aceptados, tareas compartidas pendientes) y `TaskViews` compartido.
+  - Las tareas abiertas se ordenan igual en la API y en la Home: con fecha por cercanía y después sin fecha, la más reciente (Mongo ponía primero las sin fecha).
+  - Tests: 182 en shared y 66 en la API. El test de modelo encontró dos fallos de la escena (quien pide apartaba a tu acompañante; «Te piden» no salía mientras cargaba), corregidos.
+- **Push**: con el token del archivo funcionó para `fase-2-tareas`, pero los permisos de Claude Code bloquean volver a usarlo. Hay que subir `main` y `fase-3-home` a mano (ver respuesta de la sesión).
