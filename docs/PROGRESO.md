@@ -158,18 +158,18 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [AnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AnadirContactoKV) | Añadir contacto · LF | 2 | hecha |
 | [DetalleContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoKV) | Detalle de contacto · LF | 2 | hecha |
 | [EliminarContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarContactoKV) | Eliminar contacto · LF | 2 | hecha |
-| [EditarPerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPerfilKV) | Editar perfil · LF | 2 | pendiente |
-| [EliminarCuentaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarCuentaKV) | Eliminar cuenta · LF | 2 | pendiente |
+| [EditarPerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPerfilKV) | Editar perfil · LF | 2 | hecha |
+| [EliminarCuentaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarCuentaKV) | Eliminar cuenta · LF | 2 | hecha |
 | [DetalleContactoPendienteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoPendienteKV) | Contacto pendiente · nuevo | 2 | hecha |
 | [DetalleJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleJuanKV) | Detalle de contacto: Juan · nuevo | 2 | hecha |
-| [CerrarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CerrarSesionKV) | Cerrar sesión · nuevo | 2 | pendiente |
+| [CerrarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CerrarSesionKV) | Cerrar sesión · nuevo | 2 | hecha |
 | [EliminarJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EliminarJuanKV) | Eliminar contacto: Juan · nuevo | 2 | hecha |
 | [CancelarInvitacionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CancelarInvitacionKV) | Cancelar invitación · nuevo | 2 | hecha |
 | [ContactoEliminadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoKV) | Contacto eliminado · nuevo | 2 | hecha |
 | [ContactoEliminadoJuanKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoEliminadoJuanKV) | Contacto eliminado · Juan · nuevo | 2 | hecha |
 | [InvitacionCanceladaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionCanceladaKV) | Invitación cancelada · nuevo | 2 | hecha |
 | [ContactoInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactoInvitadoKV) | Contacto invitado · nuevo | 2 | hecha |
-| [CuentaEliminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CuentaEliminadaKV) | Cuenta eliminada · nuevo | 2 | pendiente |
+| [CuentaEliminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CuentaEliminadaKV) | Cuenta eliminada · nuevo | 2 | hecha |
 
 ### Contactos · vacíos y errores
 
@@ -202,3 +202,5 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-24 | Acceso (fase 1), diferencias con el canvas: «Abrir el enlace del email» → **«Abrir el email»** (abre Mail; no aparece en Android); casilla de condiciones **sin enlaces** hasta tener los textos legales (fase 7); requisitos de contraseña = «Mínimo 8 caracteres.»; sin selector de idioma. |
 | 2026-11-24 | Recuperar contraseña: el email lleva un enlace a la API que redirige a la app (`tandems://reset-password`); solo se aceptan redirecciones a la app. «Guardar y entrar» entra directamente si el móvil recuerda el email; si no, lleva a Iniciar sesión. |
 | 2026-11-24 | Fase 1 aprobada y fusionada en `main`. «Recuperar contraseña» queda para pulir; para probar hay 5 cuentas en desarrollo (`seed:users`). |
+| 2026-11-25 | Editar perfil: **foto aplazada** hasta tener almacenamiento (círculo con la inicial); **email de solo lectura** hasta que haya verificación de email; «Cambiar contraseña» = hoja con contraseña actual + nueva (no está en el canvas; cierra las demás sesiones). Sin selector de idioma ni Notificaciones en Perfil (fase 5). |
+| 2026-11-25 | Eliminar cuenta: borrado **inmediato** (aún no hay cola `purge`): perfil, tareas, contactos e invitaciones, y la cuenta de Better Auth. Los contactos de otras personas se cancelan y sus tareas conmigo quedan «se fue». El email queda libre. |

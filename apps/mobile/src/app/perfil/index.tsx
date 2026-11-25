@@ -1,10 +1,20 @@
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { useContactsControllerList, useMeControllerMe } from '@tandems/api-client';
 import { authClient } from '@/lib/auth';
 import { es } from '@/strings/es';
 import { colors, radii, selfColor, sizes, spacing } from '@/theme';
-import { EmphasisText, ListCard, ListRow, Screen, Text, useToast } from '@/ui';
+import {
+  CardAction,
+  ConfirmSheet,
+  EmphasisText,
+  ListCard,
+  ListRow,
+  Screen,
+  Text,
+  useToast,
+} from '@/ui';
 
 export default function ProfileScreen() {
   const toast = useToast();
@@ -12,8 +22,11 @@ export default function ProfileScreen() {
   const contacts = useContactsControllerList();
   const profile = me.data?.status === 200 ? me.data.data : undefined;
   const count = contacts.data?.status === 200 ? contacts.data.data.length : 0;
+  const [confirmingSignOut, setConfirmingSignOut] = useState(false);
+  const sheet = es.profile.signOutSheet;
 
   const signOut = async () => {
+    setConfirmingSignOut(false);
     await authClient.signOut();
     toast(es.profile.signedOut);
   };
@@ -44,6 +57,9 @@ export default function ProfileScreen() {
           </View>
         </View>
       )}
+      <View style={styles.editRow}>
+        <CardAction label={es.profile.edit} onPress={() => router.push('/perfil/editar')} />
+      </View>
       <EmphasisText text={es.profile.myPeople} variant="section" accessibilityRole="header" />
       <ListCard>
         <ListRow
@@ -54,8 +70,23 @@ export default function ProfileScreen() {
         />
       </ListCard>
       <ListCard>
-        <ListRow icon="userMinus" title={es.profile.signOut} destructive onPress={signOut} />
+        <ListRow
+          icon="userMinus"
+          title={es.profile.signOut}
+          destructive
+          onPress={() => setConfirmingSignOut(true)}
+        />
       </ListCard>
+
+      <ConfirmSheet
+        visible={confirmingSignOut}
+        title={sheet.title}
+        body={sheet.body}
+        confirmLabel={sheet.confirm}
+        cancelLabel={sheet.cancel}
+        onConfirm={() => void signOut()}
+        onCancel={() => setConfirmingSignOut(false)}
+      />
     </Screen>
   );
 }
@@ -76,4 +107,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   flex: { flex: 1 },
+  editRow: { flexDirection: 'row', paddingHorizontal: spacing.sm },
 });

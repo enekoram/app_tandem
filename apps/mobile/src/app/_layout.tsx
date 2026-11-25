@@ -52,7 +52,9 @@ export default function RootLayout() {
           >
             <Stack.Protected guard={signedIn}>
               <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="perfil" />
+              <Stack.Screen name="perfil/index" />
+              <Stack.Screen name="perfil/editar" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="perfil/contrasena" options={{ presentation: 'modal' }} />
               <Stack.Screen name="contactos/index" />
               <Stack.Screen name="contactos/[id]" />
               <Stack.Screen name="contactos/nuevo" options={{ presentation: 'modal' }} />

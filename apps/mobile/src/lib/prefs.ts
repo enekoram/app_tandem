@@ -8,6 +8,7 @@ const KEYS = {
   onboardingSeen: 'tandems.onboarding_seen',
   resetEmail: 'tandems.reset_email',
   pendingInvite: 'tandems.pending_invite',
+  accountDeleted: 'tandems.account_deleted',
 } as const;
 
 export const prefs = {
@@ -20,4 +21,8 @@ export const prefs = {
   pendingInvite: () => SecureStore.getItem(KEYS.pendingInvite),
   setPendingInvite: (token: string) => SecureStore.setItemAsync(KEYS.pendingInvite, token),
   clearPendingInvite: () => SecureStore.deleteItemAsync(KEYS.pendingInvite),
+  /** Tras eliminar la cuenta: al salir se enseña «Cuenta eliminada» una vez. */
+  accountDeleted: () => SecureStore.getItem(KEYS.accountDeleted) === '1',
+  setAccountDeleted: () => SecureStore.setItemAsync(KEYS.accountDeleted, '1'),
+  clearAccountDeleted: () => SecureStore.deleteItemAsync(KEYS.accountDeleted),
 };
