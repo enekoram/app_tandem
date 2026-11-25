@@ -172,3 +172,8 @@
 - Rama `fase-6-pulido` (sale de `fase-5-apoyo`): SinConexion (NetInfo + onlineManager; apoyo desactivado sin red), ErrGuardar con «Reintentar», exportar mis datos (GET /me/export + hoja de compartir).
 - Tests: 193 en shared y 95 en la API. Empaqueta para iOS.
 - Lo que queda del proyecto ya depende de probar en el móvil (`docs/PRUEBAS-PENDIENTES.txt`) y de cuentas (EAS para push, Render para staging).
+
+### Cierre de la sesión 3
+- La petición de apoyo **no caduca** (cambio de decisión): espera hasta que respondan.
+- **Fases 3 a 6 fusionadas en `main`** (sin probar en el móvil, con visto bueno). Lo pendiente: `docs/PRUEBAS-PENDIENTES.txt`; arreglos en ramas `fix-…` sobre `main`.
+- 🧑 Subir: `git push origin main fase-3-home fase-4-sesiones fase-5-apoyo fase-6-pulido` desde Terminal (la primera vez pide usuario y token).
