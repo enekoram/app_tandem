@@ -91,6 +91,15 @@ describe('Perfil y cuenta (e2e)', () => {
     });
   });
 
+  it('exportar mis datos: perfil y lo mío, sin credenciales', async () => {
+    const res = await as('Rosa').get('/me/export').expect(200);
+    expect(res.headers['content-disposition']).toContain('tandems-mis-datos.json');
+    expect(res.body.profile).toMatchObject({ email: emailOf('Rosa') });
+    expect(res.body).toHaveProperty('tasks');
+    expect(JSON.stringify(res.body)).not.toMatch(/password|session_token|auth_user/);
+    await http.get('/me/export').expect(401);
+  });
+
   describe('eliminar cuenta', () => {
     let juanForMarta: string; // contacto de Marta
     let martaTask: string; // tarea de Marta que acompaña Juan

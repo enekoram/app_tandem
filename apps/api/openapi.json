@@ -97,6 +97,45 @@
         ]
       }
     },
+    "/me/notifications": {
+      "patch": {
+        "operationId": "MeController_notifications",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
     "/health": {
       "get": {
         "operationId": "HealthController_check",
@@ -956,6 +995,700 @@
           "tasks"
         ]
       }
+    },
+    "/me/home": {
+      "get": {
+        "operationId": "HomeController_home",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/sessions": {
+      "get": {
+        "operationId": "SessionsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      },
+      "post": {
+        "operationId": "SessionsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  },
+                  "scheduledAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "durationMin": {
+                    "type": "number"
+                  },
+                  "meetUrl": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "taskId",
+                  "scheduledAt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "SESSION_IN_PAST: esa hora ya ha pasado"
+          },
+          "409": {
+            "description": "NO_COMPANION · SESSION_EXISTS"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}": {
+      "get": {
+        "operationId": "SessionsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/accept": {
+      "post": {
+        "operationId": "SessionsController_accept",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/reject": {
+      "post": {
+        "operationId": "SessionsController_reject",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/propose": {
+      "post": {
+        "operationId": "SessionsController_propose",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scheduledAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                  },
+                  "message": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "scheduledAt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/cancel": {
+      "post": {
+        "operationId": "SessionsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}/join": {
+      "post": {
+        "operationId": "SessionsController_join",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "NOT_STARTED: aún no se puede entrar"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/support/requests": {
+      "post": {
+        "operationId": "SupportController_request",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  },
+                  "message": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "taskId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupportRequestDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "NO_COMPANION"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/requests/{id}/decline": {
+      "post": {
+        "operationId": "SupportController_decline",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending": {
+      "post": {
+        "operationId": "SupportController_start",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  }
+                },
+                "required": [
+                  "taskId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendingDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending/{id}/beat": {
+      "post": {
+        "operationId": "SupportController_beat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "409": {
+            "description": "SUPPORT_OVER: ya ha terminado (5 min como máximo)"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending/{id}/end": {
+      "post": {
+        "operationId": "SupportController_end",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/thinking": {
+      "post": {
+        "operationId": "SupportController_thinking",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  }
+                },
+                "required": [
+                  "contactId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "429": {
+            "description": "THINKING_LIMIT"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/me/export": {
+      "get": {
+        "operationId": "ExportController_export",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "JSON con todos mis datos"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/me/devices": {
+      "post": {
+        "operationId": "DevicesController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "pattern": "^Expo(nent)?PushToken\\[[^\\]]+\\]$"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "ios",
+                      "android"
+                    ]
+                  }
+                },
+                "required": [
+                  "token",
+                  "platform"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/me/devices/unregister": {
+      "post": {
+        "operationId": "DevicesController_unregister",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "pattern": "^Expo(nent)?PushToken\\[[^\\]]+\\]$"
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "ios",
+                      "android"
+                    ]
+                  }
+                },
+                "required": [
+                  "token",
+                  "platform"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
     }
   },
   "info": {
@@ -995,6 +1728,13 @@
               "soft",
               "minimal"
             ]
+          },
+          "notifications": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Avisos activados (supportRequests, sharedTasks, sessionInvites, tasksDone, supportReceived, hurras, sessionReminders); por defecto, todos"
           }
         },
         "required": [
@@ -1002,7 +1742,8 @@
           "displayName",
           "email",
           "timezone",
-          "stimulus"
+          "stimulus",
+          "notifications"
         ]
       },
       "TerminusHealthIndicatorResult": {
@@ -1340,6 +2081,246 @@
           "doneAt",
           "hurraAt",
           "createdAt"
+        ]
+      },
+      "SessionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskTitle": {
+            "type": "string",
+            "example": "Hacer la renta"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "description": "ISO 8601 (UTC)"
+          },
+          "durationMin": {
+            "type": "number",
+            "enum": [
+              15,
+              25,
+              45,
+              60
+            ]
+          },
+          "endsAt": {
+            "type": "string",
+            "description": "ISO 8601 (UTC)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "accepted",
+              "rejected",
+              "cancelled",
+              "live",
+              "ended"
+            ],
+            "description": "Estado efectivo (terminada si ya pasó)"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "companion"
+            ],
+            "description": "Mi papel en la tarea"
+          },
+          "proposedByMe": {
+            "type": "boolean",
+            "description": "La propuesta actual es mía (la otra persona tiene que responder)"
+          },
+          "previousScheduledAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Hora anterior si se reprogramó"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "meetUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "person": {
+            "nullable": true,
+            "description": "La otra persona, en mi paleta",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskPersonDto"
+              }
+            ]
+          },
+          "joinedByMe": {
+            "type": "boolean"
+          },
+          "otherJoined": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "taskId",
+          "taskTitle",
+          "scheduledAt",
+          "durationMin",
+          "endsAt",
+          "status",
+          "role",
+          "proposedByMe",
+          "previousScheduledAt",
+          "message",
+          "meetUrl",
+          "person",
+          "joinedByMe",
+          "otherJoined"
+        ]
+      },
+      "SupportRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskTitle": {
+            "type": "string",
+            "example": "Estudiar inglés"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Cuándo se pidió (no caduca: espera respuesta)"
+          },
+          "person": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskPersonDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "taskId",
+          "taskTitle",
+          "message",
+          "createdAt",
+          "person"
+        ]
+      },
+      "SupportStateDto": {
+        "type": "object",
+        "properties": {
+          "incoming": {
+            "description": "Me piden apoyo (sin responder)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportRequestDto"
+            }
+          },
+          "outgoing": {
+            "description": "He pedido apoyo (sin respuesta)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportRequestDto"
+            }
+          },
+          "sendingContactIds": {
+            "description": "Contactos que me están enviando apoyo ahora",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "incoming",
+          "outgoing",
+          "sendingContactIds"
+        ]
+      },
+      "HomeDto": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "description": "Mis tareas abiertas, en orden",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskDto"
+            }
+          },
+          "contacts": {
+            "description": "Contactos aceptados",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactDto"
+            }
+          },
+          "shared": {
+            "description": "Tareas que me comparten y esperan respuesta («Te piden»)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskDto"
+            }
+          },
+          "presentContactIds": {
+            "description": "Contactos aceptados con la app abierta ahora («está contigo»)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sessions": {
+            "description": "Sesiones por confirmar, aceptadas y en curso (por hora)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionDto"
+            }
+          },
+          "support": {
+            "$ref": "#/components/schemas/SupportStateDto"
+          }
+        },
+        "required": [
+          "tasks",
+          "contacts",
+          "shared",
+          "presentContactIds",
+          "sessions",
+          "support"
+        ]
+      },
+      "SendingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Como mucho 5 min por envío"
+          }
+        },
+        "required": [
+          "id",
+          "expiresAt"
         ]
       }
     }

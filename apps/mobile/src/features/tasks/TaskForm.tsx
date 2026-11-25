@@ -30,6 +30,8 @@ export interface TaskFormProps {
   task?: TaskDto;
   /** Error del servidor para mostrar arriba (p. ej. TASK_LIMIT o sin conexión). */
   serverError?: string | null;
+  /** ErrGuardar: «Reintentar» en el aviso del error. */
+  onRetry?: () => void;
   /** El padre envía; el formulario solo valida y devuelve los valores. */
   onValid: (values: TaskFormValues) => void;
   /** Para que la cabecera (fuera del formulario) pueda disparar el envío. */
@@ -37,7 +39,14 @@ export interface TaskFormProps {
   footer?: React.ReactNode;
 }
 
-export function TaskForm({ task, serverError, onValid, submitRef, footer }: TaskFormProps) {
+export function TaskForm({
+  task,
+  serverError,
+  onRetry,
+  onValid,
+  submitRef,
+  footer,
+}: TaskFormProps) {
   const t = es.tasks.form;
   const contactsQuery = useContactsControllerList();
   const contacts: ContactDto[] = contactsQuery.data?.status === 200 ? contactsQuery.data.data : [];
@@ -76,7 +85,12 @@ export function TaskForm({ task, serverError, onValid, submitRef, footer }: Task
   return (
     <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.body}>
       {missing > 0 && <FormAlert title={t.missing(missing)} body={t.missingBody} />}
-      {serverError && <FormAlert title={serverError} />}
+      {serverError && (
+        <FormAlert
+          title={serverError}
+          action={onRetry ? { label: es.tasks.retry, onPress: onRetry } : undefined}
+        />
+      )}
       <TextField
         label={t.name}
         placeholder={t.namePlaceholder}

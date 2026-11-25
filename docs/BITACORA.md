@@ -140,3 +140,35 @@
 2. 🧑 Probar en el iPhone: editar perfil, cambiar contraseña, cerrar sesión, eliminar cuenta, y el recorrido de invitación con una cuenta nueva.
 3. Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro: **aplazados** hasta el development build (decisión de hoy). Con eso, la fase 2 está completa a falta de tu prueba y visto bueno («ok fase 2» → fusionar en `main`).
 4. 🧑 Conectar el Blueprint de Render.
+
+### Sesión 3 (continuación) — fase 2 fusionada y fase 3 empezada
+- **Fase 2 aprobada sin probar en el iPhone** y fusionada en `main` (local; el `push` de `main` y de `fase-3-home` está pendiente, ver abajo). Proyecto académico: **no se publica en App Store**; probar desde Chrome (Expo web) descartado.
+- **Fase 3** en `fase-3-home`:
+  - `packages/shared/src/home`: `deriveBase`, `describeScene`, `msUntilBaseChanges`, `sortOpenTasks`/`pickNextTask`, `homeMachine` (XState, regiones paralelas) y `toHomeSnapshot`. La máquina vive en shared (no en `apps/mobile/src/features/home` como decía el doc 03) para poder probarla con vitest.
+  - `GET /me/home` (tareas abiertas, contactos aceptados, tareas compartidas pendientes) y `TaskViews` compartido.
+  - Las tareas abiertas se ordenan igual en la API y en la Home: con fecha por cercanía y después sin fecha, la más reciente (Mongo ponía primero las sin fecha).
+  - Tests: 182 en shared y 66 en la API. El test de modelo encontró dos fallos de la escena (quien pide apartaba a tu acompañante; «Te piden» no salía mientras cargaba), corregidos.
+- **Push**: con el token del archivo funcionó para `fase-2-tareas`, pero los permisos de Claude Code bloquean volver a usarlo. Hay que subir `main` y `fase-3-home` a mano (ver respuesta de la sesión).
+- Después: tiempo real (gateway Socket.IO, change streams de `tasks` y `contacts`, presencia en memoria; un fallo encontrado por el test: `contact_user_id` no convierte cadenas a ObjectId), hooks `useCompleteTask`/`useRespondShared`, `sceneGeometry`, `HomeScene` (Skia, goo), carrusel «Para hoy» y la pantalla Hoy nueva. La app **empaqueta para iOS con Metro sin errores** (`expo export`), pero nada visual se ha visto en un móvil.
+- Tests: 188 en shared y 70 en la API.
+
+### Pendiente
+1. 🧑 **Subir**: `git push origin main && git push -u origin fase-3-home` desde Terminal (el llavero ya no tiene la credencial vieja; la primera vez pide usuario `enekoram` y el token).
+2. 🧑 **Probar la Home en el móvil con Expo Go** (lista de casos en la respuesta de la sesión) y ajustar posiciones, tamaños y muelles.
+3. Con el visto bueno de la fase 3: fusionar y seguir con la fase 4 (sesiones).
+
+### Sesión 3 (continuación) — fase 4 (sesiones)
+- `docs/PRUEBAS-PENDIENTES.txt`: todo lo que falta probar en el móvil (fases 1–4), para ir punto por punto.
+- Rama `fase-4-sesiones` (sale de `fase-3-home`). API de sesiones con tests (programar, aceptar/rechazar, proponer otra hora/reprogramar, cancelar, unirse; persona ajena → 404), sesiones en `/me/home` y en tiempo real. App: Mis sesiones, Programar, ConfirmarSesion, hojas de rechazar/cancelar, Proponer/Reprogramar, SesionActiva y tarjetas en la Home. La app empaqueta para iOS sin errores.
+- Aplazado de la fase 4: Google OAuth, Calendar y recordatorios en cola (ver docs/05).
+- Tests: 192 en shared y 82 en la API.
+
+### Sesión 3 (continuación) — fase 5 (apoyo y avisos)
+- Rama `fase-5-apoyo` (sale de `fase-4-sesiones`). API: support_events (pedir, ahora no, enviar en vivo con latidos, «Pensé en ti»), preferencias de avisos, device_tokens, avisos push con reglas sobre los change streams y recordatorio de sesión. App: Pedir apoyo, Apoyo pedido/recibido con el corazón, «Enviar apoyo» manteniendo pulsado (háptica), «Pensé en ti», HurraRecibido, Notificaciones y PermisoNotificaciones.
+- Tests: 193 en shared y 94 en la API. La app empaqueta para iOS sin errores. Nada probado en el móvil.
+- 🧑 Para recibir push: `npx eas login` + `npx eas init` en apps/mobile (projectId). En Expo Go solo iPhone.
+
+### Sesión 3 (continuación) — fase 6 (pulido, lo que se puede sin móvil)
+- Rama `fase-6-pulido` (sale de `fase-5-apoyo`): SinConexion (NetInfo + onlineManager; apoyo desactivado sin red), ErrGuardar con «Reintentar», exportar mis datos (GET /me/export + hoja de compartir).
+- Tests: 193 en shared y 95 en la API. Empaqueta para iOS.
+- Lo que queda del proyecto ya depende de probar en el móvil (`docs/PRUEBAS-PENDIENTES.txt`) y de cuentas (EAS para push, Render para staging).

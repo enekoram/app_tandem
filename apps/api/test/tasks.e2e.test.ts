@@ -198,8 +198,11 @@ describe('Tareas (e2e)', () => {
     const open = (await as('Marta').get('/tasks')).body as {
       id: string;
       companionStatus: string;
+      person?: { contactId: string };
     }[];
-    const withJuan = open.find((x) => x.companionStatus === 'pending')!.id;
+    const withJuan = open.find(
+      (x) => x.companionStatus === 'pending' && x.person?.contactId === juan,
+    )!.id;
     await as('Juan').post(`/tasks/${withJuan}/accept`).expect(200);
     const left = await as('Juan').post(`/tasks/${withJuan}/leave`).expect(200);
     expect(left.body.companionStatus).toBe('left');
@@ -290,5 +293,51 @@ describe('Tareas (e2e)', () => {
   it('sin sesión → 401', async () => {
     await http.get('/tasks').expect(401);
     await http.post('/tasks').send(task('x', juan)).expect(401);
+  });
+
+  it('orden de abiertas: con fecha por cercanía y después sin fecha, la más reciente', async () => {
+    await person('Olga');
+    const companion = await connect('Olga', 'Rosa');
+    const pause = () => new Promise((r) => setTimeout(r, 5));
+    for (const [title, dueAt] of [
+      ['sin fecha, vieja', undefined],
+      ['tarde', '2026-12-10T10:00:00+01:00'],
+      ['sin fecha, nueva', undefined],
+      ['pronto', '2026-12-01T10:00:00+01:00'],
+    ] as const) {
+      await as('Olga')
+        .post('/tasks', { ...task(title, companion), ...(dueAt ? { dueAt } : {}) })
+        .expect(201);
+      await pause();
+    }
+    const res = await as('Olga').get('/tasks?status=open').expect(200);
+    expect(res.body.map((x: { title: string }) => x.title)).toEqual([
+      'pronto',
+      'tarde',
+      'sin fecha, nueva',
+      'sin fecha, vieja',
+    ]);
+  });
+
+  it('GET /me/home: mis abiertas en orden, contactos aceptados y lo que me comparten', async () => {
+    await person('Nora');
+    await person('Iker');
+    const iker = await connect('Nora', 'Iker');
+    await connect('Nora', 'Sincuenta', false);
+    await as('Nora').post('/tasks', task('Ordenar el armario', iker)).expect(201);
+    const ikerForNora = (await as('Iker').get('/contacts').expect(200)).body[0].id as string;
+    await as('Iker').post('/tasks', task('Ir a correr', ikerForNora)).expect(201);
+
+    const home = (await as('Nora').get('/me/home').expect(200)).body;
+    expect(home.tasks.map((x: { title: string }) => x.title)).toEqual(['Ordenar el armario']);
+    expect(home.contacts.map((c: { name: string }) => c.name)).toEqual(['Iker']);
+    expect(home.shared).toMatchObject([
+      { title: 'Ir a correr', role: 'companion', companionStatus: 'pending' },
+    ]);
+
+    // Lo de otras personas no aparece en su Home
+    const other = (await as('Pepe').get('/me/home').expect(200)).body;
+    expect(JSON.stringify(other)).not.toContain('Ordenar el armario');
+    await http.get('/me/home').expect(401);
   });
 });

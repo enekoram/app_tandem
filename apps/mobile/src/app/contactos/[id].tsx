@@ -9,6 +9,7 @@ import {
   getTasksControllerListQueryKey,
   useContactsControllerGet,
   useContactsControllerResend,
+  useSupportControllerThinking,
   useTasksControllerAccompanying,
   useTasksControllerList,
   type ContactDto,
@@ -41,6 +42,7 @@ export default function ContactDetailScreen() {
   const mine = useTasksControllerList();
   const theirs = useTasksControllerAccompanying();
   const resend = useContactsControllerResend();
+  const thinking = useSupportControllerThinking();
   const [confirming, setConfirming] = useState(false);
   const [resentTo, setResentTo] = useState<string | null>(null);
 
@@ -188,6 +190,27 @@ export default function ContactDetailScreen() {
         </>
       ) : (
         <>
+          <Button
+            label={es.support.thinking.action}
+            icon="heart"
+            variant="secondary"
+            disabled={thinking.isPending}
+            onPress={() =>
+              thinking.mutate(
+                { data: { contactId: contact.id } },
+                {
+                  onSuccess: () => toast(es.support.thinking.sent(contact.name), { kind: 'ok' }),
+                  onError: (error) =>
+                    toast(
+                      apiErrorCode(error) === 'THINKING_LIMIT'
+                        ? es.support.thinking.limit
+                        : es.auth.errors.network,
+                      { kind: 'err' },
+                    ),
+                },
+              )
+            }
+          />
           <TaskSection
             title={t.accompaniesYou}
             tasks={myTasks}

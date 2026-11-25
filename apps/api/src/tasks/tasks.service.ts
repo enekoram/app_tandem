@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import {
   MAX_OPEN_TASKS,
+  sortOpenTasks,
   type CompanionStatus,
   type CreateTaskInput,
   type UpdateTaskInput,
@@ -29,20 +30,20 @@ export class TasksService {
 
   // ── Lectura ─────────────────────────────────────────────────────────────────
 
-  listMine(me: UserDocument, status: 'open' | 'done'): Promise<TaskDocument[]> {
-    const sort: Record<string, 1 | -1> =
-      status === 'open' ? { due_at: 1, created_at: 1 } : { done_at: -1 };
-    return this.tasks.find({ owner_id: me._id, status }).sort(sort);
+  async listMine(me: UserDocument, status: 'open' | 'done'): Promise<TaskDocument[]> {
+    if (status === 'done') {
+      return this.tasks.find({ owner_id: me._id, status }).sort({ done_at: -1 });
+    }
+    return openOrder(await this.tasks.find({ owner_id: me._id, status }));
   }
 
-  listAccompanying(me: UserDocument, status: 'open' | 'done'): Promise<TaskDocument[]> {
-    return this.tasks
-      .find({
-        'companion.user_id': me._id,
-        'companion.status': status === 'open' ? { $in: VISIBLE_TO_COMPANION } : 'accepted',
-        status,
-      })
-      .sort(status === 'open' ? { due_at: 1, created_at: 1 } : { done_at: -1 });
+  async listAccompanying(me: UserDocument, status: 'open' | 'done'): Promise<TaskDocument[]> {
+    const query = this.tasks.find({
+      'companion.user_id': me._id,
+      'companion.status': status === 'open' ? { $in: VISIBLE_TO_COMPANION } : 'accepted',
+      status,
+    });
+    return status === 'done' ? query.sort({ done_at: -1 }) : openOrder(await query);
   }
 
   /** Tarea visible para `me` como dueña o acompañante (404 en otro caso: no se revela que existe). */
@@ -254,4 +255,13 @@ export class TasksService {
       changed_at: new Date(),
     };
   }
+}
+
+/**
+ * Orden de las tareas abiertas (el mismo que la Home, doc 03): con fecha por cercanía y
+ * después sin fecha, de la más reciente. Mongo pone los `null` primero, así que se ordena aquí.
+ */
+function openOrder(tasks: TaskDocument[]): TaskDocument[] {
+  const keyed = tasks.map((task) => ({ task, dueAt: task.due_at, createdAt: task.created_at }));
+  return sortOpenTasks(keyed).map((x) => x.task);
 }

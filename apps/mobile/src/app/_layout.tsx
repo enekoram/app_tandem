@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -12,7 +13,8 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 import { authClient } from '@/lib/auth';
 import { colors, fontFamilies } from '@/theme';
-import { ToastProvider } from '@/ui';
+import { OfflineBanner, ToastProvider } from '@/ui';
+import '@/lib/online';
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -31,6 +33,15 @@ export default function RootLayout() {
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
   }, [ready]);
+
+  // Al tocar un aviso push: abrir su pantalla (la ruta viene en el aviso, sin contenido)
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      const url = response.notification.request.content.data?.url;
+      if (typeof url === 'string' && url.startsWith('/')) router.navigate(url as never);
+    });
+    return () => sub.remove();
+  }, []);
 
   // Al cerrar sesión, fuera los datos de la persona anterior
   useEffect(() => {
@@ -55,6 +66,12 @@ export default function RootLayout() {
               <Stack.Screen name="perfil/index" />
               <Stack.Screen name="perfil/editar" options={{ presentation: 'modal' }} />
               <Stack.Screen name="perfil/contrasena" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="perfil/notificaciones" />
+              <Stack.Screen name="apoyo/pedir" options={{ presentation: 'modal' }} />
+              <Stack.Screen
+                name="avisos"
+                options={{ presentation: 'modal', gestureEnabled: false }}
+              />
               <Stack.Screen name="contactos/index" />
               <Stack.Screen name="contactos/[id]" />
               <Stack.Screen name="contactos/nuevo" options={{ presentation: 'modal' }} />
@@ -63,8 +80,13 @@ export default function RootLayout() {
               <Stack.Screen name="tarea/[id]/acompanante" options={{ presentation: 'modal' }} />
               <Stack.Screen name="tarea/terminada" options={{ gestureEnabled: false }} />
               <Stack.Screen name="tarea/terminadas" />
+              <Stack.Screen name="tarea/hurra" options={{ gestureEnabled: false }} />
               <Stack.Screen name="acompano/tareas" />
               <Stack.Screen name="acompano/terminadas" />
+              <Stack.Screen name="sesion/nueva" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="sesion/[id]" />
+              <Stack.Screen name="sesion/[id]/hora" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="sesion/[id]/activa" options={{ gestureEnabled: false }} />
             </Stack.Protected>
             <Stack.Protected guard={!signedIn}>
               <Stack.Screen name="(auth)" />
@@ -72,6 +94,8 @@ export default function RootLayout() {
             {/* Enlace de invitación: con o sin sesión */}
             <Stack.Screen name="invitacion" />
           </Stack>
+          {/* Encima de todo: SinConexion */}
+          <OfflineBanner />
         </ToastProvider>
       </QueryClientProvider>
     </SafeAreaProvider>

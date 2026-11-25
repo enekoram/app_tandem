@@ -10,6 +10,9 @@ const KEYS = {
   pendingInvite: 'tandems.pending_invite',
   pendingInviteAuto: 'tandems.pending_invite_auto',
   accountDeleted: 'tandems.account_deleted',
+  hurrasSeen: 'tandems.hurras_seen',
+  pushAsked: 'tandems.push_asked',
+  pushToken: 'tandems.push_token',
 } as const;
 
 export const prefs = {
@@ -35,4 +38,14 @@ export const prefs = {
   accountDeleted: () => SecureStore.getItem(KEYS.accountDeleted) === '1',
   setAccountDeleted: () => SecureStore.setItemAsync(KEYS.accountDeleted, '1'),
   clearAccountDeleted: () => SecureStore.deleteItemAsync(KEYS.accountDeleted),
+  /** ¡Hurras! ya celebrados (ids de tarea), para enseñar HurraRecibido una sola vez. */
+  hurrasSeen: (): string[] => JSON.parse(SecureStore.getItem(KEYS.hurrasSeen) ?? '[]') as string[],
+  setHurrasSeen: (ids: string[]) =>
+    SecureStore.setItemAsync(KEYS.hurrasSeen, JSON.stringify(ids.slice(-50))),
+  /** PermisoNotificaciones se enseña una sola vez. */
+  pushAsked: () => SecureStore.getItem(KEYS.pushAsked) === '1',
+  setPushAsked: () => SecureStore.setItemAsync(KEYS.pushAsked, '1'),
+  pushToken: () => SecureStore.getItem(KEYS.pushToken),
+  setPushToken: (token: string) => SecureStore.setItemAsync(KEYS.pushToken, token),
+  clearPushToken: () => SecureStore.deleteItemAsync(KEYS.pushToken),
 };

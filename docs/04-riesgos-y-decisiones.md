@@ -34,7 +34,7 @@
 | 4 | Onboarding propio para la invitada | ★ **Sí, corto**: 2 pantallas (qué es acompañar + permiso de notificaciones) y BienvenidaInvitado con la tarea compartida. | Fase 2 |
 | 5 | Meet por enlace o videollamada integrada | ★ **Meet (Opción A)** + SesionActiva en la app; enlace manual mientras Google verifica. LiveKit tras el MVP si las pruebas con usuarios lo piden. Ver doc 01 §7. | Fase 4 |
 | 6 | Reciprocidad por defecto | ★ La **relación de contacto** es siempre mutua; **acompañar** no: cada tarea se acepta una a una. No se activa nada «por defecto» sin que la otra persona acepte. | Fase 2 |
-| 7 | Ventana de deshacer y duración del apoyo | ★ Deshacer: **8 s**. Petición de apoyo: caduca a los **15 min** sin respuesta. Envío de apoyo en vivo: hasta que se suelta o **5 min** como máximo por envío. Vibración del corazón: háptica suave en cada latido solo en estímulo «completo». | Fases 2 y 5 |
+| 7 | Ventana de deshacer y duración del apoyo | ★ Deshacer: **8 s**. Petición de apoyo: **no caduca** (cambiado el 2026-11-25): sigue abierta hasta que la otra persona envía apoyo o dice «Ahora no». Envío de apoyo en vivo: hasta que se suelta o **5 min** como máximo por envío. Vibración del corazón: háptica suave en cada latido solo en estímulo «completo». | Fases 2 y 5 |
 
 ### Otras dudas que plantea el canvas (decididas)
 

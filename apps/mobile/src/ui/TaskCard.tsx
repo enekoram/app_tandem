@@ -71,10 +71,20 @@ export interface TaskCardProps {
   featured?: boolean;
   onDone?: () => void;
   onEdit?: () => void;
+  /** «Pedir apoyo» (PedirApoyo); con `supportAsked`, «Pedido». */
+  onAskSupport?: () => void;
+  supportAsked?: boolean;
 }
 
 /** Tarjeta de una tarea propia (canvas «Mis tareas»). */
-export function TaskCard({ task, featured = false, onDone, onEdit }: TaskCardProps) {
+export function TaskCard({
+  task,
+  featured = false,
+  onDone,
+  onEdit,
+  onAskSupport,
+  supportAsked = false,
+}: TaskCardProps) {
   const active = task.companionStatus === 'pending' || task.companionStatus === 'accepted';
   const person = usePersonStyle(task.person?.color);
   const { caption, prefix, suffix } = describe(task);
@@ -110,8 +120,16 @@ export function TaskCard({ task, featured = false, onDone, onEdit }: TaskCardPro
           {task.description}
         </Text>
       ) : null}
-      {(onDone || onEdit) && (
+      {(onDone || onEdit || onAskSupport) && (
         <View style={styles.actions}>
+          {onAskSupport && (
+            <CardAction
+              label={supportAsked ? es.support.ask.asked : es.support.ask.action}
+              icon="heart"
+              variant={supportAsked ? 'solid' : 'ghost'}
+              onPress={onAskSupport}
+            />
+          )}
           {onDone && (
             <CardAction
               label={es.tasks.card.done}

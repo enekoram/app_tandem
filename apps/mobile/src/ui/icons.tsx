@@ -24,7 +24,9 @@ export type IconName =
   | 'users'
   | 'clock'
   | 'lock'
-  | 'trash';
+  | 'trash'
+  | 'heart'
+  | 'bell';
 
 interface IconProps {
   name: IconName;
@@ -128,6 +130,12 @@ export function Icon({ name, size = sizes.icon.nav, color, strokeWidth = 1.6 }: 
           <Rect {...common} x={5} y={10.5} width={14} height={10} rx={3} />
           <Path {...common} d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
         </>
+      )}
+      {name === 'heart' && (
+        <Path {...common} d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
+      )}
+      {name === 'bell' && (
+        <Path {...common} d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15L6 16zM10 20.5a2 2 0 0 0 4 0" />
       )}
       {name === 'trash' && <Path {...common} d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13" />}
       {name === 'send' && <Path {...common} d="M21 3L10 14M21 3l-7 18-4-7-7-4 18-7z" />}

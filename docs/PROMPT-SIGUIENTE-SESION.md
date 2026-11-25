@@ -6,12 +6,12 @@ Retomamos el proyecto **Tandems** (app de acompañamiento para personas con TDAH
 
 Antes de nada, lee en este orden: `CLAUDE.md`, `docs/BITACORA.md` (sobre todo «Pendiente para la próxima sesión» de la última sesión), `docs/05-plan-por-fases.md` (estado de la fase 1 y fase 2), `docs/06-ui-kit.md` y, por encima, `docs/01` a `04` y `docs/PROGRESO.md`. Ahí está todo lo decidido; no vuelvas a plantear decisiones ya tomadas.
 
-Estado: fases 0 y 1 en `main`; fase 2 completa en `fase-2-tareas` a falta de mi prueba en el iPhone y mi visto bueno (deep links y Maestro aplazados). Entorno: Node 24 con fnm en `~/.local/share/fnm`, pnpm 12 por corepack, secretos de desarrollo en `apps/api/.env`.
+Estado: fases 0, 1 y 2 en `main`; fases 3 (Home viva), 4 (sesiones), 5 (apoyo y avisos) y 6 (pulido, la parte sin móvil) escritas en ramas encadenadas (`fase-3-home` → `fase-4-sesiones` → `fase-5-apoyo` → `fase-6-pulido`) y sin probar en el móvil. Lo que hay que probar está en `docs/PRUEBAS-PENDIENTES.txt`: vamos punto por punto. Entorno: Node 24 con fnm en `~/.local/share/fnm`, pnpm 12 por corepack, secretos de desarrollo en `apps/api/.env`.
 
 Hoy:
 1. Comprueba el repositorio (`git status`, rama, commits sin subir, estado de la CI) y dime qué tareas 🧑 de la bitácora siguen abiertas.
 2. Si sigue pendiente, guíame paso a paso para conectar el Blueprint de Render y comprobar `/health` en staging.
-3. [Escribe aquí: «ok fase 2» o los cambios que quieras.] Con el ok, fusiona `fase-2-tareas` en `main`, súbelo y, tras mi visto bueno, empieza la fase 3 en `fase-3-home`, en pasos pequeños y verificables, con commits en castellano y lint/typecheck/tests en verde antes de cada commit. Cada recurso nuevo con su test «persona ajena → 404» y el límite de 5 tareas en el servidor (contador condicional + test de concurrencia).
+3. Repasemos `docs/PRUEBAS-PENDIENTES.txt` punto por punto: te digo qué he visto y lo ajustas. Con el ok de cada fase, fusiona en `main` (en orden: 3, 4, 5 y 6) y súbelo. Después, lo que quede de la fase 6 con el móvil delante, en pasos pequeños y verificables, con commits en castellano y lint/typecheck/tests en verde antes de cada commit. Cada recurso nuevo con su test «persona ajena → 404» y el límite de 5 tareas en el servidor (contador condicional + test de concurrencia).
 4. Cuando llegues a una tarea que solo puedo hacer yo (cuentas, secretos), para y guíame. Las claves nunca se pegan en el chat ni van al repositorio: dime dónde ponerlas.
 
 Recuerda: el canvas (https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f) es de solo lectura; usa solo las páginas «Prototipo con look and feel» (pantallas) y «UI kit» (componentes). Al terminar cada paso, resume qué has hecho, cómo probarlo y qué viene después, y actualiza `docs/BITACORA.md`, `docs/PROGRESO.md` y este prompt **antes de cerrar la sesión**.

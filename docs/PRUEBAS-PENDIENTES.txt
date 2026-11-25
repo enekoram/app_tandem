@@ -1,0 +1,137 @@
+TANDEMS · PRUEBAS PENDIENTES (las hacemos nosotros, en el móvil)
+Creado: 2026-11-25. Marcar [x] al probar; anotar lo que falle debajo de cada punto.
+
+CÓMO PREPARARLO
+- En el Mac: pnpm dev (arranca API + Metro y enseña el QR). Parar: pnpm stop.
+- Móviles en la MISMA red que el Mac (si la wifi del centro no deja, punto de acceso del iPhone).
+- Abrir con Expo Go escaneando el QR (iPhone: con la Cámara).
+- Cuentas de prueba (sin email real): pnpm --filter @tandems/api seed:users
+  -> contraseñas en docs/pwd_usuarios_prueba.txt
+- Para invitaciones hace falta un EMAIL REAL (a @example.com no se envía nada).
+
+─────────────────────────────────────────────
+0. TAREAS DE CUENTAS / ENTORNO
+─────────────────────────────────────────────
+[ ] 0.1 Subir el código desde Terminal (una vez, guarda la credencial):
+        cd ~/Documents/proyectos/app_tandem && git push origin main && git push -u origin fase-3-home
+        Usuario: enekoram · Contraseña: el token
+[ ] 0.2 Conectar el Blueprint de Render y comprobar /health en staging
+[ ] 0.3 Sacar docs/pwd_*.rtf de la carpeta del proyecto a un gestor de contraseñas
+[ ] 0.4 (Opcional) Añadir fnm a ~/.zshrc para que "pnpm dev" funcione en cualquier Terminal
+
+─────────────────────────────────────────────
+1. ACCESO (fase 1)
+─────────────────────────────────────────────
+[ ] 1.1 Onboarding 1–4: animaciones, «Saltar», «Atrás»
+[ ] 1.2 Crear cuenta: errores con campos vacíos, email repetido, contraseña corta
+[ ] 1.3 Iniciar sesión: datos incorrectos y correctos
+[ ] 1.4 Recuperar contraseña COMPLETO: pedir enlace -> abrir el email en el móvil ->
+        «Abrir Tandems» -> crear contraseña nueva -> entrar
+[ ] 1.5 Pasar a «revisada» en docs/PROGRESO.md las pantallas que estén bien
+
+─────────────────────────────────────────────
+2. PERFIL Y CUENTA (fase 2)
+─────────────────────────────────────────────
+[ ] 2.1 Perfil -> Editar perfil: cambiar el nombre; vacío o > 40 caracteres da error
+[ ] 2.2 El email aparece y no se puede editar
+[ ] 2.3 Cambiar contraseña: primero con la actual MAL (error), luego bien;
+        la otra sesión (otro móvil) se cierra
+[ ] 2.4 Cerrar sesión: sale la hoja «¿Cerrar sesión?» y vuelve al acceso
+[ ] 2.5 Eliminar cuenta (con una cuenta de prueba): hoja de confirmación ->
+        «Hasta pronto» -> «Crear una cuenta nueva» con el mismo email funciona
+[ ] 2.6 Tras eliminar, el otro móvil ya no ve a esa persona ni sus tareas
+
+─────────────────────────────────────────────
+3. CONTACTOS E INVITACIONES (fase 2) · dos móviles
+─────────────────────────────────────────────
+[ ] 3.1 Añadir contacto (email real): llega el email; «Compartir enlace» funciona
+[ ] 3.2 Errores: email no válido, contacto repetido, tu propio email
+[ ] 3.3 Detalle de contacto pendiente: reenviar (y límite), cancelar invitación con «Deshacer»
+[ ] 3.4 Móvil B sin cuenta: abrir el enlace -> «Crear cuenta y aceptar» ->
+        nombre rellenado, email fijo -> «Crear cuenta y unirme» ->
+        llega a Acompaño con «Ya formas parte de la red de apoyo de…»
+[ ] 3.5 Móvil B con cuenta: enlace -> «Ya tengo cuenta» -> entrar -> aceptar invitación
+[ ] 3.6 Eliminar contacto aceptado: desaparece en los dos móviles
+
+─────────────────────────────────────────────
+4. TAREAS Y ACOMPAÑO (fase 2) · dos móviles
+─────────────────────────────────────────────
+[ ] 4.1 Nueva tarea con acompañante, con y sin fecha; orden de la lista
+        (con fecha primero, por cercanía; luego sin fecha, la más reciente)
+[ ] 4.2 Límite de 5 tareas: aviso al intentar la sexta
+[ ] 4.3 Editar, borrar con «Deshacer», marcar «Hecha» -> pantalla ¡hurra! -> Terminadas
+[ ] 4.4 Móvil B: aceptar y rechazar (con «Deshacer») una tarea compartida
+[ ] 4.5 Móvil B: dejar de acompañar -> móvil A ve el aviso y puede cambiar de acompañante
+[ ] 4.6 Móvil B: enviar ¡hurra! a una tarea terminada -> móvil A lo ve en Hoy
+
+─────────────────────────────────────────────
+5. HOME VIVA (fase 3) · fijarse en animaciones, tamaños y que nada se corte
+─────────────────────────────────────────────
+[ ] 5.1 Cuenta nueva sin contactos: tú sola + dos huecos discontinuos
+[ ] 5.2 Con contactos y sin tareas: formas separadas; si el otro móvil abre la app,
+        su forma se une y aparece «Marta está contigo»; al cerrarla se atenúa
+[ ] 5.3 Con tarea con acompañante: formas unidas que respiran suave (como el onboarding)
+[ ] 5.4 Móvil B comparte una tarea: aparece SOLA en la Home (sin refrescar),
+        forma con ondas y su tarjeta la primera del carrusel
+[ ] 5.5 «Aceptar» en la tarjeta: las ondas se van y la forma se recoloca con muelle
+[ ] 5.6 Carrusel: deslizar, puntos, flechas (deshabilitadas en los extremos)
+[ ] 5.7 Ajustes del iPhone -> Accesibilidad -> Reducir movimiento: solo fundidos
+[ ] 5.8 VoiceOver: la forma se lee («Tu energía y la de Marta, unidas»),
+        se llega a los botones de las tarjetas, las flechas anuncian «Tarjeta 2 de 3»
+[ ] 5.9 Mandar la app a segundo plano y volver: se actualiza
+[ ] 5.10 Capturas de lo que no se parezca al canvas (para ajustarlo)
+
+─────────────────────────────────────────────
+6. SESIONES (fase 4) · dos móviles; la tarea tiene que estar aceptada por quien acompaña
+─────────────────────────────────────────────
+[ ] 6.1 Mis sesiones vacía -> «Programar sesión»
+[ ] 6.2 Programar: elegir tarea, fecha y hora; una hora pasada da
+        «Esa hora ya ha pasado»; con y sin enlace de Meet; toast «Invitación enviada a…»
+[ ] 6.3 Móvil B: la invitación aparece SOLA en Mis sesiones («Por confirmar») y en la Home
+        («Te piden», con ondas en la forma)
+[ ] 6.4 Móvil B: abrir la invitación (ConfirmarSesion) -> Aceptar sesión
+[ ] 6.5 Móvil B: Rechazar -> hoja con «Rechazar invitación» / «Proponer otra hora» / «Volver»
+[ ] 6.6 Proponer otra hora con mensaje -> en el móvil A pasa a «Por confirmar» con
+        «Antes: …»
+[ ] 6.7 Reprogramar una aceptada («Elegir») y cancelarla (hoja con «Elegir otra hora»)
+[ ] 6.8 Programar una sesión a 5–10 min: la Home cambia a «Tu sesión empieza pronto ·
+        Empieza en N min», las formas laten suave y aparece «Unirse a la sesión»
+[ ] 6.9 Unirse: SesionActiva; el otro móvil ve «En curso» y la forma fusionada con
+        «EN VIVO»; «Abrir Google Meet» abre el enlace (o crea una videollamada si no hay)
+[ ] 6.10 Marcar la tarea como hecha: su sesión desaparece en los dos móviles
+[ ] 6.11 VoiceOver en las tarjetas de sesión y en las hojas
+
+─────────────────────────────────────────────
+7. APOYO Y AVISOS (fase 5) · dos móviles
+─────────────────────────────────────────────
+[ ] 7.0 (Una vez) Para los push: en apps/mobile, «npx eas login» y «npx eas init» con la
+        cuenta de Expo -> añade el projectId a app.json. Sin esto la app funciona,
+        pero no llegan avisos al móvil. En Expo Go solo funcionan en iPhone.
+[ ] 7.1 Al entrar por primera vez sale «Que no se te escape el apoyo» -> Activar / Ahora no
+[ ] 7.2 Móvil A: «Pedir apoyo» en la siguiente tarea -> mensaje opcional -> la Home pasa
+        a «Esperando el apoyo de…»
+[ ] 7.3 Móvil B: en la Home, «Marta te pide apoyo» (la primera tarjeta); con la app
+        cerrada, llega el aviso «Marta te pide apoyo» (sin el título de la tarea)
+[ ] 7.4 Móvil B: MANTENER PULSADO «Enviar apoyo» -> en el móvil A late un corazón en la
+        forma y sale «Juan te está enviando apoyo»; al soltar, se apaga en unos segundos
+[ ] 7.5 Vibración suave en cada latido solo con estímulo completo
+[ ] 7.6 Con VoiceOver: tocar «Enviar apoyo» empieza y tocar otra vez para
+[ ] 7.7 «Ahora no» en una petición
+[ ] 7.8 Detalle de contacto -> «Pensé en ti» -> el otro móvil ve «Juan pensó en ti»;
+        repetirlo enseguida avisa de que ya se lo dijiste
+[ ] 7.9 Terminar una tarea y que el otro envíe ¡hurra! -> pantalla «Marta celebra contigo»
+        (una sola vez)
+[ ] 7.10 Perfil › Notificaciones: desactivar un tipo y comprobar que ya no llega
+[ ] 7.11 Tocar un aviso abre la pantalla que toca
+[ ] 7.12 Recordatorio de sesión 10 min antes (con la app cerrada)
+
+─────────────────────────────────────────────
+8. PULIDO (fase 6)
+─────────────────────────────────────────────
+[ ] 8.1 Modo avión con la app abierta: franja «Sin conexión» arriba; se sigue viendo lo
+        que había; «Pedir apoyo» y «Enviar apoyo» no se pueden usar; «Reintentar» al
+        volver la red quita la franja y refresca
+[ ] 8.2 Editar una tarea sin conexión y Guardar: «No se han podido guardar los cambios.
+        Siguen en el formulario.» con «Reintentar»; lo escrito no se pierde
+[ ] 8.3 Perfil › Editar perfil › «Descargar mis datos»: se abre la hoja de compartir con
+        un JSON con perfil, contactos, tareas, sesiones y apoyo (sin contraseñas)

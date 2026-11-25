@@ -34,3 +34,21 @@ export function formatDue(iso: string | null | undefined, now = new Date()): str
   if (days > 1 && days < 7) return `${weekdayFormatter.format(date)}, ${time}`;
   return `${shortDateFormatter.format(date)}, ${time}`;
 }
+
+/** Fecha y hora elegidas por separado → ISO (null si falta alguna). */
+export function combineDateTime(date: Date | null, time: Date | null): string | null {
+  if (!date || !time) return null;
+  const d = new Date(date);
+  d.setHours(time.getHours(), time.getMinutes(), 0, 0);
+  return d.toISOString();
+}
+
+/** «Mañana, 15:00» (como formatDue pero con mayúscula inicial, para empezar una línea). */
+export function formatWhen(iso: string, now = new Date()): string {
+  return capitalize(formatDue(iso, now));
+}
+
+/** «15:00». */
+export function formatTime(date: Date): string {
+  return timeFormatter.format(date);
+}

@@ -5,6 +5,7 @@
  * API de Tandems
  * OpenAPI spec version: 0.1.0
  */
+import type { MeDtoNotifications } from './meDtoNotifications.ts';
 import type { MeDtoStimulus } from './meDtoStimulus.ts';
 
 export interface MeDto {
@@ -14,4 +15,6 @@ export interface MeDto {
   email: string;
   timezone: string;
   stimulus: MeDtoStimulus;
+  /** Avisos activados (supportRequests, sharedTasks, sessionInvites, tasksDone, supportReceived, hurras, sessionReminders); por defecto, todos */
+  notifications: MeDtoNotifications;
 }

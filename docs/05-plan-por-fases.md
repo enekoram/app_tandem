@@ -41,29 +41,37 @@
 8. ⏸ E2E Maestro: happy path «crear tarea e invitar a alguien» y «aceptar invitación». **Aplazado** (2026-11-25): sin simulador ni Java en el equipo; los dos recorridos están cubiertos por los e2e de la API.
 
 ## Fase 3 · Home viva (`fase-3-home`)
-1. Shader SkSL de metaballs + componente `UnitedShape` (Storybook con todas las escenas).
-2. Perfiles de movimiento (completo/suave/mínimo + Reducir movimiento).
-3. `homeMachine` (XState) + `deriveBase` + `describeScene` con tests.
-4. Gateway realtime (Socket.IO, auth en el handshake, salas por usuario), change streams, presencia en Redis.
-5. `GET /me/home` y reconciliación al volver a primer plano.
-6. Carrusel accesible.
-7. Medición de fps en un Android modesto. Build → 🧑 probar.
+> Estado 2026-11-25: todo escrito y con tests salvo lo visual, que está **sin probar en el móvil** (🧑).
+
+1. ✅ Forma unida `HomeScene` con la técnica goo del onboarding (no SkSL, ver decisiones). ⏸ Storybook.
+2. ✅ Perfiles de movimiento (completo/suave/mínimo + Reducir movimiento).
+3. ✅ `homeMachine` (XState) + `deriveBase` + `describeScene` + `sceneGeometry` con tests (en `packages/shared`).
+4. ✅ Gateway realtime (Socket.IO, auth en el handshake, salas por usuario), change streams, presencia **en memoria** (Redis más adelante).
+5. ✅ `GET /me/home` y reconciliación al volver a primer plano.
+6. ✅ Carrusel accesible.
+7. ⏳ 🧑 Probar en el móvil (animaciones, VoiceOver) · ⏸ medición de fps.
 
 ## Fase 4 · Sesiones (`fase-4-sesiones`)
-1. Proponer, aceptar, rechazar, contraproponer, reprogramar, cancelar; zonas horarias; ErrProgramarSesion.
-2. Conectar Google (OAuth en la app, refresh token cifrado en la API).
-3. Cola `calendar`: crear/actualizar/borrar evento con Meet; enlace manual como alternativa.
-4. Recordatorios como trabajos retrasados + cron de seguridad.
-5. SesionPorEmpezar, SesionActiva, modo «presencia sin vídeo», estado `live`.
+> Estado 2026-11-25: hecho y con tests en la API; pantallas **sin probar en el móvil** (🧑). Empezada sobre `fase-3-home` (aún sin fusionar).
+
+1. ✅ Proponer, aceptar, rechazar, contraproponer, reprogramar, cancelar; zonas horarias (UTC en la API, hora local en la app); ErrProgramarSesion.
+2. ⏸ Conectar Google (OAuth en la app, refresh token cifrado en la API): necesita Google verificado y dominio propio.
+3. ⏸ Cola `calendar` (evento con Meet): necesita Google y Redis. Mientras, **enlace de Meet a mano** (opcional) y «Crear videollamada en Meet».
+4. ⏸ Recordatorios como trabajos retrasados: necesitan Redis/BullMQ; el aviso push llega con la fase 5. La Home ya entra sola en «por empezar» 10 min antes.
+5. ✅ SesionPorEmpezar (titular de la Home), SesionActiva, estado `live`. ⏸ Modo «presencia sin vídeo» como opción explícita (hoy: sesión sin enlace).
 
 ## Fase 5 · Apoyo y notificaciones (`fase-5-apoyo`)
-1. Pedir apoyo (ApoyoPedido), responder (aceptar / ahora no), caducidad.
-2. Enviar apoyo (mantener pulsado) con presencia y corazón en tiempo real (ApoyoRecibido).
-3. «Pensé en ti», ¡hurra! y «Gracias».
-4. Push: PermisoNotificaciones, tokens, catálogo completo, categorías/acciones rápidas, agrupación, horario de silencio, idempotencia y límite de frecuencia; NotificacionesKV en Perfil.
-5. Fallback por email para invitaciones y avisos críticos.
+> Estado 2026-11-25: hecho y con tests en la API; **sin probar en el móvil** (🧑). Sale de `fase-4-sesiones`.
+
+1. ✅ Pedir apoyo (ApoyoPedido), responder (enviar / ahora no); la petición no caduca (2026-11-25).
+2. ✅ Enviar apoyo (mantener pulsado) con corazón en tiempo real (ApoyoRecibido).
+3. ✅ «Pensé en ti», ¡hurra! (HurraRecibido). ⏸ «Gracias» (respuesta al ¡hurra!).
+4. ✅ Push: PermisoNotificaciones, tokens, catálogo, idempotencia, NotificacionesKV, recordatorio de sesión. ⏸ Categorías/acciones rápidas, agrupación, horario de silencio. 🧑 `eas init` para el projectId.
+5. ✅ Email: las invitaciones ya van por email (fase 2). ⏸ Fallback por email de avisos críticos.
 
 ## Fase 6 · Pulido (`fase-6-pulido`)
+> Estado 2026-11-25: ✅ SinConexion, ErrGuardar y exportar mis datos. Lo demás necesita el móvil (motion fino, auditoría de accesibilidad, pruebas en dispositivos) o cuentas (Sentry, analítica): pendiente 🧑. Live Activity, fuera (sin development build).
+
 Motion fino en todos los componentes, auditoría de accesibilidad (VoiceOver, TalkBack, teclado externo, Dynamic Type máximo), todos los estados vacíos y de error del canvas, Sentry, analítica sin contenido, Live Activity (si hay tiempo), exportar datos, pruebas en dispositivos reales.
 
 ## Fase 7 · Lanzamiento (`fase-7-lanzamiento`)

@@ -3,5 +3,7 @@ export * from './generated/contacts/contacts';
 export * from './generated/health/health';
 export * from './generated/invitations/invitations';
 export * from './generated/me/me';
+export * from './generated/sessions/sessions';
+export * from './generated/support/support';
 export * from './generated/tasks/tasks';
 export * from './generated/model';

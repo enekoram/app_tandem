@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { borders, colors, MIN_TOUCH_TARGET, radii, sizes, spacing } from '@/theme';
+import { Button } from './Button';
 import { Icon } from './icons';
 import { Text } from './Text';
 
@@ -72,7 +73,16 @@ export function Checkbox({
 }
 
 /** Aviso de error arriba del formulario (rojo teja suave, como el toast err). */
-export function FormAlert({ title, body }: { title: string; body?: string }) {
+export function FormAlert({
+  title,
+  body,
+  action,
+}: {
+  title: string;
+  body?: string;
+  /** ErrGuardar: «Reintentar» sin perder lo escrito. */
+  action?: { label: string; onPress: () => void };
+}) {
   const c = colors.toast.err;
   return (
     <View
@@ -91,6 +101,7 @@ export function FormAlert({ title, body }: { title: string; body?: string }) {
           </Text>
         ) : null}
       </View>
+      {action ? <Button label={action.label} variant="link" onPress={action.onPress} /> : null}
     </View>
   );
 }

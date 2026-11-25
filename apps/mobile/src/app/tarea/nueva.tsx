@@ -55,7 +55,12 @@ export default function NewTaskScreen() {
         />
       }
     >
-      <TaskForm submitRef={submitRef} onValid={save} serverError={serverError} />
+      <TaskForm
+        submitRef={submitRef}
+        onValid={save}
+        serverError={serverError}
+        onRetry={() => submitRef.current?.()}
+      />
     </ModalScreen>
   );
 }

@@ -25,6 +25,10 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  DevicesControllerRegisterBody,
+  DevicesControllerUnregisterBody,
+  HomeDto,
+  MeControllerNotificationsBody,
   MeControllerUpdateBody,
   MeDto
 } from '../model';
@@ -358,4 +362,451 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
         TContext
       > => {
       return useMutation(getAccountControllerDeleteMutationOptions(options), queryClient);
+    }
+    export type meControllerNotificationsResponse200 = {
+  data: MeDto
+  status: 200
+}
+
+export type meControllerNotificationsResponseSuccess = (meControllerNotificationsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type meControllerNotificationsResponse = (meControllerNotificationsResponseSuccess)
+
+export const getMeControllerNotificationsUrl = () => {
+
+
+
+
+  return `/me/notifications`
+}
+
+export const meControllerNotifications = async (meControllerNotificationsBody: MeControllerNotificationsBody, options?: Parameters<typeof apiFetch>[1]): Promise<meControllerNotificationsResponse> => {
+
+  return apiFetch<meControllerNotificationsResponse>(getMeControllerNotificationsUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(meControllerNotificationsBody)
+  }
+);}
+
+
+
+
+
+export const getMeControllerNotificationsMutationKey = () => ['meControllerNotifications'] as const;
+
+export const getMeControllerNotificationsMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext> => {
+
+const mutationKey = getMeControllerNotificationsMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof meControllerNotifications>>, MeControllerNotificationsMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  meControllerNotifications(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MeControllerNotificationsMutationResult = NonNullable<Awaited<ReturnType<typeof meControllerNotifications>>>
+    export type MeControllerNotificationsMutationBody = MeControllerNotificationsBody
+    export type MeControllerNotificationsMutationError = unknown
+    export type MeControllerNotificationsMutationVariables = {data: MeControllerNotificationsBody}
+
+    export const useMeControllerNotifications = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof meControllerNotifications>>,
+        TError,
+        MeControllerNotificationsMutationVariables,
+        TContext
+      > => {
+      return useMutation(getMeControllerNotificationsMutationOptions(options), queryClient);
+    }
+    export type homeControllerHomeResponse200 = {
+  data: HomeDto
+  status: 200
+}
+
+export type homeControllerHomeResponseSuccess = (homeControllerHomeResponse200) & {
+  headers: Headers;
+};
+;
+
+export type homeControllerHomeResponse = (homeControllerHomeResponseSuccess)
+
+export const getHomeControllerHomeUrl = () => {
+
+
+
+
+  return `/me/home`
+}
+
+export const homeControllerHome = async ( options?: Parameters<typeof apiFetch>[1]): Promise<homeControllerHomeResponse> => {
+
+  return apiFetch<homeControllerHomeResponse>(getHomeControllerHomeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getHomeControllerHomeQueryKey = () => {
+    return [
+    `/me/home`
+    ] as const;
+    }
+
+
+export const getHomeControllerHomeQueryOptions = <TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getHomeControllerHomeQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof homeControllerHome>>> = ({ signal }) => homeControllerHome({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HomeControllerHomeQueryResult = NonNullable<Awaited<ReturnType<typeof homeControllerHome>>>
+export type HomeControllerHomeQueryError = unknown
+
+
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homeControllerHome>>,
+          TError,
+          Awaited<ReturnType<typeof homeControllerHome>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homeControllerHome>>,
+          TError,
+          Awaited<ReturnType<typeof homeControllerHome>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getHomeControllerHomeQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export type exportControllerExportResponse200 = {
+  data: void
+  status: 200
+}
+
+export type exportControllerExportResponseSuccess = (exportControllerExportResponse200) & {
+  headers: Headers;
+};
+;
+
+export type exportControllerExportResponse = (exportControllerExportResponseSuccess)
+
+export const getExportControllerExportUrl = () => {
+
+
+
+
+  return `/me/export`
+}
+
+export const exportControllerExport = async ( options?: Parameters<typeof apiFetch>[1]): Promise<exportControllerExportResponse> => {
+
+  return apiFetch<exportControllerExportResponse>(getExportControllerExportUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getExportControllerExportQueryKey = () => {
+    return [
+    `/me/export`
+    ] as const;
+    }
+
+
+export const getExportControllerExportQueryOptions = <TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getExportControllerExportQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof exportControllerExport>>> = ({ signal }) => exportControllerExport({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ExportControllerExportQueryResult = NonNullable<Awaited<ReturnType<typeof exportControllerExport>>>
+export type ExportControllerExportQueryError = unknown
+
+
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof exportControllerExport>>,
+          TError,
+          Awaited<ReturnType<typeof exportControllerExport>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof exportControllerExport>>,
+          TError,
+          Awaited<ReturnType<typeof exportControllerExport>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useExportControllerExport<TData = Awaited<ReturnType<typeof exportControllerExport>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof exportControllerExport>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getExportControllerExportQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export type devicesControllerRegisterResponse204 = {
+  data: void
+  status: 204
+}
+
+export type devicesControllerRegisterResponseSuccess = (devicesControllerRegisterResponse204) & {
+  headers: Headers;
+};
+;
+
+export type devicesControllerRegisterResponse = (devicesControllerRegisterResponseSuccess)
+
+export const getDevicesControllerRegisterUrl = () => {
+
+
+
+
+  return `/me/devices`
+}
+
+export const devicesControllerRegister = async (devicesControllerRegisterBody: DevicesControllerRegisterBody, options?: Parameters<typeof apiFetch>[1]): Promise<devicesControllerRegisterResponse> => {
+
+  return apiFetch<devicesControllerRegisterResponse>(getDevicesControllerRegisterUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(devicesControllerRegisterBody)
+  }
+);}
+
+
+
+
+
+export const getDevicesControllerRegisterMutationKey = () => ['devicesControllerRegister'] as const;
+
+export const getDevicesControllerRegisterMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext> => {
+
+const mutationKey = getDevicesControllerRegisterMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof devicesControllerRegister>>, DevicesControllerRegisterMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  devicesControllerRegister(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DevicesControllerRegisterMutationResult = NonNullable<Awaited<ReturnType<typeof devicesControllerRegister>>>
+    export type DevicesControllerRegisterMutationBody = DevicesControllerRegisterBody
+    export type DevicesControllerRegisterMutationError = unknown
+    export type DevicesControllerRegisterMutationVariables = {data: DevicesControllerRegisterBody}
+
+    export const useDevicesControllerRegister = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerRegister>>, TError,DevicesControllerRegisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof devicesControllerRegister>>,
+        TError,
+        DevicesControllerRegisterMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDevicesControllerRegisterMutationOptions(options), queryClient);
+    }
+    export type devicesControllerUnregisterResponse204 = {
+  data: void
+  status: 204
+}
+
+export type devicesControllerUnregisterResponseSuccess = (devicesControllerUnregisterResponse204) & {
+  headers: Headers;
+};
+;
+
+export type devicesControllerUnregisterResponse = (devicesControllerUnregisterResponseSuccess)
+
+export const getDevicesControllerUnregisterUrl = () => {
+
+
+
+
+  return `/me/devices/unregister`
+}
+
+export const devicesControllerUnregister = async (devicesControllerUnregisterBody: DevicesControllerUnregisterBody, options?: Parameters<typeof apiFetch>[1]): Promise<devicesControllerUnregisterResponse> => {
+
+  return apiFetch<devicesControllerUnregisterResponse>(getDevicesControllerUnregisterUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(devicesControllerUnregisterBody)
+  }
+);}
+
+
+
+
+
+export const getDevicesControllerUnregisterMutationKey = () => ['devicesControllerUnregister'] as const;
+
+export const getDevicesControllerUnregisterMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext> => {
+
+const mutationKey = getDevicesControllerUnregisterMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof devicesControllerUnregister>>, DevicesControllerUnregisterMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  devicesControllerUnregister(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DevicesControllerUnregisterMutationResult = NonNullable<Awaited<ReturnType<typeof devicesControllerUnregister>>>
+    export type DevicesControllerUnregisterMutationBody = DevicesControllerUnregisterBody
+    export type DevicesControllerUnregisterMutationError = unknown
+    export type DevicesControllerUnregisterMutationVariables = {data: DevicesControllerUnregisterBody}
+
+    export const useDevicesControllerUnregister = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof devicesControllerUnregister>>, TError,DevicesControllerUnregisterMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof devicesControllerUnregister>>,
+        TError,
+        DevicesControllerUnregisterMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDevicesControllerUnregisterMutationOptions(options), queryClient);
     }
