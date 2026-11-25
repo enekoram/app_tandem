@@ -25,6 +25,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  HomeDto,
   MeControllerUpdateBody,
   MeDto
 } from '../model';
@@ -359,3 +360,108 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
       return useMutation(getAccountControllerDeleteMutationOptions(options), queryClient);
     }
+    export type homeControllerHomeResponse200 = {
+  data: HomeDto
+  status: 200
+}
+
+export type homeControllerHomeResponseSuccess = (homeControllerHomeResponse200) & {
+  headers: Headers;
+};
+;
+
+export type homeControllerHomeResponse = (homeControllerHomeResponseSuccess)
+
+export const getHomeControllerHomeUrl = () => {
+
+
+
+
+  return `/me/home`
+}
+
+export const homeControllerHome = async ( options?: Parameters<typeof apiFetch>[1]): Promise<homeControllerHomeResponse> => {
+
+  return apiFetch<homeControllerHomeResponse>(getHomeControllerHomeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getHomeControllerHomeQueryKey = () => {
+    return [
+    `/me/home`
+    ] as const;
+    }
+
+
+export const getHomeControllerHomeQueryOptions = <TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getHomeControllerHomeQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof homeControllerHome>>> = ({ signal }) => homeControllerHome({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type HomeControllerHomeQueryResult = NonNullable<Awaited<ReturnType<typeof homeControllerHome>>>
+export type HomeControllerHomeQueryError = unknown
+
+
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homeControllerHome>>,
+          TError,
+          Awaited<ReturnType<typeof homeControllerHome>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof homeControllerHome>>,
+          TError,
+          Awaited<ReturnType<typeof homeControllerHome>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useHomeControllerHome<TData = Awaited<ReturnType<typeof homeControllerHome>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof homeControllerHome>>, TError, TData>>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getHomeControllerHomeQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+

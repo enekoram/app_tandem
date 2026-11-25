@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import {
   ApiBody,
   ApiConflictResponse,
@@ -17,14 +16,12 @@ import {
   type CreateTaskInput,
   type UpdateTaskInput,
 } from '@tandems/shared';
-import type { Model } from 'mongoose';
 import { openApiSchema, ZodPipe } from '../common/zod.js';
-import { Contact, type ContactDocument } from '../contacts/contact.schema.js';
 import type { UserDocument } from '../users/user.schema.js';
 import { UsersService } from '../users/users.service.js';
-import type { TaskDocument } from './task.schema.js';
-import { TaskDto, toTaskDto } from './tasks.dto.js';
-import { TasksService, type TaskRole } from './tasks.service.js';
+import { TaskViews } from './task-views.js';
+import { TaskDto } from './tasks.dto.js';
+import { TasksService } from './tasks.service.js';
 
 type ListStatus = 'open' | 'done';
 const listStatus = (s: unknown): ListStatus => (s === 'done' ? 'done' : 'open');
@@ -36,7 +33,7 @@ export class TasksController {
   constructor(
     private readonly tasks: TasksService,
     private readonly users: UsersService,
-    @InjectModel(Contact.name) private readonly contacts: Model<Contact>,
+    private readonly views: TaskViews,
   ) {}
 
   /** Mis tareas (abiertas o terminadas). */
@@ -48,7 +45,7 @@ export class TasksController {
     @Query('status') status?: string,
   ): Promise<TaskDto[]> {
     const me = await this.me(session);
-    return this.toDtos(me, await this.tasks.listMine(me, listStatus(status)), 'owner');
+    return this.views.toDtos(me, await this.tasks.listMine(me, listStatus(status)), 'owner');
   }
 
   /** Tareas que acompaño (pantalla Acompaño). */
@@ -60,7 +57,11 @@ export class TasksController {
     @Query('status') status?: string,
   ): Promise<TaskDto[]> {
     const me = await this.me(session);
-    return this.toDtos(me, await this.tasks.listAccompanying(me, listStatus(status)), 'companion');
+    return this.views.toDtos(
+      me,
+      await this.tasks.listAccompanying(me, listStatus(status)),
+      'companion',
+    );
   }
 
   @Get(':id')
@@ -68,7 +69,7 @@ export class TasksController {
   async get(@Session() session: UserSession, @Param('id') id: string): Promise<TaskDto> {
     const me = await this.me(session);
     const { task, role } = await this.tasks.getVisible(me, id);
-    return (await this.toDtos(me, [task], role))[0]!;
+    return (await this.views.toDtos(me, [task], role))[0]!;
   }
 
   @Post()
@@ -80,7 +81,7 @@ export class TasksController {
     @Body(new ZodPipe(createTaskSchema)) body: CreateTaskInput,
   ): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.create(me, body), 'owner');
+    return this.views.one(me, await this.tasks.create(me, body), 'owner');
   }
 
   @Patch(':id')
@@ -92,7 +93,7 @@ export class TasksController {
     @Body(new ZodPipe(updateTaskSchema)) body: UpdateTaskInput,
   ): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.update(me, id, body), 'owner');
+    return this.views.one(me, await this.tasks.update(me, id, body), 'owner');
   }
 
   @Post(':id/complete')
@@ -100,7 +101,7 @@ export class TasksController {
   @ApiOkResponse({ type: TaskDto })
   async complete(@Session() session: UserSession, @Param('id') id: string): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.complete(me, id), 'owner');
+    return this.views.one(me, await this.tasks.complete(me, id), 'owner');
   }
 
   @Delete(':id')
@@ -117,7 +118,7 @@ export class TasksController {
   @ApiConflictResponse({ description: 'UNDO_EXPIRED · TASK_LIMIT' })
   async restore(@Session() session: UserSession, @Param('id') id: string): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.restore(me, id), 'owner');
+    return this.views.one(me, await this.tasks.restore(me, id), 'owner');
   }
 
   @Post(':id/accept')
@@ -141,7 +142,7 @@ export class TasksController {
   @ApiConflictResponse({ description: 'HURRA_ALREADY_SENT' })
   async hurra(@Session() session: UserSession, @Param('id') id: string): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.hurra(me, id), 'companion');
+    return this.views.one(me, await this.tasks.hurra(me, id), 'companion');
   }
 
   /** Dejar de acompañar. */
@@ -164,38 +165,6 @@ export class TasksController {
     action: 'accept' | 'reject' | 'leave',
   ): Promise<TaskDto> {
     const me = await this.me(session);
-    return this.one(me, await this.tasks.respond(me, id, action), 'companion');
-  }
-
-  private async one(me: UserDocument, task: TaskDocument, role: TaskRole): Promise<TaskDto> {
-    return (await this.toDtos(me, [task], role))[0]!;
-  }
-
-  /**
-   * Añade «la otra persona» con UNA consulta de contactos de `me`:
-   * dueña → el contacto que acompaña; acompañante → mi contacto de la dueña.
-   */
-  private async toDtos(
-    me: UserDocument,
-    tasks: TaskDocument[],
-    role: TaskRole,
-  ): Promise<TaskDto[]> {
-    if (!tasks.length) return [];
-    const filter =
-      role === 'owner'
-        ? { owner_id: me._id, _id: { $in: tasks.map((t) => t.companion.contact_id) } }
-        : {
-            owner_id: me._id,
-            contact_user_id: { $in: tasks.map((t) => t.owner_id) },
-            status: { $in: ['pending' as const, 'accepted' as const] },
-          };
-    const found: ContactDocument[] = await this.contacts.find(filter);
-    return tasks.map((t) => {
-      const person =
-        role === 'owner'
-          ? found.find((c) => c._id.equals(t.companion.contact_id))
-          : found.find((c) => c.contact_user_id?.equals(t.owner_id));
-      return toTaskDto(t, role, person);
-    });
+    return this.views.one(me, await this.tasks.respond(me, id, action), 'companion');
   }
 }

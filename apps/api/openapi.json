@@ -956,6 +956,32 @@
           "tasks"
         ]
       }
+    },
+    "/me/home": {
+      "get": {
+        "operationId": "HomeController_home",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
     }
   },
   "info": {
@@ -1340,6 +1366,37 @@
           "doneAt",
           "hurraAt",
           "createdAt"
+        ]
+      },
+      "HomeDto": {
+        "type": "object",
+        "properties": {
+          "tasks": {
+            "description": "Mis tareas abiertas, en orden",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskDto"
+            }
+          },
+          "contacts": {
+            "description": "Contactos aceptados",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactDto"
+            }
+          },
+          "shared": {
+            "description": "Tareas que me comparten y esperan respuesta («Te piden»)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskDto"
+            }
+          }
+        },
+        "required": [
+          "tasks",
+          "contacts",
+          "shared"
         ]
       }
     }

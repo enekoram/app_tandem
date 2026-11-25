@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ContactsModule } from '../contacts/contacts.module.js';
 import { User, UserSchema } from '../users/user.schema.js';
 import { UsersModule } from '../users/users.module.js';
+import { HomeController } from './home.controller.js';
+import { TaskViews } from './task-views.js';
 import { Task, TaskSchema } from './task.schema.js';
 import { TasksController } from './tasks.controller.js';
 import { TasksService } from './tasks.service.js';
@@ -16,7 +18,7 @@ import { TasksService } from './tasks.service.js';
       { name: User.name, schema: UserSchema },
     ]),
   ],
-  controllers: [TasksController],
-  providers: [TasksService],
+  controllers: [TasksController, HomeController],
+  providers: [TasksService, TaskViews],
 })
 export class TasksModule {}

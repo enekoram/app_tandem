@@ -318,4 +318,26 @@ describe('Tareas (e2e)', () => {
       'sin fecha, vieja',
     ]);
   });
+
+  it('GET /me/home: mis abiertas en orden, contactos aceptados y lo que me comparten', async () => {
+    await person('Nora');
+    await person('Iker');
+    const iker = await connect('Nora', 'Iker');
+    await connect('Nora', 'Sincuenta', false);
+    await as('Nora').post('/tasks', task('Ordenar el armario', iker)).expect(201);
+    const ikerForNora = (await as('Iker').get('/contacts').expect(200)).body[0].id as string;
+    await as('Iker').post('/tasks', task('Ir a correr', ikerForNora)).expect(201);
+
+    const home = (await as('Nora').get('/me/home').expect(200)).body;
+    expect(home.tasks.map((x: { title: string }) => x.title)).toEqual(['Ordenar el armario']);
+    expect(home.contacts.map((c: { name: string }) => c.name)).toEqual(['Iker']);
+    expect(home.shared).toMatchObject([
+      { title: 'Ir a correr', role: 'companion', companionStatus: 'pending' },
+    ]);
+
+    // Lo de otras personas no aparece en su Home
+    const other = (await as('Pepe').get('/me/home').expect(200)).body;
+    expect(JSON.stringify(other)).not.toContain('Ordenar el armario');
+    await http.get('/me/home').expect(401);
+  });
 });
