@@ -41,13 +41,15 @@
 8. ⏸ E2E Maestro: happy path «crear tarea e invitar a alguien» y «aceptar invitación». **Aplazado** (2026-11-25): sin simulador ni Java en el equipo; los dos recorridos están cubiertos por los e2e de la API.
 
 ## Fase 3 · Home viva (`fase-3-home`)
-1. Shader SkSL de metaballs + componente `UnitedShape` (Storybook con todas las escenas).
-2. Perfiles de movimiento (completo/suave/mínimo + Reducir movimiento).
-3. `homeMachine` (XState) + `deriveBase` + `describeScene` con tests.
-4. Gateway realtime (Socket.IO, auth en el handshake, salas por usuario), change streams, presencia en Redis.
-5. `GET /me/home` y reconciliación al volver a primer plano.
-6. Carrusel accesible.
-7. Medición de fps en un Android modesto. Build → 🧑 probar.
+> Estado 2026-11-25: todo escrito y con tests salvo lo visual, que está **sin probar en el móvil** (🧑).
+
+1. ✅ Forma unida `HomeScene` con la técnica goo del onboarding (no SkSL, ver decisiones). ⏸ Storybook.
+2. ✅ Perfiles de movimiento (completo/suave/mínimo + Reducir movimiento).
+3. ✅ `homeMachine` (XState) + `deriveBase` + `describeScene` + `sceneGeometry` con tests (en `packages/shared`).
+4. ✅ Gateway realtime (Socket.IO, auth en el handshake, salas por usuario), change streams, presencia **en memoria** (Redis más adelante).
+5. ✅ `GET /me/home` y reconciliación al volver a primer plano.
+6. ✅ Carrusel accesible.
+7. ⏳ 🧑 Probar en el móvil (animaciones, VoiceOver) · ⏸ medición de fps.
 
 ## Fase 4 · Sesiones (`fase-4-sesiones`)
 1. Proponer, aceptar, rechazar, contraproponer, reprogramar, cancelar; zonas horarias; ErrProgramarSesion.

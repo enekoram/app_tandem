@@ -48,7 +48,7 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [HoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HoyKV) | Hoy · LF | 3 | pendiente |
+| [HoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HoyKV) | Hoy · LF | 3 | hecha |
 | [TareasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasKV) | Mis tareas · LF | 2 | hecha |
 | [TareasVacioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasVacioKV) | Mis tareas (vacío) · LF | 2 | hecha |
 | [CrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CrearTareaKV) | Nueva tarea · LF | 2 | hecha |
@@ -84,8 +84,8 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [VacioHoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyKV) | Hoy (vacío, sin contactos) · LF | 3 | pendiente |
-| [VacioHoyContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyContactosKV) | Hoy (vacío, con contactos) · LF | 3 | pendiente |
+| [VacioHoyKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyKV) | Hoy (vacío, sin contactos) · LF | 3 | hecha |
+| [VacioHoyContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioHoyContactosKV) | Hoy (vacío, con contactos) · LF | 3 | hecha |
 | [ErrCrearTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrCrearTareaKV) | Crear tarea: campos sin rellenar · LF | 2 | hecha |
 | [TareaRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaRechazadaKV) | Acompañante no acepta la tarea · LF | 2 | hecha |
 | [CambiarAcompananteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiarAcompananteKV) | Cambiar acompañante · LF | 2 | hecha |
@@ -207,3 +207,6 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-25 | Persona invitada: «Crear cuenta y aceptar» lleva a RegistroInvitado (nombre rellenado con el que puso quien invita, email de la invitación de solo lectura); al entrar la invitación se acepta sola y se abre Acompaño con «Ya formas parte de la red de apoyo de…» (BienvenidaInvitado). Sin onboarding aparte para la persona invitada. |
 | 2026-11-25 | Deep links (AASA/assetlinks, Install Referrer) y E2E con Maestro **aplazados** hasta tener development build con EAS. La fase 2 queda lista para probar en el iPhone y dar el visto bueno. |
 | 2026-11-25 | Fase 2 aprobada y fusionada en `main` sin probar en el iPhone. Probar desde un navegador (Expo web) se descarta: la app no tiene soporte web (SecureStore, Skia, cookies entre orígenes) y no se comportaría igual. |
+| 2026-11-25 | Home viva: la forma unida usa la técnica goo del onboarding (desenfoque + umbral de alfa con máscara) en lugar de un shader SkSL: ya está probada en el iPhone y el canvas pide que sea «igual que el onboarding». `homeMachine`, `deriveBase`, `describeScene` y la geometría viven en `packages/shared/src/home` (no en la app) para probarlas con vitest. |
+| 2026-11-25 | Tiempo real: Socket.IO solo websocket; los avisos no llevan contenido (la app vuelve a pedir `/me/home`). Presencia **en memoria** mientras haya una instancia (Render gratuito); Redis cuando haga falta. Sin resume token: al reconectar se refresca todo. |
+| 2026-11-25 | Orden de tareas abiertas (API y Home): con fecha por cercanía y después sin fecha, la más reciente. |

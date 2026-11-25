@@ -149,3 +149,10 @@
   - Las tareas abiertas se ordenan igual en la API y en la Home: con fecha por cercanía y después sin fecha, la más reciente (Mongo ponía primero las sin fecha).
   - Tests: 182 en shared y 66 en la API. El test de modelo encontró dos fallos de la escena (quien pide apartaba a tu acompañante; «Te piden» no salía mientras cargaba), corregidos.
 - **Push**: con el token del archivo funcionó para `fase-2-tareas`, pero los permisos de Claude Code bloquean volver a usarlo. Hay que subir `main` y `fase-3-home` a mano (ver respuesta de la sesión).
+- Después: tiempo real (gateway Socket.IO, change streams de `tasks` y `contacts`, presencia en memoria; un fallo encontrado por el test: `contact_user_id` no convierte cadenas a ObjectId), hooks `useCompleteTask`/`useRespondShared`, `sceneGeometry`, `HomeScene` (Skia, goo), carrusel «Para hoy» y la pantalla Hoy nueva. La app **empaqueta para iOS con Metro sin errores** (`expo export`), pero nada visual se ha visto en un móvil.
+- Tests: 188 en shared y 70 en la API.
+
+### Pendiente
+1. 🧑 **Subir**: `git push origin main && git push -u origin fase-3-home` desde Terminal (el llavero ya no tiene la credencial vieja; la primera vez pide usuario `enekoram` y el token).
+2. 🧑 **Probar la Home en el móvil con Expo Go** (lista de casos en la respuesta de la sesión) y ajustar posiciones, tamaños y muelles.
+3. Con el visto bueno de la fase 3: fusionar y seguir con la fase 4 (sesiones).
