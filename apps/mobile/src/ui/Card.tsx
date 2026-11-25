@@ -8,17 +8,20 @@ import { usePersonStyle } from './person';
 export interface CardProps extends ViewProps {
   /** Filo izquierdo con el degradado de la persona (deep → base → soft). */
   person?: PersonColorId;
+  /** Filo con otros colores (p. ej. gris de «sin acompañante»). */
+  edge?: readonly [string, string, string];
   children: ReactNode;
 }
 
 /** Tarjeta del kit: radio 20, borde 1, superficie; con filo de persona si se indica. */
-export function Card({ person, children, style, ...rest }: CardProps) {
+export function Card({ person, edge, children, style, ...rest }: CardProps) {
   const personStyle = usePersonStyle(person);
+  const edgeColors = personStyle?.edge ?? edge;
   return (
-    <View style={[styles.card, person && styles.withEdge, style]} {...rest}>
-      {personStyle && (
+    <View style={[styles.card, edgeColors && styles.withEdge, style]} {...rest}>
+      {edgeColors && (
         <LinearGradient
-          colors={personStyle.edge}
+          colors={edgeColors}
           locations={[0, 0.45, 1]}
           style={styles.edge}
           accessibilityElementsHidden

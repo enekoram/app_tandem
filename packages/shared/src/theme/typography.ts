@@ -37,8 +37,14 @@ export const typography = {
   tagline: { family: 'serif', size: 21, lineHeight: 23, letterSpacing: 0 },
   /** Titular grande del onboarding. */
   hero: { family: 'serif', size: 44, lineHeight: 45, letterSpacing: -0.01 },
+  /** Título de la tarea destacada («Hoy empiezo con…»). */
+  taskTitleBig: { family: 'serif', size: 26, lineHeight: 29, letterSpacing: -0.01 },
   /** Inicial dentro del avatar. */
   avatarInitial: { family: 'serif', size: 24, lineHeight: 28, letterSpacing: 0 },
+  avatarSmall: { family: 'serif', size: 20, lineHeight: 24, letterSpacing: 0 },
+  avatarLarge: { family: 'serif', size: 36, lineHeight: 40, letterSpacing: 0 },
+  /** Título de una hoja modal o de confirmación. */
+  sheetTitle: { family: 'serif', size: 28, lineHeight: 31, letterSpacing: -0.01 },
 } as const satisfies Record<
   string,
   {

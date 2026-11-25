@@ -15,6 +15,13 @@ export function buildOpenApiConfig() {
 export function configureApp(app: INestApplication, { swagger }: { swagger: boolean }): void {
   app.useLogger(app.get(Logger));
   app.use(helmet());
+  // Datos personales y siempre frescos: sin ETag ni caché (un 304 dejaba listas sin actualizar)
+  const express = app.getHttpAdapter().getInstance() as { set: (k: string, v: unknown) => void };
+  express.set('etag', false);
+  app.use((_req: unknown, res: { setHeader: (k: string, v: string) => void }, next: () => void) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
   app.enableShutdownHooks();
 
   if (swagger) {

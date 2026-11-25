@@ -36,7 +36,7 @@ function page(body: string): string {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Tandems · Crear contraseña nueva</title>
+<title>Tandems</title>
 <style>${css}</style>
 </head>
 <body><main>
@@ -60,4 +60,21 @@ export function invalidLinkPage(): string {
 <p class="cap">Enlace no válido</p>
 <h1>Este enlace <i>no funciona</i></h1>
 <p class="err">Puede que esté incompleto o que ya se haya usado. Pide uno nuevo desde la app: Iniciar sesión → ¿Has olvidado tu contraseña?</p>`);
+}
+
+export function invitationLandingPage(inviterName: string, appLink: string): string {
+  const name = escapeHtml(inviterName);
+  return page(`
+<p class="cap">Invitación</p>
+<h1>${name} te invita a su <i>red de apoyo</i></h1>
+<p>En Tandems podrás acompañar sus tareas, uniros en sesiones en vivo y enviarle apoyo cuando lo necesite.</p>
+<a class="btn" href="${escapeHtml(appLink)}">Abrir en Tandems</a>
+<p class="note"><b>¿Aún no tienes Tandems?</b> Instálala en tu móvil y vuelve a abrir este enlace desde allí. Si estás en el ordenador, abre este mismo mensaje en el móvil. La invitación caduca en 14 días.</p>`);
+}
+
+export function invalidInvitationPage(): string {
+  return page(`
+<p class="cap">Invitación no disponible</p>
+<h1>Esta invitación <i>no funciona</i></h1>
+<p class="err">Puede que haya caducado, que ya se haya aceptado o que la hayan cancelado. Pide a la persona que te invitó que te envíe otra.</p>`);
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio, deltaE2000, hexToRgb } from './contrast';
+import { contrastRatio, deltaE2000, hexToRgb } from './contrast.ts';
 
 describe('contrastRatio', () => {
   it('negro sobre blanco es 21:1', () => {

@@ -5,6 +5,6 @@
  * API de Tandems
  * OpenAPI spec version: 0.1.0
  */
-import type { TerminusHealthIndicatorResult } from './terminusHealthIndicatorResult';
+import type { TerminusHealthIndicatorResult } from './terminusHealthIndicatorResult.ts';
 
 export type TerminusHealthCheckResultDetails = {[key: string]: TerminusHealthIndicatorResult & { [key: string]: unknown }};

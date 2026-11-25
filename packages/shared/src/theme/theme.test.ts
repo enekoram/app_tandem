@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio, deltaE2000, WCAG_AA, type Hex } from '../color/contrast';
-import { colors } from './colors';
-import { PERSON_COLOR_IDS, personColors, selfColor } from './persons';
-import { resolveMotionProfile } from './motion';
+import { contrastRatio, deltaE2000, WCAG_AA, type Hex } from '../color/contrast.ts';
+import { colors } from './colors.ts';
+import { PERSON_COLOR_IDS, personColors, selfColor } from './persons.ts';
+import { resolveMotionProfile } from './motion.ts';
 
 /** Diferencia mínima entre rellenos de avatar para distinguirlos de un vistazo. */
 const MIN_FILL_DELTA_E = 9;
@@ -74,6 +74,9 @@ describe('contrastes del UI kit', () => {
     ['secundario / surface', colors.text.secondary, colors.bg.surface],
     ['secundario / burbuja', colors.text.secondary, colors.bg.bubble],
     ['texto del CTA principal', colors.action.onPrimary, colors.action.primary],
+    ['texto del botón destructivo', colors.action.onPrimary, colors.action.destructive],
+    ['fila destructiva / surface', colors.action.destructive, colors.bg.surface],
+    ['«Enviar» deshabilitado', colors.action.disabledText, colors.action.disabledBg],
     ['«En vivo» / surface', colors.status.liveText, colors.bg.surface],
     ['toast info', colors.toast.info.text, colors.toast.info.bg],
     ['toast ok', colors.toast.ok.text, colors.toast.ok.bg],

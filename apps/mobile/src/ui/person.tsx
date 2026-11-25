@@ -1,6 +1,14 @@
 import { StyleSheet, View } from 'react-native';
-import { borders, colors, personColors, radii, sizes, type PersonColorId } from '@/theme';
 import { es } from '@/strings/es';
+import {
+  borders,
+  colors,
+  personColors,
+  radii,
+  sizes,
+  type PersonColorId,
+  type TypographyVariant,
+} from '@/theme';
 import { Text } from './Text';
 
 /**
@@ -18,43 +26,65 @@ export function usePersonStyle(id: PersonColorId | undefined) {
   };
 }
 
+export type AvatarSize = keyof typeof sizes.avatar;
+
+const INITIAL_VARIANT: Record<AvatarSize, TypographyVariant> = {
+  sm: 'avatarSmall',
+  md: 'avatarSmall',
+  kit: 'avatarInitial',
+  lg: 'avatarLarge',
+};
+
 export interface PersonTokenProps {
-  /** Nombre visible; la inicial sale de aquí. */
+  /** Nombre visible (para VoiceOver). */
   name: string;
+  /** Iniciales calculadas por la API (1–2 letras o emoji). Por defecto, la primera letra. */
+  initials?: string;
   color: PersonColorId;
-  /** Aún no ha aceptado: círculo con borde discontinuo gris, sin relleno. */
+  /** Aún no se ha unido: círculo con borde discontinuo gris, sin relleno. */
   pending?: boolean;
-  size?: number;
+  size?: AvatarSize;
+  /** Si el nombre ya se lee al lado (filas), el avatar no se anuncia. */
+  decorative?: boolean;
 }
 
-/** Avatar de persona: inicial serif sobre su color. El estado se anuncia, no depende solo del color. */
+/** Avatar de persona: iniciales serif sobre su color. El estado se anuncia, no depende solo del color. */
 export function PersonToken({
   name,
+  initials,
   color,
   pending = false,
-  size = sizes.avatar,
+  size = 'kit',
+  decorative = false,
 }: PersonTokenProps) {
   const style = usePersonStyle(color);
-  const initial = name.trim().charAt(0).toLocaleUpperCase('es');
+  const px = sizes.avatar[size];
+  const label = initials ?? name.trim().charAt(0).toLocaleUpperCase('es');
   return (
     <View
-      accessible
+      accessible={!decorative}
+      importantForAccessibility={decorative ? 'no-hide-descendants' : 'auto'}
+      accessibilityElementsHidden={decorative}
       accessibilityLabel={pending ? `${name}, ${es.common.pendingSuffix}` : name}
       style={[
         styles.base,
-        { width: size, height: size, borderRadius: radii.round },
+        { width: px, height: px, borderRadius: radii.round },
         pending ? styles.pending : { backgroundColor: style?.fill },
       ]}
     >
-      <Text variant="avatarInitial" color={colors.text.primary} maxFontSizeMultiplier={1.2}>
-        {initial}
+      <Text
+        variant={INITIAL_VARIANT[size]}
+        color={pending ? colors.text.secondary : colors.text.primary}
+        maxFontSizeMultiplier={1.2}
+      >
+        {label}
       </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  base: { alignItems: 'center', justifyContent: 'center' },
+  base: { alignItems: 'center', justifyContent: 'center', flex: 0 },
   pending: {
     borderWidth: borders.pending,
     borderStyle: 'dashed',

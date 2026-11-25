@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { DISPLAY_NAME_MAX } from '@tandems/shared';
 import type { HydratedDocument } from 'mongoose';
 
-export const DISPLAY_NAME_MAX = 40;
+export { DISPLAY_NAME_MAX };
 export const STIMULUS_LEVELS = ['full', 'soft', 'minimal'] as const;
 export const MAX_OPEN_TASKS = 5;
 

@@ -3,7 +3,8 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Emphasis } from '@/strings/es';
-import { colors, sizes } from '@/theme';
+import { colors, sizes, spacing } from '@/theme';
+import { BackLink } from './form';
 import { EmphasisText, Text } from './Text';
 
 export interface ScreenProps {
@@ -11,23 +12,31 @@ export interface ScreenProps {
   title: Emphasis;
   /** Botón a la derecha del título (perfil, nueva tarea…). */
   action?: ReactNode;
-  /** `tab` = titular 52 de pestaña; `inner` = 30 de pantalla interior. */
+  /** `tab` = titular 52 de pestaña; `inner` = 30 de pantalla interior (sin barra de pestañas). */
   kind?: 'tab' | 'inner';
+  /** «‹ Mi perfil»: vuelta atrás con texto (pantallas interiores). */
+  back?: { label: string; onPress: () => void };
   children: ReactNode;
 }
 
 /** Pantalla con cabecera fija (caption + titular) y contenido desplazable que se funde bajo la barra. */
-export function Screen({ caption, title, action, kind = 'tab', children }: ScreenProps) {
+export function Screen({ caption, title, action, kind = 'tab', back, children }: ScreenProps) {
+  const tab = kind === 'tab';
   const insets = useSafeAreaInsets();
   const t = sizes.screenTitle;
   const c = sizes.screenContent;
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
+      {back && (
+        <View style={styles.backRow}>
+          <BackLink label={back.label} onPress={back.onPress} />
+        </View>
+      )}
       <View
         style={[
           styles.header,
           {
-            minHeight: t.height,
+            minHeight: tab ? t.height : undefined,
             paddingTop: t.paddingTop,
             paddingHorizontal: t.paddingHorizontal,
             paddingBottom: t.paddingBottom,
@@ -53,18 +62,20 @@ export function Screen({ caption, title, action, kind = 'tab', children }: Scree
         contentContainerStyle={{
           paddingHorizontal: c.paddingHorizontal,
           paddingTop: c.paddingTop,
-          paddingBottom: c.paddingBottom + insets.bottom,
+          paddingBottom: (tab ? c.paddingBottom : spacing.xxl) + insets.bottom,
           gap: c.gap,
         }}
       >
         {children}
       </ScrollView>
-      <LinearGradient
-        pointerEvents="none"
-        colors={[colors.bg.groundTransparent, colors.bg.ground]}
-        locations={[0, 0.58]}
-        style={[styles.fade, { height: sizes.navFade.height + insets.bottom }]}
-      />
+      {tab && (
+        <LinearGradient
+          pointerEvents="none"
+          colors={[colors.bg.groundTransparent, colors.bg.ground]}
+          locations={[0, 0.58]}
+          style={[styles.fade, { height: sizes.navFade.height + insets.bottom }]}
+        />
+      )}
     </View>
   );
 }
@@ -78,5 +89,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg.ground,
   },
   titles: { flex: 1, flexShrink: 1 },
+  backRow: { paddingHorizontal: spacing.sm },
   fade: { position: 'absolute', left: 0, right: 0, bottom: 0 },
 });

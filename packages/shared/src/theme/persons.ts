@@ -11,7 +11,7 @@
  * Los cuatro primeros y el tono de «tú» vienen del UI kit; salvia y ocre, del prototipo;
  * pervinca y agua son nuevos. Aprobada el 2026-11-24.
  */
-import type { Hex } from '../color/contrast';
+import type { Hex } from '../color/contrast.ts';
 
 export const PERSON_COLOR_IDS = [
   'lilac',

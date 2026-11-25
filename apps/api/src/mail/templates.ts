@@ -40,3 +40,29 @@ export function resetPasswordEmail(to: string, name: string, url: string): Email
 </div></body></html>`,
   };
 }
+
+export function invitationEmail(to: string, inviterName: string, url: string): EmailMessage {
+  const safeInviter = escapeHtml(inviterName);
+  return {
+    to,
+    subject: `${inviterName} te invita a su red de apoyo en Tandems`,
+    text: [
+      'Hola:',
+      '',
+      `${inviterName} te invita a su red de apoyo en Tandems, una app para avanzar en lo que importa con personas de confianza.`,
+      'Podrás acompañar sus tareas, uniros en sesiones en vivo y enviarle apoyo cuando lo necesite.',
+      '',
+      'Abre este enlace desde tu móvil para aceptar:',
+      url,
+      '',
+      'La invitación caduca en 14 días. Si no conoces a esta persona, ignora este email.',
+    ].join('\n'),
+    html: `<!doctype html><html lang="es"><body style="margin:0;background:${brand.ground};font-family:-apple-system,Segoe UI,sans-serif;color:${brand.ink}">
+<div style="max-width:480px;margin:0 auto;padding:32px 24px">
+<p style="font-family:Georgia,serif;font-size:28px;margin:0 0 16px">${safeInviter} te invita a su <i>red de apoyo</i></p>
+<p style="font-size:16px;line-height:1.5;margin:0 0 24px">En Tandems podrás acompañar sus tareas, uniros en sesiones en vivo y enviarle apoyo cuando lo necesite.</p>
+<p style="margin:0 0 24px"><a href="${url}" style="display:inline-block;background:${brand.ink};color:${brand.onInk};text-decoration:none;font-weight:600;padding:16px 24px;border-radius:18px">Ver la invitación</a></p>
+<p style="font-size:14px;line-height:1.5;color:${brand.secondary};margin:0">La invitación caduca en 14 días. Si no conoces a esta persona, ignora este email.</p>
+</div></body></html>`,
+  };
+}

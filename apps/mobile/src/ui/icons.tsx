@@ -15,7 +15,16 @@ export type IconName =
   | 'eyeOff'
   | 'alert'
   | 'check'
-  | 'mail';
+  | 'mail'
+  | 'chevron'
+  | 'checkCircle'
+  | 'userMinus'
+  | 'send'
+  | 'share'
+  | 'users'
+  | 'clock'
+  | 'lock'
+  | 'trash';
 
 interface IconProps {
   name: IconName;
@@ -95,6 +104,45 @@ export function Icon({ name, size = sizes.icon.nav, color, strokeWidth = 1.6 }: 
         </>
       )}
       {name === 'check' && <Path {...common} d="M5 12.5l4.5 4.5L19 7" />}
+      {name === 'clock' && (
+        <>
+          <Circle {...common} cx={12} cy={12} r={8.5} />
+          <Path {...common} d="M12 7.5V12l3 2" />
+        </>
+      )}
+      {name === 'chevron' && <Path {...common} d="M9 5l7 7-7 7" />}
+      {name === 'checkCircle' && (
+        <>
+          <Circle {...common} cx={12} cy={12} r={8.5} />
+          <Path {...common} d="M8.5 12.5l2.5 2.5 4.5-5" />
+        </>
+      )}
+      {name === 'userMinus' && (
+        <>
+          <Circle {...common} cx={10} cy={8.5} r={3.5} />
+          <Path {...common} d="M3.5 19.5c1-3.2 3.6-5 6.5-5s5.5 1.8 6.5 5M16.5 11h5" />
+        </>
+      )}
+      {name === 'lock' && (
+        <>
+          <Rect {...common} x={5} y={10.5} width={14} height={10} rx={3} />
+          <Path {...common} d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
+        </>
+      )}
+      {name === 'trash' && <Path {...common} d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13" />}
+      {name === 'send' && <Path {...common} d="M21 3L10 14M21 3l-7 18-4-7-7-4 18-7z" />}
+      {name === 'share' && (
+        <Path {...common} d="M12 15V3M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+      )}
+      {name === 'users' && (
+        <>
+          <Circle {...common} cx={9} cy={8.5} r={3.5} />
+          <Path
+            {...common}
+            d="M2.5 19.5c1-3.2 3.6-5 6.5-5s5.5 1.8 6.5 5M16 5.5a3.5 3.5 0 0 1 0 6.5M18 14.8c1.8.8 3 2.4 3.5 4.7"
+          />
+        </>
+      )}
       {name === 'mail' && (
         <>
           <Rect {...common} x={3} y={5.5} width={18} height={13} rx={3} />

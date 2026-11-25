@@ -3,7 +3,7 @@ import { borders, colors, MIN_TOUCH_TARGET, radii, sizes, spacing } from '@/them
 import { Icon, type IconName } from './icons';
 import { Text } from './Text';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link' | 'destructive';
 
 export interface ButtonProps extends Omit<PressableProps, 'children' | 'style'> {
   label: string;
@@ -13,7 +13,10 @@ export interface ButtonProps extends Omit<PressableProps, 'children' | 'style'> 
 
 /** Botón del UI kit: h 52, radio 18, 16/600. `link` = enlace subrayado («Deshacer»). */
 export function Button({ label, variant = 'primary', icon, disabled, ...rest }: ButtonProps) {
-  const fg = variant === 'primary' ? colors.action.onPrimary : colors.text.primary;
+  const fg =
+    variant === 'primary' || variant === 'destructive'
+      ? colors.action.onPrimary
+      : colors.text.primary;
   return (
     <Pressable
       accessibilityRole="button"
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   primary: { backgroundColor: colors.action.primary },
+  destructive: { backgroundColor: colors.action.destructive },
   secondary: {
     backgroundColor: 'transparent',
     borderWidth: borders.pending,

@@ -5,7 +5,7 @@
  * API de Tandems
  * OpenAPI spec version: 0.1.0
  */
-import type { TerminusHealthIndicatorResultStatus } from './terminusHealthIndicatorResultStatus';
+import type { TerminusHealthIndicatorResultStatus } from './terminusHealthIndicatorResultStatus.ts';
 
 export interface TerminusHealthIndicatorResult {
   /** The status of this health indicator */

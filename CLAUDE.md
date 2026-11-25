@@ -15,7 +15,7 @@ Sin Docker. Dev contra Atlas M0 (`tandems_dev`) y Render Key Value (prefijo `dev
 - `apps/mobile` Expo (expo-router, Reanimated 4, Skia, XState, TanStack Query)
 - `apps/api` NestJS (REST + WebSocket; `worker.ts` = procesadores BullMQ)
 - `apps/web` Static Site (aterrizaje de invitaciones, AASA, assetlinks.json)
-- `packages/shared` esquemas Zod, tipos, tokens de diseño, paleta de personas, reglas puras
+- `packages/shared` esquemas Zod, tipos, tokens de diseño, paleta de personas, reglas puras. **Sin compilar**: Node 24 lo ejecuta como TypeScript (la API lo importa así) y Metro lo empaqueta. Por eso: imports relativos **con extensión `.ts`**, `import type` para tipos y solo sintaxis borrable (sin `enum`, `namespace` ni propiedades en constructores; lo vigila `erasableSyntaxOnly`).
 - `packages/api-client` cliente generado desde OpenAPI (no editar a mano)
 
 ## Comandos
