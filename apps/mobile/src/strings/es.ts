@@ -624,6 +624,71 @@ export const es = {
       unavailable: 'En este móvil aún no se pueden recibir avisos (lo verás al abrir la app).',
     },
   },
+  legal: {
+    back: 'Volver',
+    draft: 'Borrador · proyecto académico. Revisar antes de cualquier uso real.',
+    links: { terms: 'Leer las condiciones', privacy: 'Leer la política de privacidad' },
+    profileRow: 'Privacidad y condiciones',
+    updated: 'Última actualización: 25 de noviembre de 2026',
+    terms: {
+      title: { lead: 'Condiciones ', em: 'de uso' } satisfies Emphasis,
+      sections: [
+        {
+          title: 'Qué es Tandems',
+          body: 'Tandems es una app de acompañamiento para personas con TDAH: te ayuda a avanzar en tus tareas con el apoyo de personas de confianza. Es un proyecto académico, gratuito y sin publicidad.',
+        },
+        {
+          title: 'Tu cuenta',
+          body: 'Necesitas una cuenta con tu email y una contraseña. Eres responsable de lo que se haga con ella; si crees que alguien la usa, cambia la contraseña desde Mi perfil.',
+        },
+        {
+          title: 'Tu gente',
+          body: 'Solo pueden acompañarte las personas que invitas y aceptan. Lo que compartes (el título y la descripción de una tarea, las sesiones, el apoyo) solo lo ve la persona que la acompaña. Puedes eliminar un contacto cuando quieras.',
+        },
+        {
+          title: 'Uso responsable',
+          body: 'Tandems no es un servicio médico ni sustituye a ningún tratamiento. No lo uses para molestar a otras personas: la app limita cuántas invitaciones y avisos se pueden enviar.',
+        },
+        {
+          title: 'Disponibilidad',
+          body: 'Al ser un proyecto académico, el servicio puede cambiar, dormirse o dejar de estar disponible. Haremos lo posible por avisar antes de cerrarlo y por que puedas descargar tus datos.',
+        },
+        {
+          title: 'Darte de baja',
+          body: 'Puedes eliminar tu cuenta en Mi perfil › Editar perfil › Eliminar cuenta. Se borran tus tareas, sesiones y contactos.',
+        },
+      ],
+    },
+    privacy: {
+      title: { lead: 'Política de ', em: 'privacidad' } satisfies Emphasis,
+      sections: [
+        {
+          title: 'Qué datos guardamos',
+          body: 'Tu nombre y tu email; tus contactos (el nombre que les pones y su email); tus tareas, sesiones y peticiones de apoyo; tus preferencias; y, si activas los avisos, el identificador de tu móvil para enviártelos.',
+        },
+        {
+          title: 'Para qué',
+          body: 'Solo para que la app funcione: acompañarte, avisar a tu gente y recordarte tus sesiones. No hay analítica, publicidad ni venta de datos.',
+        },
+        {
+          title: 'Dónde',
+          body: 'En servidores de la Unión Europea: la base de datos (MongoDB Atlas) y la API (Render) en Fráncfort, y los emails con Resend (UE). Los avisos al móvil pasan por el servicio de Expo y de Apple o Google, y nunca llevan el contenido de tus tareas: solo quién y qué («Marta te pide apoyo»).',
+        },
+        {
+          title: 'Quién lo ve',
+          body: 'Tú y, de cada tarea, solo la persona que la acompaña. Nadie más del proyecto mira tus tareas; los registros técnicos no guardan su contenido.',
+        },
+        {
+          title: 'Cuánto tiempo',
+          body: 'Mientras tengas la cuenta. Las invitaciones se borran 30 días después de caducar, el registro de avisos a los 90 días y los avisos de apoyo terminados a los 30 días. Al eliminar la cuenta se borra todo lo tuyo.',
+        },
+        {
+          title: 'Tus derechos',
+          body: 'Puedes descargar tus datos (Mi perfil › Editar perfil › Descargar mis datos), corregir tu nombre y eliminar tu cuenta en cualquier momento desde la app.',
+        },
+      ],
+    },
+  },
   offline: {
     title: 'Sin conexión',
     body: 'No puedes pedir ni enviar apoyo hasta que vuelvas a tener conexión.',

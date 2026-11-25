@@ -74,5 +74,11 @@
 
 Motion fino en todos los componentes, auditoría de accesibilidad (VoiceOver, TalkBack, teclado externo, Dynamic Type máximo), todos los estados vacíos y de error del canvas, Sentry, analítica sin contenido, Live Activity (si hay tiempo), exportar datos, pruebas en dispositivos reales.
 
-## Fase 7 · Lanzamiento (`fase-7-lanzamiento`)
-🧑 Verificación de Google completada, políticas de privacidad y condiciones, fichas de tienda y declaración de datos, TestFlight y pruebas internas en Play, entorno de producción en Render y Atlas M10, pruebas con usuarios reales.
+## Fase 7 · Cierre (`fase-7-cierre`)
+> Proyecto académico: **sin App Store ni Google Play** (decisión del 2026-11-25). La fase 7 original (fichas de tienda, TestFlight, M10) no aplica.
+
+1. ✅ «Gracias» por el ¡hurra! y horario de silencio de los avisos (aplazados de la fase 5).
+2. ✅ Límites propios en las rutas sensibles (iniciar sesión, crear cuenta, recuperar contraseña, invitar, apoyo).
+3. ✅ Condiciones de uso y política de privacidad (borrador) en la app, enlazadas desde Crear cuenta y Perfil.
+4. ✅ Guía de despliegue (`docs/DESPLIEGUE.md`) y prueba de humo de la API compilada en producción.
+5. 🧑 Conectar Render (staging), `eas init` para push y la ronda de pruebas (`docs/PRUEBAS-PENDIENTES.txt`).

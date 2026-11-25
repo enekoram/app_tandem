@@ -135,3 +135,15 @@ CÓMO PREPARARLO
         Siguen en el formulario.» con «Reintentar»; lo escrito no se pierde
 [ ] 8.3 Perfil › Editar perfil › «Descargar mis datos»: se abre la hoja de compartir con
         un JSON con perfil, contactos, tareas, sesiones y apoyo (sin contraseñas)
+
+─────────────────────────────────────────────
+9. CIERRE (fase 7)
+─────────────────────────────────────────────
+[ ] 9.1 Crear cuenta: los enlaces «Leer las condiciones» y «Leer la política de
+        privacidad» abren sus textos (sin sesión); Perfil › Privacidad y condiciones
+[ ] 9.2 Revisar el contenido de los textos legales (son un borrador)
+[ ] 9.3 HurraRecibido -> «Dar las gracias» -> el otro móvil ve el aviso y, en sus
+        terminadas, «Te ha dado las gracias»
+[ ] 9.4 Notificaciones -> «Silenciar avisos por la noche» con Desde/Hasta: dentro de esas
+        horas no llegan avisos (salvo recordatorios de sesión)
+[ ] 9.5 Iniciar sesión mal 6 veces seguidas: a la sexta, «Demasiados intentos»

@@ -77,6 +77,11 @@ export default function ProfileScreen() {
           title={es.notifications.row}
           onPress={() => router.push('/perfil/notificaciones')}
         />
+        <ListRow
+          icon="lock"
+          title={es.legal.profileRow}
+          onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'privacidad' } })}
+        />
       </ListCard>
       <ListCard>
         <ListRow
