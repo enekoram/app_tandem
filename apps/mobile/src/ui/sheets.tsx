@@ -25,6 +25,8 @@ export interface ConfirmSheetProps {
   cancelLabel: string;
   /** Rojo para acciones que borran algo; principal (negro) para el resto. */
   destructive?: boolean;
+  /** Tercera salida entre confirmar y volver (p. ej. «Proponer otra hora»). */
+  alternative?: { label: string; onPress: () => void };
   busy?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -42,6 +44,7 @@ export function ConfirmSheet({
   confirmIcon,
   cancelLabel,
   destructive = false,
+  alternative,
   busy = false,
   onConfirm,
   onCancel,
@@ -91,7 +94,18 @@ export function ConfirmSheet({
                 disabled={busy}
                 accessibilityState={{ busy }}
               />
-              <Button label={cancelLabel} variant="secondary" onPress={onCancel} />
+              {alternative && (
+                <Button
+                  label={alternative.label}
+                  variant="secondary"
+                  onPress={alternative.onPress}
+                />
+              )}
+              <Button
+                label={cancelLabel}
+                variant={alternative ? 'ghost' : 'secondary'}
+                onPress={onCancel}
+              />
             </View>
           </Animated.View>
         </View>

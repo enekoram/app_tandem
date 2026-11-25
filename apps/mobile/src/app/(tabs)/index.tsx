@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useTasksControllerList, type TaskDto } from '@tandems/api-client';
+import { useTasksControllerList, type SessionDto, type TaskDto } from '@tandems/api-client';
 import type { SceneCard } from '@tandems/shared';
 import { presenceLine } from '@/features/home/a11y';
 import { HomeScene } from '@/features/home/HomeScene';
+import { SessionCard } from '@/features/sessions/SessionCard';
+import { useSessionActions } from '@/features/sessions/useSessionActions';
 import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
@@ -38,6 +40,7 @@ export default function TodayScreen() {
   const home = useHome();
   const done = useCompleteTask();
   const respond = useRespondShared();
+  const sessionActions = useSessionActions();
   const finished = useTasksControllerList({ status: 'done' });
   const { scene, dto } = home;
 
@@ -47,6 +50,25 @@ export default function TodayScreen() {
   const byId = new Map<string, TaskDto>(
     [...(dto?.tasks ?? []), ...(dto?.shared ?? [])].map((x) => [x.id, x]),
   );
+  const sessionsById = new Map<string, SessionDto>((dto?.sessions ?? []).map((x) => [x.id, x]));
+  const sessionItem = (session: SessionDto | undefined): CarouselItem | null =>
+    session
+      ? {
+          key: `session:${session.id}`,
+          label: t.cardSession(session.person?.name ?? '', session.taskTitle),
+          node: (
+            <SessionCard
+              session={session}
+              onOpen={() => router.push({ pathname: '/sesion/[id]', params: { id: session.id } })}
+              onAccept={() => sessionActions.accept(session)}
+              onReject={() => sessionActions.askReject(session)}
+              onChoose={() => sessionActions.chooseTime(session)}
+              onCancel={() => sessionActions.askCancel(session)}
+              onJoin={() => sessionActions.join(session)}
+            />
+          ),
+        }
+      : null;
 
   const cards = scene.cards
     .map((card) => toItem(card, byId))
@@ -100,7 +122,11 @@ export default function TodayScreen() {
         ),
       };
     }
-    // Sesiones y apoyo: fases 4 y 5
+    if (card.kind === 'request' && card.request.kind === 'session') {
+      return sessionItem(sessionsById.get(card.request.id.replace(/^session:/, '')));
+    }
+    if (card.kind === 'session') return sessionItem(sessionsById.get(card.session.id));
+    // Apoyo: fase 5
     return null;
   }
 
@@ -108,10 +134,17 @@ export default function TodayScreen() {
   const presence =
     scene.a11y.kind === 'contacts' ? presenceLine(scene.a11y.present, scene.a11y.absent) : '';
 
+  // SesionPorEmpezar: la Home cambia de titular cuando falta poco (doc 03 · sessionSoon)
+  const soon = scene.pulse ? scene.cards.find((c) => c.kind === 'session') : undefined;
+  const minutesLeft =
+    soon?.kind === 'session'
+      ? Math.max(0, Math.ceil((new Date(soon.session.scheduledAt).getTime() - Date.now()) / 60_000))
+      : 0;
+
   return (
     <Screen
-      caption={formatLongDay(new Date())}
-      title={dto && !cards.length && empty ? t.title : t.liveTitle}
+      caption={soon ? t.startsIn(minutesLeft) : formatLongDay(new Date())}
+      title={soon ? t.soonTitle : dto && !cards.length && empty ? t.title : t.liveTitle}
       action={
         <IconButton
           icon="profile"
@@ -186,6 +219,7 @@ export default function TodayScreen() {
 
       {done.sheet}
       {respond.sheet}
+      {sessionActions.sheets}
     </Screen>
   );
 }

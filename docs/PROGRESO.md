@@ -124,29 +124,29 @@ Estados: `pendiente` · `hecha` · `revisada`
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [SesionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionesKV) | Mis sesiones · LF | 4 | pendiente |
-| [ProgramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ProgramarSesionKV) | Programar sesión · LF | 4 | pendiente |
-| [SesionEnviadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionEnviadaKV) | Invitación enviada · LF | 4 | pendiente |
-| [ConfirmarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ConfirmarSesionKV) | Confirmar sesión · LF | 4 | pendiente |
-| [SesionAceptadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionAceptadaKV) | Sesión aceptada · LF | 4 | pendiente |
-| [ReprogramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ReprogramarSesionKV) | Reprogramar sesión · LF | 4 | pendiente |
-| [SesionReprogramadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionReprogramadaKV) | Reprogramada · LF | 4 | pendiente |
-| [SesionActivaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionActivaKV) | Unirse a la sesión · LF | 4 | pendiente |
-| [RechazarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RechazarSesionKV) | Rechazar invitación · LF | 4 | pendiente |
-| [CancelarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CancelarSesionKV) | Cancelar sesión · LF | 4 | pendiente |
-| [SesionPorEmpezarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionPorEmpezarKV) | Recordatorio de sesión · nuevo | 4 | pendiente |
-| [ProponerHoraKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ProponerHoraKV) | Proponer otra hora · nuevo | 4 | pendiente |
-| [HoraPropuestaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HoraPropuestaKV) | Hora propuesta · nuevo | 4 | pendiente |
-| [SesionCanceladaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionCanceladaKV) | Sesión cancelada · nuevo | 4 | pendiente |
-| [InvitacionRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionRechazadaKV) | Invitación rechazada · nuevo | 4 | pendiente |
+| [SesionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionesKV) | Mis sesiones · LF | 4 | hecha |
+| [ProgramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ProgramarSesionKV) | Programar sesión · LF | 4 | hecha |
+| [SesionEnviadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionEnviadaKV) | Invitación enviada · LF | 4 | hecha |
+| [ConfirmarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ConfirmarSesionKV) | Confirmar sesión · LF | 4 | hecha |
+| [SesionAceptadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionAceptadaKV) | Sesión aceptada · LF | 4 | hecha |
+| [ReprogramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ReprogramarSesionKV) | Reprogramar sesión · LF | 4 | hecha |
+| [SesionReprogramadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionReprogramadaKV) | Reprogramada · LF | 4 | hecha |
+| [SesionActivaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionActivaKV) | Unirse a la sesión · LF | 4 | hecha |
+| [RechazarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RechazarSesionKV) | Rechazar invitación · LF | 4 | hecha |
+| [CancelarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CancelarSesionKV) | Cancelar sesión · LF | 4 | hecha |
+| [SesionPorEmpezarKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionPorEmpezarKV) | Recordatorio de sesión · nuevo | 4 | hecha |
+| [ProponerHoraKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ProponerHoraKV) | Proponer otra hora · nuevo | 4 | hecha |
+| [HoraPropuestaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HoraPropuestaKV) | Hora propuesta · nuevo | 4 | hecha |
+| [SesionCanceladaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionCanceladaKV) | Sesión cancelada · nuevo | 4 | hecha |
+| [InvitacionRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionRechazadaKV) | Invitación rechazada · nuevo | 4 | hecha |
 
 ### Sesiones · vacíos y errores
 
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
-| [VacioSesionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioSesionesKV) | Mis sesiones (vacío) · LF | 4 | pendiente |
-| [ErrProgramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrProgramarSesionKV) | Programar sesión: hora pasada · LF | 4 | pendiente |
-| [SesionRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionRechazadaKV) | Invitación a sesión rechazada · LF | 4 | pendiente |
+| [VacioSesionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-VacioSesionesKV) | Mis sesiones (vacío) · LF | 4 | hecha |
+| [ErrProgramarSesionKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ErrProgramarSesionKV) | Programar sesión: hora pasada · LF | 4 | hecha |
+| [SesionRechazadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-SesionRechazadaKV) | Invitación a sesión rechazada · LF | 4 | hecha |
 
 ### Perfil, contactos y configuración
 
