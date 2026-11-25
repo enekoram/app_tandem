@@ -7,6 +7,7 @@ import { CONTACT_NAME_MAX } from '../rules/contacts.ts';
 import { TASK_DESCRIPTION_MAX, TASK_TITLE_MAX } from '../rules/tasks.ts';
 import { DISPLAY_NAME_MAX } from '../rules/users.ts';
 import { SESSION_DURATIONS, SESSION_MESSAGE_MAX } from '../rules/sessions.ts';
+import { NOTIFICATION_KINDS, SUPPORT_MESSAGE_MAX } from '../rules/support.ts';
 
 export const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, 'identificador no válido');
 
@@ -81,3 +82,22 @@ export const proposeTimeSchema = z.object({
   message: sessionMessage,
 });
 export type ProposeTimeInput = z.input<typeof proposeTimeSchema>;
+
+/** Pedir apoyo sobre una tarea mía con acompañante aceptada. */
+export const supportRequestSchema = z.object({
+  taskId: objectIdSchema,
+  message: optionalText(SUPPORT_MESSAGE_MAX),
+});
+export type SupportRequestInput = z.input<typeof supportRequestSchema>;
+
+/** Empezar a enviar apoyo a la dueña de una tarea que acompaño. */
+export const sendSupportSchema = z.object({ taskId: objectIdSchema });
+export type SendSupportInput = z.input<typeof sendSupportSchema>;
+
+/** «Pensé en ti» a un contacto aceptado. */
+export const thinkingSchema = z.object({ contactId: objectIdSchema });
+export type ThinkingInput = z.input<typeof thinkingSchema>;
+
+/** Preferencias de avisos: solo las que cambian. */
+export const notificationPrefsSchema = z.partialRecord(z.enum(NOTIFICATION_KINDS), z.boolean());
+export type NotificationPrefsInput = z.input<typeof notificationPrefsSchema>;

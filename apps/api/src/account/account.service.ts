@@ -4,6 +4,7 @@ import { AuthService } from '@thallesp/nestjs-better-auth';
 import type { Connection } from 'mongoose';
 import { ContactsService } from '../contacts/contacts.service.js';
 import { SessionsService } from '../sessions/sessions.service.js';
+import { SupportService } from '../support/support.service.js';
 import type { UserDocument } from '../users/user.schema.js';
 import { UsersService } from '../users/users.service.js';
 
@@ -21,6 +22,7 @@ export class AccountService {
     private readonly users: UsersService,
     private readonly contacts: ContactsService,
     private readonly sessions: SessionsService,
+    private readonly support: SupportService,
     private readonly auth: AuthService,
   ) {}
 
@@ -28,6 +30,7 @@ export class AccountService {
     await this.connection.transaction(async (session) => {
       await this.contacts.purgeAccount(me, session);
       await this.sessions.purgeAccount(me._id, session);
+      await this.support.purgeAccount(me._id, session);
       // Mis tareas (abiertas, terminadas y borradas): quien me acompañaba deja de verlas
       await this.connection.collection('tasks').deleteMany({ owner_id: me._id }, { session });
       await this.users.purge(me._id, session);

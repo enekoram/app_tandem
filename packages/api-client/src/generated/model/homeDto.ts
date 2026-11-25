@@ -7,6 +7,7 @@
  */
 import type { ContactDto } from './contactDto.ts';
 import type { SessionDto } from './sessionDto.ts';
+import type { SupportStateDto } from './supportStateDto.ts';
 import type { TaskDto } from './taskDto.ts';
 
 export interface HomeDto {
@@ -20,4 +21,5 @@ export interface HomeDto {
   presentContactIds: string[];
   /** Sesiones por confirmar, aceptadas y en curso (por hora) */
   sessions: SessionDto[];
+  support: SupportStateDto;
 }

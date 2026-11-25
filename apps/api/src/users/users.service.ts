@@ -44,6 +44,19 @@ export class UsersService {
     return me.save();
   }
 
+  /** Preferencias de avisos: se mezclan con las guardadas. */
+  async setNotifications(
+    me: UserDocument,
+    changes: Partial<Record<string, boolean>>,
+  ): Promise<UserDocument> {
+    const set = Object.fromEntries(
+      Object.entries(changes).map(([k, v]) => [`prefs.notifications.${k}`, v]),
+    );
+    return this.users
+      .findOneAndUpdate({ _id: me._id }, { $set: set }, { returnDocument: 'after' })
+      .orFail();
+  }
+
   /** Eliminar cuenta: borra el perfil (libera el email para una cuenta nueva). */
   async purge(id: Types.ObjectId, session: ClientSession): Promise<void> {
     await this.users.deleteOne({ _id: id }, { session });

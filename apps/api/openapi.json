@@ -97,6 +97,45 @@
         ]
       }
     },
+    "/me/notifications": {
+      "patch": {
+        "operationId": "MeController_notifications",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
     "/health": {
       "get": {
         "operationId": "HealthController_check",
@@ -1314,6 +1353,231 @@
           "sessions"
         ]
       }
+    },
+    "/support/requests": {
+      "post": {
+        "operationId": "SupportController_request",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  },
+                  "message": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "taskId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupportRequestDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "NO_COMPANION"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/requests/{id}/decline": {
+      "post": {
+        "operationId": "SupportController_decline",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending": {
+      "post": {
+        "operationId": "SupportController_start",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "taskId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  }
+                },
+                "required": [
+                  "taskId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendingDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending/{id}/beat": {
+      "post": {
+        "operationId": "SupportController_beat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "409": {
+            "description": "SUPPORT_OVER: ya ha terminado (5 min como máximo)"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/sending/{id}/end": {
+      "post": {
+        "operationId": "SupportController_end",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/support/thinking": {
+      "post": {
+        "operationId": "SupportController_thinking",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "string",
+                    "pattern": "^[a-f\\d]{24}$"
+                  }
+                },
+                "required": [
+                  "contactId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "429": {
+            "description": "THINKING_LIMIT"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "support"
+        ]
+      }
     }
   },
   "info": {
@@ -1353,6 +1617,13 @@
               "soft",
               "minimal"
             ]
+          },
+          "notifications": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Avisos activados (supportRequests, sharedTasks, sessionInvites, tasksDone, supportReceived, hurras, sessionReminders); por defecto, todos"
           }
         },
         "required": [
@@ -1360,7 +1631,8 @@
           "displayName",
           "email",
           "timezone",
-          "stimulus"
+          "stimulus",
+          "notifications"
         ]
       },
       "TerminusHealthIndicatorResult": {
@@ -1802,6 +2074,77 @@
           "otherJoined"
         ]
       },
+      "SupportRequestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "taskTitle": {
+            "type": "string",
+            "example": "Estudiar inglés"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Caduca a los 15 min sin respuesta"
+          },
+          "person": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskPersonDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "taskId",
+          "taskTitle",
+          "message",
+          "expiresAt",
+          "person"
+        ]
+      },
+      "SupportStateDto": {
+        "type": "object",
+        "properties": {
+          "incoming": {
+            "description": "Me piden apoyo (sin responder)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportRequestDto"
+            }
+          },
+          "outgoing": {
+            "description": "He pedido apoyo (sin respuesta)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupportRequestDto"
+            }
+          },
+          "sendingContactIds": {
+            "description": "Contactos que me están enviando apoyo ahora",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "incoming",
+          "outgoing",
+          "sendingContactIds"
+        ]
+      },
       "HomeDto": {
         "type": "object",
         "properties": {
@@ -1839,6 +2182,9 @@
             "items": {
               "$ref": "#/components/schemas/SessionDto"
             }
+          },
+          "support": {
+            "$ref": "#/components/schemas/SupportStateDto"
           }
         },
         "required": [
@@ -1846,7 +2192,24 @@
           "contacts",
           "shared",
           "presentContactIds",
-          "sessions"
+          "sessions",
+          "support"
+        ]
+      },
+      "SendingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "Como mucho 5 min por envío"
+          }
+        },
+        "required": [
+          "id",
+          "expiresAt"
         ]
       }
     }

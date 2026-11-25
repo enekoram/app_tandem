@@ -8,7 +8,14 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { updateProfileSchema, type UpdateProfileInput } from '@tandems/shared';
+import {
+  NOTIFICATION_KINDS,
+  notificationPrefsSchema,
+  updateProfileSchema,
+  type NotificationKind,
+  type NotificationPrefsInput,
+  type UpdateProfileInput,
+} from '@tandems/shared';
 import { AuthService, Session, type UserSession } from '@thallesp/nestjs-better-auth';
 import { openApiSchema, ZodPipe } from '../common/zod.js';
 import { STIMULUS_LEVELS, type UserDocument } from './user.schema.js';
@@ -29,6 +36,13 @@ export class MeDto {
 
   @ApiProperty({ enum: STIMULUS_LEVELS })
   stimulus!: (typeof STIMULUS_LEVELS)[number];
+
+  @ApiProperty({
+    type: 'object',
+    additionalProperties: { type: 'boolean' },
+    description: `Avisos activados (${NOTIFICATION_KINDS.join(', ')}); por defecto, todos`,
+  })
+  notifications!: Record<NotificationKind, boolean>;
 }
 
 @ApiTags('me')
@@ -64,6 +78,27 @@ export class MeController {
     await ctx.internalAdapter.updateUser(session.user.id, { name: body.displayName });
     return toMeDto(updated);
   }
+
+  /** NotificacionesKV: activar o desactivar cada tipo de aviso. */
+  @Patch('notifications')
+  @ApiBody({ schema: openApiSchema(notificationPrefsSchema) })
+  @ApiOkResponse({ type: MeDto })
+  async notifications(
+    @Session() session: UserSession,
+    @Body(new ZodPipe(notificationPrefsSchema)) body: NotificationPrefsInput,
+  ): Promise<MeDto> {
+    const me = await this.users.ensureProfile(session.user);
+    return toMeDto(await this.users.setNotifications(me, body));
+  }
+}
+
+/** Preferencias de avisos con los valores por defecto (todo activado). */
+function notificationsOf(profile: UserDocument): Record<NotificationKind, boolean> {
+  const saved = profile.prefs.notifications ?? {};
+  return Object.fromEntries(NOTIFICATION_KINDS.map((k) => [k, saved[k] ?? true])) as Record<
+    NotificationKind,
+    boolean
+  >;
 }
 
 function toMeDto(profile: UserDocument): MeDto {
@@ -73,5 +108,6 @@ function toMeDto(profile: UserDocument): MeDto {
     email: profile.email,
     timezone: profile.timezone,
     stimulus: profile.prefs.stimulus,
+    notifications: notificationsOf(profile),
   };
 }

@@ -4,6 +4,7 @@ export * from './rules/contacts.ts';
 export * from './rules/tasks.ts';
 export * from './rules/users.ts';
 export * from './rules/sessions.ts';
+export * from './rules/support.ts';
 export * from './schemas/index.ts';
 export * from './home/scene.ts';
 export * from './home/machine.ts';

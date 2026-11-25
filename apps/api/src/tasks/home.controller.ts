@@ -7,6 +7,9 @@ import { Presence } from '../realtime/presence.js';
 import { SessionViews } from '../sessions/session-views.js';
 import { SessionDto } from '../sessions/sessions.dto.js';
 import { SessionsService } from '../sessions/sessions.service.js';
+import { SupportStateDto } from '../support/support.dto.js';
+import { SupportViews } from '../support/support-views.js';
+import { SupportService } from '../support/support.service.js';
 import { UsersService } from '../users/users.service.js';
 import { TaskViews } from './task-views.js';
 import { TaskDto } from './tasks.dto.js';
@@ -37,6 +40,9 @@ export class HomeDto {
     description: 'Sesiones por confirmar, aceptadas y en curso (por hora)',
   })
   sessions!: SessionDto[];
+
+  @ApiProperty({ type: SupportStateDto })
+  support!: SupportStateDto;
 }
 
 @ApiTags('me')
@@ -51,6 +57,8 @@ export class HomeController {
     private readonly presence: Presence,
     private readonly sessions: SessionsService,
     private readonly sessionViews: SessionViews,
+    private readonly supportService: SupportService,
+    private readonly supportViews: SupportViews,
   ) {}
 
   /** Arranque, reconexión y vuelta a primer plano: una sola petición. */
@@ -64,6 +72,7 @@ export class HomeController {
       this.contacts.list(me),
       this.sessions.listActive(me),
     ]);
+    const support = await this.supportViews.state(me, await this.supportService.state(me));
     const pending = accompanying.filter((t) => t.companion.status === 'pending');
     const [tasks, shared, sessionDtos] = await Promise.all([
       this.views.toDtos(me, open, 'owner'),
@@ -79,6 +88,7 @@ export class HomeController {
         .filter((c) => c.contact_user_id && this.presence.isOnline(c.contact_user_id.toString()))
         .map((c) => c.id as string),
       sessions: sessionDtos,
+      support,
     };
   }
 }

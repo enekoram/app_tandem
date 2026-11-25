@@ -26,6 +26,7 @@ import type {
 
 import type {
   HomeDto,
+  MeControllerNotificationsBody,
   MeControllerUpdateBody,
   MeDto
 } from '../model';
@@ -359,6 +360,85 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
         TContext
       > => {
       return useMutation(getAccountControllerDeleteMutationOptions(options), queryClient);
+    }
+    export type meControllerNotificationsResponse200 = {
+  data: MeDto
+  status: 200
+}
+
+export type meControllerNotificationsResponseSuccess = (meControllerNotificationsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type meControllerNotificationsResponse = (meControllerNotificationsResponseSuccess)
+
+export const getMeControllerNotificationsUrl = () => {
+
+
+
+
+  return `/me/notifications`
+}
+
+export const meControllerNotifications = async (meControllerNotificationsBody: MeControllerNotificationsBody, options?: Parameters<typeof apiFetch>[1]): Promise<meControllerNotificationsResponse> => {
+
+  return apiFetch<meControllerNotificationsResponse>(getMeControllerNotificationsUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(meControllerNotificationsBody)
+  }
+);}
+
+
+
+
+
+export const getMeControllerNotificationsMutationKey = () => ['meControllerNotifications'] as const;
+
+export const getMeControllerNotificationsMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext> => {
+
+const mutationKey = getMeControllerNotificationsMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof meControllerNotifications>>, MeControllerNotificationsMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  meControllerNotifications(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MeControllerNotificationsMutationResult = NonNullable<Awaited<ReturnType<typeof meControllerNotifications>>>
+    export type MeControllerNotificationsMutationBody = MeControllerNotificationsBody
+    export type MeControllerNotificationsMutationError = unknown
+    export type MeControllerNotificationsMutationVariables = {data: MeControllerNotificationsBody}
+
+    export const useMeControllerNotifications = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerNotifications>>, TError,MeControllerNotificationsMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof meControllerNotifications>>,
+        TError,
+        MeControllerNotificationsMutationVariables,
+        TContext
+      > => {
+      return useMutation(getMeControllerNotificationsMutationOptions(options), queryClient);
     }
     export type homeControllerHomeResponse200 = {
   data: HomeDto

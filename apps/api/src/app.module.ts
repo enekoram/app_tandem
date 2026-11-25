@@ -11,6 +11,7 @@ import { ContactsModule } from './contacts/contacts.module.js';
 import { HealthModule } from './health/health.module.js';
 import { LinksModule } from './links/links.module.js';
 import { SessionsModule } from './sessions/sessions.module.js';
+import { SupportModule } from './support/support.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 import { MailModule } from './mail/mail.module.js';
 import { RealtimeModule } from './realtime/realtime.module.js';
@@ -61,6 +62,7 @@ import { UsersModule } from './users/users.module.js';
     ContactsModule,
     TasksModule,
     SessionsModule,
+    SupportModule,
     AccountModule,
     RealtimeModule,
   ],

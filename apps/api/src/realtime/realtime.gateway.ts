@@ -17,6 +17,19 @@ import { Presence } from './presence.js';
 export const HOME_CHANGED = 'home:changed';
 export const PRESENCE = 'presence';
 
+export const SUPPORT = 'support';
+export const THINKING = 'thinking';
+
+/** Apoyo en vivo: quién (contacto en la lista de quien lo recibe) y en qué punto va. */
+export interface SupportPayload {
+  contactId: string;
+  state: 'started' | 'beat' | 'ended';
+}
+
+export interface ThinkingPayload {
+  contactId: string;
+}
+
 export interface PresencePayload {
   /** Id del contacto en la lista de quien recibe el evento. */
   contactId: string;
@@ -74,6 +87,11 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   homeChanged(userIds: Iterable<Types.ObjectId | string | null | undefined>): void {
     const rooms = [...new Set([...userIds].filter((id) => id).map((id) => roomOf(id!)))];
     if (rooms.length) this.server.to(rooms).emit(HOME_CHANGED);
+  }
+
+  /** Evento efímero a una persona (apoyo en vivo, «Pensé en ti»): nunca con contenido. */
+  toUser(userId: Types.ObjectId | string, event: string, payload: object): void {
+    this.server.to(roomOf(userId)).emit(event, payload);
   }
 
   /** A quien me tiene como contacto aceptado: «está contigo» / «hoy no está». */
