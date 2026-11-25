@@ -17,6 +17,8 @@ export const durations = {
   floatingNotice: 8000,
   /** Ventana para «Deshacer». */
   undo: 8000,
+  /** Aviso sin acción (toast informativo): se retira antes. */
+  toast: 4000,
 } as const;
 
 /**
@@ -39,6 +41,12 @@ export const easings = {
   enter: [0, 0, 0, 1],
   exit: [0.3, 0, 1, 1],
 } as const;
+
+/**
+ * Órbita del «amigo» alrededor de ti en la Home (pedido tras las pruebas del 2026-11-25):
+ * ángulo máximo en radianes (±) y duración de un vaivén completo.
+ */
+export const orbit = { maxAngle: 0.35, duration: 9000, apartFactor: 0.4 } as const;
 
 /** Configuración de muelles (forma de Reanimated `withSpring`). */
 export const springs = {

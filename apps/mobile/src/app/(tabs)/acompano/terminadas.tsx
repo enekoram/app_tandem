@@ -15,6 +15,7 @@ export default function AccompaniedDoneScreen() {
   return (
     <Screen
       kind="inner"
+      underTabBar
       caption={t.caption}
       title={t.title}
       back={{ label: t.back, onPress: () => router.back() }}

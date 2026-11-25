@@ -265,3 +265,29 @@ describe('describeScene', () => {
     expect(sc.approach).toBe('c-juan');
   });
 });
+
+describe('sesión aceptada más adelante (quien acompaña, sin tareas propias)', () => {
+  const me = { initials: 'A' };
+  const tomorrow = session({ scheduledAt: at(24 * 60) });
+
+  it('deriveBase: upcomingSession; con tarea propia, manda la tarea', () => {
+    expect(deriveBase(snap({ contacts: [marta], sessions: [tomorrow] }), NOW).kind).toBe(
+      'upcomingSession',
+    );
+    expect(deriveBase(snap({ tasks: [task('renta')], sessions: [tomorrow] }), NOW).kind).toBe(
+      'nextTask',
+    );
+  });
+
+  it('describeScene: unidas, sin pulso, con la tarjeta de la sesión', () => {
+    const s = snap({ contacts: [marta], sessions: [tomorrow] });
+    const sc = describeScene(
+      { base: deriveBase(s, NOW), incoming: [], supportFrom: null, celebrating: false },
+      s,
+      me,
+    );
+    expect(sc).toMatchObject({ layout: 'joined', pulse: false, liveDot: false });
+    expect(sc.people.map((p) => p.id)).toEqual(['me', 'c-marta']);
+    expect(sc.cards.map((c) => c.kind)).toEqual(['session']);
+  });
+});

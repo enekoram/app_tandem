@@ -7,11 +7,13 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { AccessibilityInfo, StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeInDown, FadeOutDown, ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { borders, colors, durations, radii, sizes, spacing } from '@/theme';
+import { es } from '@/strings/es';
+import { borders, colors, durations, MIN_TOUCH_TARGET, radii, sizes, spacing } from '@/theme';
 import { Button } from './Button';
+import { Icon } from './icons';
 import { Text } from './Text';
 
 export type ToastKind = 'info' | 'ok' | 'err';
@@ -46,7 +48,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     clearTimeout(timer.current);
     setToast({ id: Date.now(), message, ...options });
     AccessibilityInfo.announceForAccessibility(message);
-    timer.current = setTimeout(() => setToast(null), durations.undo);
+    // Con «Deshacer», la ventana de deshacer (8 s); si solo informa, 4 s
+    timer.current = setTimeout(
+      () => setToast(null),
+      options.action ? durations.undo : durations.toast,
+    );
   }, []);
 
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -84,6 +90,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               }}
             />
           )}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={es.common.close}
+            hitSlop={spacing.xs}
+            onPress={() => {
+              clearTimeout(timer.current);
+              setToast(null);
+            }}
+            style={styles.close}
+          >
+            <Icon name="close" size={sizes.icon.button} color={palette.text} strokeWidth={1.8} />
+          </Pressable>
         </Animated.View>
       )}
     </ToastContext.Provider>
@@ -103,4 +121,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   message: { flex: 1, paddingVertical: spacing.md },
+  close: {
+    width: MIN_TOUCH_TARGET,
+    height: MIN_TOUCH_TARGET,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.xs,
+  },
 });

@@ -22,7 +22,6 @@ export interface CarouselItem {
 }
 
 const { card } = sizes.carousel;
-const STEP = card.width + card.gap;
 
 /**
  * Carrusel «Para hoy» (doc 03 · canvas Hoy): tarjetas con paginación que dejan asomar la
@@ -33,13 +32,16 @@ const STEP = card.width + card.gap;
 export function Carousel({ title, items }: { title: Emphasis; items: CarouselItem[] }) {
   const list = useRef<FlatList<CarouselItem>>(null);
   const [index, setIndex] = useState(0);
+  // Tarjetas a todo el ancho disponible (decisión tras las pruebas del 2026-11-25)
+  const [width, setWidth] = useState<number>(card.width);
+  const step = width + card.gap;
   const count = items.length;
   const current = Math.min(index, Math.max(count - 1, 0));
 
   const goTo = (i: number) => {
     const next = Math.max(0, Math.min(count - 1, i));
     setIndex(next);
-    list.current?.scrollToOffset({ offset: next * STEP, animated: true });
+    list.current?.scrollToOffset({ offset: next * step, animated: true });
     const item = items[next];
     if (item) {
       AccessibilityInfo.announceForAccessibility(
@@ -49,10 +51,10 @@ export function Carousel({ title, items }: { title: Emphasis; items: CarouselIte
   };
 
   const onScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) =>
-    setIndex(Math.round(e.nativeEvent.contentOffset.x / STEP));
+    setIndex(Math.round(e.nativeEvent.contentOffset.x / step));
 
   return (
-    <View style={styles.root}>
+    <View style={styles.root} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
       <View style={styles.header}>
         <EmphasisText text={title} variant="section" accessibilityRole="header" />
         {count > 1 && (
@@ -90,14 +92,14 @@ export function Carousel({ title, items }: { title: Emphasis; items: CarouselIte
         keyExtractor={(item) => item.key}
         renderItem={({ item, index: i }) => (
           <View
-            style={styles.card}
+            style={[styles.card, { width }]}
             accessibilityLabel={`${es.carousel.position(i + 1, count)}: ${item.label}`}
           >
             {item.node}
           </View>
         )}
         showsHorizontalScrollIndicator={false}
-        snapToInterval={STEP}
+        snapToInterval={step}
         decelerationRate="fast"
         contentContainerStyle={styles.track}
         onMomentumScrollEnd={onScrollEnd}
@@ -165,6 +167,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.carousel.dotInactive,
   },
   dotOn: { width: sizes.carousel.dotMark.activeWidth, backgroundColor: colors.carousel.dotActive },
-  track: { gap: card.gap, paddingRight: spacing.lg },
-  card: { width: card.width, minHeight: card.minHeight },
+  track: { gap: card.gap },
+  card: { minHeight: card.minHeight },
 });
