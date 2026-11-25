@@ -58,6 +58,10 @@ export class Task {
   @Prop()
   hurra_at?: Date;
 
+  /** «Gracias» de la dueña a quien le envió el ¡hurra! (uno por tarea). */
+  @Prop()
+  thanks_at?: Date;
+
   created_at!: Date;
 }
 

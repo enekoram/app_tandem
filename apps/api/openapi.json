@@ -961,6 +961,44 @@
         ]
       }
     },
+    "/tasks/{id}/thanks": {
+      "post": {
+        "operationId": "TasksController_thanks",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "THANKS_ALREADY_SENT · NO_HURRA"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
     "/tasks/{id}/leave": {
       "post": {
         "operationId": "TasksController_leave",
@@ -2064,6 +2102,12 @@
             "format": "date-time",
             "description": "Cuándo envió quien acompaña un ¡hurra!"
           },
+          "thanksAt": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "description": "Cuándo dio las gracias la dueña por el ¡hurra!"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -2080,6 +2124,7 @@
           "person",
           "doneAt",
           "hurraAt",
+          "thanksAt",
           "createdAt"
         ]
       },

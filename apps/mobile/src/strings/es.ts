@@ -573,6 +573,9 @@ export const es = {
     title: (name: string): Emphasis => ({ lead: `${name} celebra `, em: 'contigo' }),
     body: (title: string, name: string) =>
       `Terminaste «${title}» y ${name} te ha enviado un ¡hurra!`,
+    thank: 'Dar las gracias',
+    thankedToast: (name: string) => `${name} sabrá que te ha llegado.`,
+    thanked: 'Te ha dado las gracias',
   },
   notifications: {
     back: 'Mi perfil',

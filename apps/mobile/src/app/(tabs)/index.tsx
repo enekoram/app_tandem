@@ -79,7 +79,7 @@ export default function TodayScreen() {
     send({ type: 'HURRA' });
     router.push({
       pathname: '/tarea/hurra',
-      params: { title: fresh.title, name: fresh.person?.name ?? '' },
+      params: { id: fresh.id, title: fresh.title, name: fresh.person?.name ?? '' },
     });
   }, [hurraIds, send]);
   const byId = new Map<string, TaskDto>(

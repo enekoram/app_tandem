@@ -106,6 +106,16 @@ export class NotificationRules implements OnModuleInit, OnModuleDestroy {
           dedupeKey: `done:${id}`,
         });
       }
+      if (touched('thanks_at') && doc.thanks_at && companion?.user_id) {
+        out.push({
+          to: companion.user_id,
+          from: doc.owner_id,
+          kind: 'hurras',
+          text: 'thanks',
+          url: '/acompano/terminadas',
+          dedupeKey: `thanks:${id}`,
+        });
+      }
       if (touched('hurra_at') && doc.hurra_at && companion?.user_id) {
         out.push({
           to: doc.owner_id,

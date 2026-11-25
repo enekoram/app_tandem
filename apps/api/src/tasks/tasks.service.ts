@@ -160,6 +160,30 @@ export class TasksService {
     throw notFound('Tarea');
   }
 
+  /** «Gracias» por un ¡hurra!: solo la dueña, una vez, después del ¡hurra!. */
+  async thanks(me: UserDocument, id: string): Promise<TaskDocument> {
+    if (!Types.ObjectId.isValid(id)) throw notFound('Tarea');
+    const task = await this.tasks.findOneAndUpdate(
+      {
+        _id: id,
+        owner_id: me._id,
+        status: 'done',
+        hurra_at: { $exists: true },
+        thanks_at: { $exists: false },
+      },
+      { $set: { thanks_at: new Date() } },
+      { returnDocument: 'after' },
+    );
+    if (task) return task;
+    const mine = await this.tasks.findOne({ _id: id, owner_id: me._id, status: 'done' });
+    if (!mine) throw notFound('Tarea');
+    throw new DomainError(
+      HttpStatus.CONFLICT,
+      mine.thanks_at ? 'THANKS_ALREADY_SENT' : 'NO_HURRA',
+      mine.thanks_at ? 'Ya diste las gracias' : 'Aún no hay ¡hurra! que agradecer',
+    );
+  }
+
   async respond(
     me: UserDocument,
     id: string,

@@ -8,7 +8,7 @@ import { User } from '../users/user.schema.js';
 import { DeviceToken } from './device-token.schema.js';
 import { Notification } from './notification.schema.js';
 import { PushTransport } from './push-transport.js';
-import { PUSH_ROUTES, PUSH_TEXTS } from './texts.js';
+import { EXTRA_TEXTS, PUSH_ROUTES, PUSH_TEXTS, type ExtraText } from './texts.js';
 
 export interface NotifyInput {
   to: Types.ObjectId;
@@ -18,6 +18,10 @@ export interface NotifyInput {
   /** Idempotencia: el mismo hecho nunca avisa dos veces. */
   dedupeKey: string;
   payload?: Record<string, string>;
+  /** Texto propio (p. ej. «Gracias», que va con la preferencia de ¡hurras!). */
+  text?: ExtraText;
+  /** Ruta propia al tocarlo. */
+  url?: string;
 }
 
 /**
@@ -35,7 +39,15 @@ export class Notifier {
     private readonly transport: PushTransport,
   ) {}
 
-  async notify({ to, from, kind, dedupeKey, payload = {} }: NotifyInput): Promise<boolean> {
+  async notify({
+    to,
+    from,
+    kind,
+    dedupeKey,
+    payload = {},
+    text: textKey,
+    url,
+  }: NotifyInput): Promise<boolean> {
     const user = await this.users.findById(to, { prefs: 1 });
     if (!user || user.prefs?.notifications?.[kind] === false) return false;
     if (this.presence.isOnline(to.toString())) return false;
@@ -52,12 +64,12 @@ export class Notifier {
       if ((error as { code?: number }).code === 11000) return false; // ya avisado
       throw error;
     }
-    const text = PUSH_TEXTS[kind](contact.name);
+    const text = (textKey ? EXTRA_TEXTS[textKey] : PUSH_TEXTS[kind])(contact.name);
     const { invalidTokens } = await this.transport.send(
       devices.map((d) => ({
         to: d.expo_push_token,
         ...text,
-        data: { ...payload, url: PUSH_ROUTES[kind] },
+        data: { ...payload, url: url ?? PUSH_ROUTES[kind] },
       })),
     );
     if (invalidTokens.length)

@@ -127,6 +127,16 @@ describe('Avisos push (e2e)', () => {
     expect((await pushTo(TOKEN('marta'))).body).toBe('Juan te ha enviado un ¡hurra!');
   });
 
+  it('«Gracias» por el ¡hurra!: solo la dueña, una vez; aviso a Juan', async () => {
+    await as('Juan').post(`/tasks/${renta}/thanks`).expect(404);
+    const res = await as('Marta').post(`/tasks/${renta}/thanks`).expect(200);
+    expect(res.body.thanksAt).not.toBeNull();
+    expect((await pushTo(TOKEN('juan'))).body).toBe('Marta te da las gracias por tu ¡hurra!');
+    expect((await as('Marta').post(`/tasks/${renta}/thanks`).expect(409)).body.code).toBe(
+      'THANKS_ALREADY_SENT',
+    );
+  });
+
   it('el mismo hecho nunca avisa dos veces (clave de idempotencia)', async () => {
     const notifier = t.app.get(Notifier);
     const marta = (await as('Marta').get('/me').expect(200)).body.id;
