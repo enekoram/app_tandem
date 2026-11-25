@@ -12,6 +12,7 @@ import { HealthModule } from './health/health.module.js';
 import { LinksModule } from './links/links.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
 import { MailModule } from './mail/mail.module.js';
+import { RealtimeModule } from './realtime/realtime.module.js';
 import { UsersModule } from './users/users.module.js';
 
 @Module({
@@ -59,6 +60,7 @@ import { UsersModule } from './users/users.module.js';
     ContactsModule,
     TasksModule,
     AccountModule,
+    RealtimeModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })

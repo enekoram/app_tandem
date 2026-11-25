@@ -3,6 +3,7 @@ import { ApiCookieAuth, ApiOkResponse, ApiProperty, ApiTags } from '@nestjs/swag
 import { Session, type UserSession } from '@thallesp/nestjs-better-auth';
 import { ContactDto, toContactDto } from '../contacts/contacts.dto.js';
 import { ContactsService } from '../contacts/contacts.service.js';
+import { Presence } from '../realtime/presence.js';
 import { UsersService } from '../users/users.service.js';
 import { TaskViews } from './task-views.js';
 import { TaskDto } from './tasks.dto.js';
@@ -21,6 +22,12 @@ export class HomeDto {
     description: 'Tareas que me comparten y esperan respuesta («Te piden»)',
   })
   shared!: TaskDto[];
+
+  @ApiProperty({
+    type: [String],
+    description: 'Contactos aceptados con la app abierta ahora («está contigo»)',
+  })
+  presentContactIds!: string[];
 }
 
 @ApiTags('me')
@@ -32,6 +39,7 @@ export class HomeController {
     private readonly tasks: TasksService,
     private readonly contacts: ContactsService,
     private readonly views: TaskViews,
+    private readonly presence: Presence,
   ) {}
 
   /** Arranque, reconexión y vuelta a primer plano: una sola petición. */
@@ -49,10 +57,14 @@ export class HomeController {
       this.views.toDtos(me, open, 'owner'),
       this.views.toDtos(me, pending, 'companion'),
     ]);
+    const accepted = contacts.filter((c) => c.status === 'accepted');
     return {
       tasks,
-      contacts: contacts.filter((c) => c.status === 'accepted').map(toContactDto),
+      contacts: accepted.map(toContactDto),
       shared,
+      presentContactIds: accepted
+        .filter((c) => c.contact_user_id && this.presence.isOnline(c.contact_user_id.toString()))
+        .map((c) => c.id as string),
     };
   }
 }

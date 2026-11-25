@@ -15,4 +15,6 @@ export interface HomeDto {
   contacts: ContactDto[];
   /** Tareas que me comparten y esperan respuesta («Te piden») */
   shared: TaskDto[];
+  /** Contactos aceptados con la app abierta ahora («está contigo») */
+  presentContactIds: string[];
 }

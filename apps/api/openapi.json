@@ -1391,12 +1391,20 @@
             "items": {
               "$ref": "#/components/schemas/TaskDto"
             }
+          },
+          "presentContactIds": {
+            "description": "Contactos aceptados con la app abierta ahora («está contigo»)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "required": [
           "tasks",
           "contacts",
-          "shared"
+          "shared",
+          "presentContactIds"
         ]
       }
     }
