@@ -15,7 +15,7 @@ CÓMO PREPARARLO
 [ ] 0.1 Subir el código desde Terminal (una vez, guarda la credencial):
         cd ~/Documents/proyectos/app_tandem && git push origin main && git push -u origin fase-3-home
         Usuario: enekoram · Contraseña: el token
-[ ] 0.2 Conectar el Blueprint de Render y comprobar /health en staging
+[ ] 0.2 Conectar el Blueprint de Render y comprobar /health en staging (pasos en docs/DESPLIEGUE.md)
 [ ] 0.3 Sacar docs/pwd_*.rtf de la carpeta del proyecto a un gestor de contraseñas
 [ ] 0.4 (Opcional) Añadir fnm a ~/.zshrc para que "pnpm dev" funcione en cualquier Terminal
 
@@ -135,3 +135,15 @@ CÓMO PREPARARLO
         Siguen en el formulario.» con «Reintentar»; lo escrito no se pierde
 [ ] 8.3 Perfil › Editar perfil › «Descargar mis datos»: se abre la hoja de compartir con
         un JSON con perfil, contactos, tareas, sesiones y apoyo (sin contraseñas)
+
+─────────────────────────────────────────────
+9. CIERRE (fase 7)
+─────────────────────────────────────────────
+[ ] 9.1 Crear cuenta: los enlaces «Leer las condiciones» y «Leer la política de
+        privacidad» abren sus textos (sin sesión); Perfil › Privacidad y condiciones
+[ ] 9.2 Revisar el contenido de los textos legales (son un borrador)
+[ ] 9.3 HurraRecibido -> «Dar las gracias» -> el otro móvil ve el aviso y, en sus
+        terminadas, «Te ha dado las gracias»
+[ ] 9.4 Notificaciones -> «Silenciar avisos por la noche» con Desde/Hasta: dentro de esas
+        horas no llegan avisos (salvo recordatorios de sesión)
+[ ] 9.5 Iniciar sesión mal 6 veces seguidas: a la sexta, «Demasiados intentos»

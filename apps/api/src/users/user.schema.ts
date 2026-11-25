@@ -13,6 +13,10 @@ export class UserPrefs {
 
   @Prop({ type: Object, default: {} })
   notifications!: Record<string, boolean>;
+
+  /** Horario de silencio de los avisos push (en la zona horaria de la persona). */
+  @Prop({ type: Object })
+  quiet?: { enabled: boolean; start: string; end: string };
 }
 
 /**

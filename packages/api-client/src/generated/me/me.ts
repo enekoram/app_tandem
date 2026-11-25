@@ -29,6 +29,7 @@ import type {
   DevicesControllerUnregisterBody,
   HomeDto,
   MeControllerNotificationsBody,
+  MeControllerQuietBody,
   MeControllerUpdateBody,
   MeDto
 } from '../model';
@@ -362,6 +363,85 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
         TContext
       > => {
       return useMutation(getAccountControllerDeleteMutationOptions(options), queryClient);
+    }
+    export type meControllerQuietResponse200 = {
+  data: MeDto
+  status: 200
+}
+
+export type meControllerQuietResponseSuccess = (meControllerQuietResponse200) & {
+  headers: Headers;
+};
+;
+
+export type meControllerQuietResponse = (meControllerQuietResponseSuccess)
+
+export const getMeControllerQuietUrl = () => {
+
+
+
+
+  return `/me/quiet`
+}
+
+export const meControllerQuiet = async (meControllerQuietBody: MeControllerQuietBody, options?: Parameters<typeof apiFetch>[1]): Promise<meControllerQuietResponse> => {
+
+  return apiFetch<meControllerQuietResponse>(getMeControllerQuietUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: getHeaders({ 'Content-Type': 'application/json' }, options?.headers),
+    body: JSON.stringify(meControllerQuietBody)
+  }
+);}
+
+
+
+
+
+export const getMeControllerQuietMutationKey = () => ['meControllerQuiet'] as const;
+
+export const getMeControllerQuietMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerQuiet>>, TError,MeControllerQuietMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof meControllerQuiet>>, TError,MeControllerQuietMutationVariables, TContext> => {
+
+const mutationKey = getMeControllerQuietMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof meControllerQuiet>>, MeControllerQuietMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  meControllerQuiet(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MeControllerQuietMutationResult = NonNullable<Awaited<ReturnType<typeof meControllerQuiet>>>
+    export type MeControllerQuietMutationBody = MeControllerQuietBody
+    export type MeControllerQuietMutationError = unknown
+    export type MeControllerQuietMutationVariables = {data: MeControllerQuietBody}
+
+    export const useMeControllerQuiet = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof meControllerQuiet>>, TError,MeControllerQuietMutationVariables, TContext>, request?: SecondParameter<typeof apiFetch>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof meControllerQuiet>>,
+        TError,
+        MeControllerQuietMutationVariables,
+        TContext
+      > => {
+      return useMutation(getMeControllerQuietMutationOptions(options), queryClient);
     }
     export type meControllerNotificationsResponse200 = {
   data: MeDto

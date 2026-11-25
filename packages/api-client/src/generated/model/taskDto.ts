@@ -33,5 +33,10 @@ export interface TaskDto {
      * @nullable
      */
   hurraAt: string | null;
+  /**
+     * Cuándo dio las gracias la dueña por el ¡hurra!
+     * @nullable
+     */
+  thanksAt: string | null;
   createdAt: string;
 }

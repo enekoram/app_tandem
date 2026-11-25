@@ -127,6 +127,46 @@ describe('Avisos push (e2e)', () => {
     expect((await pushTo(TOKEN('marta'))).body).toBe('Juan te ha enviado un ¡hurra!');
   });
 
+  it('«Gracias» por el ¡hurra!: solo la dueña, una vez; aviso a Juan', async () => {
+    await as('Juan').post(`/tasks/${renta}/thanks`).expect(404);
+    const res = await as('Marta').post(`/tasks/${renta}/thanks`).expect(200);
+    expect(res.body.thanksAt).not.toBeNull();
+    expect((await pushTo(TOKEN('juan'))).body).toBe('Marta te da las gracias por tu ¡hurra!');
+    expect((await as('Marta').post(`/tasks/${renta}/thanks`).expect(409)).body.code).toBe(
+      'THANKS_ALREADY_SENT',
+    );
+  });
+
+  it('horario de silencio: dentro, no llega (salvo recordatorios); fuera, sí', async () => {
+    const notifier = t.app.get(Notifier);
+    const { Types } = await import('mongoose');
+    const marta = new Types.ObjectId((await as('Marta').get('/me').expect(200)).body.id as string);
+    const juanId = new Types.ObjectId((await as('Juan').get('/me').expect(200)).body.id as string);
+    // Todo el día en silencio (00:00–23:59)
+    const res = await as('Marta')
+      .patch('/me/quiet', { enabled: true, start: '00:00', end: '23:59' })
+      .expect(200);
+    expect(res.body.quiet).toEqual({ enabled: true, start: '00:00', end: '23:59' });
+    const base = { to: marta, from: juanId };
+    expect(await notifier.notify({ ...base, kind: 'supportReceived', dedupeKey: 'quiet:1' })).toBe(
+      false,
+    );
+    expect(await notifier.notify({ ...base, kind: 'sessionReminders', dedupeKey: 'quiet:2' })).toBe(
+      true,
+    );
+    await pushTo(TOKEN('marta'));
+    await as('Marta')
+      .patch('/me/quiet', { enabled: false, start: '22:00', end: '08:00' })
+      .expect(200);
+    expect(await notifier.notify({ ...base, kind: 'supportReceived', dedupeKey: 'quiet:3' })).toBe(
+      true,
+    );
+    await pushTo(TOKEN('marta'));
+    await as('Marta')
+      .patch('/me/quiet', { enabled: true, start: '25:00', end: '08:00' })
+      .expect(400);
+  });
+
   it('el mismo hecho nunca avisa dos veces (clave de idempotencia)', async () => {
     const notifier = t.app.get(Notifier);
     const marta = (await as('Marta').get('/me').expect(200)).body.id;

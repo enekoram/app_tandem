@@ -91,8 +91,9 @@ export default function RootLayout() {
             <Stack.Protected guard={!signedIn}>
               <Stack.Screen name="(auth)" />
             </Stack.Protected>
-            {/* Enlace de invitación: con o sin sesión */}
+            {/* Enlace de invitación y textos legales: con o sin sesión */}
             <Stack.Screen name="invitacion" />
+            <Stack.Screen name="legal/[doc]" />
           </Stack>
           {/* Encima de todo: SinConexion */}
           <OfflineBanner />

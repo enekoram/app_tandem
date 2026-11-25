@@ -97,6 +97,60 @@
         ]
       }
     },
+    "/me/quiet": {
+      "patch": {
+        "operationId": "MeController_quiet",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "start": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "end": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "start",
+                  "end"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "me"
+        ]
+      }
+    },
     "/me/notifications": {
       "patch": {
         "operationId": "MeController_notifications",
@@ -961,6 +1015,44 @@
         ]
       }
     },
+    "/tasks/{id}/thanks": {
+      "post": {
+        "operationId": "TasksController_thanks",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "THANKS_ALREADY_SENT · NO_HURRA"
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
     "/tasks/{id}/leave": {
       "post": {
         "operationId": "TasksController_leave",
@@ -1735,6 +1827,28 @@
               "type": "boolean"
             },
             "description": "Avisos activados (supportRequests, sharedTasks, sessionInvites, tasksDone, supportReceived, hurras, sessionReminders); por defecto, todos"
+          },
+          "quiet": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "start": {
+                "type": "string",
+                "example": "22:00"
+              },
+              "end": {
+                "type": "string",
+                "example": "08:00"
+              }
+            },
+            "required": [
+              "enabled",
+              "start",
+              "end"
+            ],
+            "description": "Horario de silencio (sin avisos push salvo recordatorios de sesión)"
           }
         },
         "required": [
@@ -2064,6 +2178,12 @@
             "format": "date-time",
             "description": "Cuándo envió quien acompaña un ¡hurra!"
           },
+          "thanksAt": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "description": "Cuándo dio las gracias la dueña por el ¡hurra!"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -2080,6 +2200,7 @@
           "person",
           "doneAt",
           "hurraAt",
+          "thanksAt",
           "createdAt"
         ]
       },

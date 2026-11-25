@@ -34,9 +34,11 @@ export default function AccompaniedDoneScreen() {
                   : '',
             )}
             meta={
-              task.hurraAt
-                ? `${t.from(task.person?.name ?? '')} · ${es.companion.hurraAlready}`
-                : t.from(task.person?.name ?? '')
+              task.thanksAt
+                ? `${t.from(task.person?.name ?? '')} · ${es.hurra.thanked}`
+                : task.hurraAt
+                  ? `${t.from(task.person?.name ?? '')} · ${es.companion.hurraAlready}`
+                  : t.from(task.person?.name ?? '')
             }
             actions={
               task.hurraAt ? undefined : (

@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { MeDtoNotifications } from './meDtoNotifications.ts';
+import type { MeDtoQuiet } from './meDtoQuiet.ts';
 import type { MeDtoStimulus } from './meDtoStimulus.ts';
 
 export interface MeDto {
@@ -17,4 +18,6 @@ export interface MeDto {
   stimulus: MeDtoStimulus;
   /** Avisos activados (supportRequests, sharedTasks, sessionInvites, tasksDone, supportReceived, hurras, sessionReminders); por defecto, todos */
   notifications: MeDtoNotifications;
+  /** Horario de silencio (sin avisos push salvo recordatorios de sesión) */
+  quiet?: MeDtoQuiet;
 }

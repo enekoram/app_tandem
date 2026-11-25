@@ -34,7 +34,24 @@ export function createAuth({ env, db, client, mailer }: AuthDeps) {
     telemetry: { enabled: false },
     // Better Auth desactiva la comprobación de origen en tests: la forzamos siempre para que
     // los tests cubran lo mismo que producción (redirecciones y CSRF).
-    advanced: { disableOriginCheck: false },
+    advanced: {
+      disableOriginCheck: false,
+      // Detrás del proxy de Render la IP real llega en X-Forwarded-For (límites por IP)
+      ipAddress: { ipAddressHeaders: ['x-forwarded-for'] },
+    },
+    // Límites contra fuerza bruta (fuera de los tests, que crean muchas cuentas seguidas)
+    rateLimit: {
+      enabled: env.NODE_ENV !== 'test',
+      storage: 'memory',
+      window: 60,
+      max: 100,
+      customRules: {
+        '/sign-in/email': { window: 60, max: 5 },
+        '/sign-up/email': { window: 60, max: 5 },
+        '/request-password-reset': { window: 300, max: 3 },
+        '/change-password': { window: 300, max: 5 },
+      },
+    },
     // Colecciones con prefijo para no confundirlas con `users` (perfil del dominio)
     user: { modelName: 'auth_users' },
     session: { modelName: 'auth_sessions', expiresIn: 60 * DAY, updateAge: DAY },

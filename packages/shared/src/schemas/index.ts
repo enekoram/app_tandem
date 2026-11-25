@@ -7,7 +7,7 @@ import { CONTACT_NAME_MAX } from '../rules/contacts.ts';
 import { TASK_DESCRIPTION_MAX, TASK_TITLE_MAX } from '../rules/tasks.ts';
 import { DISPLAY_NAME_MAX } from '../rules/users.ts';
 import { SESSION_DURATIONS, SESSION_MESSAGE_MAX } from '../rules/sessions.ts';
-import { NOTIFICATION_KINDS, SUPPORT_MESSAGE_MAX } from '../rules/support.ts';
+import { HHMM, NOTIFICATION_KINDS, SUPPORT_MESSAGE_MAX } from '../rules/support.ts';
 
 export const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, 'identificador no válido');
 
@@ -108,3 +108,11 @@ export const deviceSchema = z.object({
   platform: z.enum(['ios', 'android']),
 });
 export type DeviceInput = z.input<typeof deviceSchema>;
+
+/** Horario de silencio de los avisos. */
+export const quietHoursSchema = z.object({
+  enabled: z.boolean(),
+  start: z.string().regex(HHMM),
+  end: z.string().regex(HHMM),
+});
+export type QuietHoursInput = z.input<typeof quietHoursSchema>;

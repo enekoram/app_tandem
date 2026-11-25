@@ -185,7 +185,23 @@ export default function RegisterScreen() {
         hint={es.auth.passwordHint}
         error={errors.password}
       />
-      <Checkbox label={t.terms} checked={terms} onChange={setTerms} error={errors.terms} />
+      <View style={styles.group}>
+        <Checkbox label={t.terms} checked={terms} onChange={setTerms} error={errors.terms} />
+        <View style={styles.links}>
+          <Button
+            variant="link"
+            label={es.legal.links.terms}
+            onPress={() =>
+              router.push({ pathname: '/legal/[doc]', params: { doc: 'condiciones' } })
+            }
+          />
+          <Button
+            variant="link"
+            label={es.legal.links.privacy}
+            onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'privacidad' } })}
+          />
+        </View>
+      </View>
       <Button
         label={invite ? ti.submit : t.submit}
         onPress={submit}
@@ -200,6 +216,7 @@ const styles = StyleSheet.create({
   header: { gap: spacing.sm, paddingHorizontal: spacing.sm },
   help: { paddingHorizontal: spacing.sm },
   group: { gap: spacing.xxs },
+  links: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, paddingHorizontal: spacing.sm },
   flex: { flex: 1 },
   inviteCard: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   inviteAvatar: {

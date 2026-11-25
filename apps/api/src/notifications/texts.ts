@@ -20,6 +20,15 @@ export const PUSH_TEXTS: Record<
   sessionReminders: (name) => ({ title: 'Tandems', body: `Tu sesión con ${name} empieza pronto` }),
 };
 
+/** Avisos con texto propio que comparten preferencia con otro tipo. */
+export const EXTRA_TEXTS = {
+  thanks: (name: string) => ({
+    title: 'Tandems',
+    body: `${name} te da las gracias por tu ¡hurra!`,
+  }),
+} as const;
+export type ExtraText = keyof typeof EXTRA_TEXTS;
+
 /** Ruta de la app que se abre al tocar cada aviso. */
 export const PUSH_ROUTES: Record<NotificationKind, string> = {
   supportRequests: '/',
