@@ -16,3 +16,4 @@ export * from './TaskCard';
 export * from './Text';
 export * from './TextField';
 export * from './Toast';
+export * from './Carousel';

@@ -56,6 +56,11 @@ export const motionProfiles = {
   minimal: { breathAmplitude: 0, heartbeatScale: 1, spring: null },
 } as const satisfies Record<MotionProfile, unknown>;
 
+/** Nivel de estímulo del perfil (API: full · soft · minimal) → perfil de movimiento. */
+export function profileForStimulus(stimulus: 'full' | 'soft' | 'minimal'): MotionProfile {
+  return stimulus === 'soft' ? 'gentle' : stimulus;
+}
+
 /** Perfil efectivo: Reducir movimiento del sistema manda sobre la preferencia. */
 export function resolveMotionProfile(
   preferred: MotionProfile,

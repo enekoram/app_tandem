@@ -40,7 +40,14 @@ export const sizes = {
   grabber: { width: 36, height: 5 },
   tabBar: { height: 72 },
   modalHeader: { height: 68 },
-  carousel: { arrow: { width: 40, height: 44 }, dot: { width: 18, height: 44 } },
+  carousel: {
+    arrow: { width: 40, height: 44 },
+    dot: { width: 18, height: 44 },
+    /** Punto visible (canvas: .dot span) y el activo, más ancho. */
+    dotMark: { size: 6, activeWidth: 16 },
+    /** Tarjeta del carrusel «Para hoy»: deja asomar la siguiente. */
+    card: { width: 300, minHeight: 266, gap: 12 },
+  },
   cardEdge: { width: 5 },
   /** Degradado que funde el contenido bajo la barra de pestañas flotante. */
   navFade: { height: 124 },

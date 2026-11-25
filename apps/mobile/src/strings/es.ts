@@ -36,11 +36,30 @@ export const es = {
     createFirst: 'Crear mi primera tarea',
     liveTitle: { lead: 'Contigo ', em: 'ahora' } satisfies Emphasis,
     seeTasks: 'Ver mis tareas',
-    sharedWaiting: (n: number) =>
-      pluralEs(n, 'Te han compartido 1 tarea', `Te han compartido ${n} tareas`),
-    sharedWaitingSub: 'Acepta o rechaza en Acompaño',
+    emptyBodyWithContacts:
+      'Empieza por una sola cosa que quieras hacer, y elige a alguien de tu red para que te acompañe.',
+    forToday: { lead: 'Para ', em: 'hoy' } satisfies Emphasis,
+    cardNextTask: (title: string) => `Tu siguiente tarea, ${title}`,
+    cardShared: (name: string, title: string) => `${name} te comparte ${title}`,
     hurraReceived: (name: string, title: string) =>
       `${name} te ha enviado un ¡hurra! por «${title}»`,
+    /** Lo que lee VoiceOver de la forma de la Home (doc 03 · describeScene). */
+    scene: {
+      loading: 'Cargando tu día',
+      empty: 'Tu red de apoyo, aún vacía',
+      alone: 'Tu energía',
+      joined: (name: string) => `Tu energía y la de ${name}, unidas`,
+      live: (name: string) => `Tú y ${name}, en una sesión en vivo`,
+      support: (name: string) => `${name} te está enviando apoyo`,
+      approaching: (name: string) => `${name} te pide algo`,
+      present: (names: string) => `${names} está contigo`,
+      presentMany: (names: string) => `${names} están contigo`,
+      absent: (names: string) => `${names} hoy no está`,
+      absentMany: (names: string) => `${names} hoy no están`,
+      and: ' y ',
+    },
+    /** Texto bajo la forma (VacioHoyContactos): «Marta está contigo · Juan hoy no está». */
+    presenceJoin: ' · ',
   },
   tasks: {
     caption: 'Sin tareas todavía',
@@ -376,6 +395,11 @@ export const es = {
     /** BienvenidaInvitado */
     welcome: (name: string) => `Ya formas parte de la red de apoyo de ${name}`,
     welcomeOk: 'Vale',
+  },
+  carousel: {
+    previous: 'Tarjeta anterior',
+    next: 'Tarjeta siguiente',
+    position: (i: number, n: number) => `Tarjeta ${i} de ${n}`,
   },
   dates: {
     noDate: 'sin fecha',

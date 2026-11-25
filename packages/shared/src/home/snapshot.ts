@@ -32,6 +32,8 @@ export interface HomeDtoLike {
   tasks: TaskLike[];
   contacts: ContactLike[];
   shared: TaskLike[];
+  /** Contactos con la app abierta ahora. */
+  presentContactIds?: string[];
 }
 
 const COMPANION = ['pending', 'accepted', 'rejected', 'left'] as const;
@@ -67,6 +69,7 @@ export function toHomeSnapshot(dto: HomeDtoLike): HomeSnapshot {
       name: c.name,
       initials: c.initials,
       color: c.color,
+      present: dto.presentContactIds?.includes(c.id) ?? false,
     })),
     // Sesiones y apoyo llegan en las fases 4 y 5
     sessions: [],

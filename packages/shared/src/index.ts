@@ -7,3 +7,4 @@ export * from './schemas/index.ts';
 export * from './home/scene.ts';
 export * from './home/machine.ts';
 export * from './home/snapshot.ts';
+export * from './home/geometry.ts';

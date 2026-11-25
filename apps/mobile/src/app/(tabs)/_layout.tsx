@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { useMeControllerMe } from '@tandems/api-client';
+import { useRealtime } from '@/lib/realtime';
 import { useResumeInvite } from '@/lib/useResumeInvite';
 import { colors } from '@/theme';
 import { TabBar } from '@/ui';
@@ -9,6 +10,8 @@ export default function TabsLayout() {
   useMeControllerMe();
 
   useResumeInvite();
+  // Mientras hay sesión: avisos en tiempo real y presencia («está contigo»)
+  useRealtime();
 
   return (
     <Tabs

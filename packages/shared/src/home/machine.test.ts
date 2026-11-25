@@ -246,6 +246,15 @@ describe('toHomeSnapshot', () => {
       ],
     });
     expect(s.tasks[0]?.companion).toMatchObject({ id: 'c-marta', status: 'accepted' });
+    expect(s.contacts[0]?.present).toBe(false);
+    expect(
+      toHomeSnapshot({
+        tasks: [],
+        shared: [],
+        contacts: [{ id: 'c-marta', name: 'Marta', color: 'lilac', initials: 'M' }],
+        presentContactIds: ['c-marta'],
+      }).contacts[0]?.present,
+    ).toBe(true);
     expect(s.tasks[1]?.companion).toBeNull();
     expect(s.requests).toEqual([
       {

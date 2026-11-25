@@ -1,15 +1,20 @@
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import {
-  useContactsControllerList,
-  useTasksControllerAccompanying,
-  useTasksControllerList,
-} from '@tandems/api-client';
-import { formatLongDay } from '@/lib/dates';
+import { useTasksControllerList, type TaskDto } from '@tandems/api-client';
+import type { SceneCard } from '@tandems/shared';
+import { presenceLine } from '@/features/home/a11y';
+import { HomeScene } from '@/features/home/HomeScene';
+import { useHome } from '@/features/home/useHome';
+import { useCompleteTask } from '@/features/tasks/useCompleteTask';
+import { useRespondShared } from '@/features/tasks/useRespondShared';
+import { formatDue, formatLongDay } from '@/lib/dates';
 import { es } from '@/strings/es';
 import { colors, spacing } from '@/theme';
 import {
   Button,
+  CardAction,
+  Carousel,
+  CompanionTaskCard,
   EmphasisText,
   EmptyStateCard,
   IconButton,
@@ -18,37 +23,95 @@ import {
   Screen,
   TaskCard,
   Text,
+  type CarouselItem,
 } from '@/ui';
 
 /** Recientes: ¡hurras! de las últimas 48 h. */
 const RECENT_MS = 48 * 60 * 60 * 1000;
 
 /**
- * Hoy. Versión de la fase 2: tu siguiente tarea, lo que te han compartido y los ¡hurras!.
- * La Home «viva» con la forma unida y el tiempo real llega en la fase 3 (doc 03).
+ * Hoy · «Contigo ahora» (doc 03): la forma unida, quién está contigo y el carrusel «Para
+ * hoy» (lo que te piden primero, después tu siguiente tarea). Se actualiza en tiempo real.
  */
 export default function TodayScreen() {
   const t = es.today;
-  const open = useTasksControllerList({ status: 'open' });
-  const done = useTasksControllerList({ status: 'done' });
-  const accompanying = useTasksControllerAccompanying({ status: 'open' });
-  const contacts = useContactsControllerList();
+  const home = useHome();
+  const done = useCompleteTask();
+  const respond = useRespondShared();
+  const finished = useTasksControllerList({ status: 'done' });
+  const { scene, dto } = home;
 
-  const tasks = open.data?.status === 200 ? open.data.data : [];
-  const shared = (accompanying.data?.status === 200 ? accompanying.data.data : []).filter(
-    (x) => x.companionStatus === 'pending',
-  );
-  const hurras = (done.data?.status === 200 ? done.data.data : []).filter(
+  const hurras = (finished.data?.status === 200 ? finished.data.data : []).filter(
     (x) => x.hurraAt && Date.now() - new Date(x.hurraAt).getTime() < RECENT_MS,
   );
-  const hasContacts = contacts.data?.status === 200 && contacts.data.data.length > 0;
-  const next = tasks[0];
-  const nothing = open.isSuccess && !next && shared.length === 0 && hurras.length === 0;
+  const byId = new Map<string, TaskDto>(
+    [...(dto?.tasks ?? []), ...(dto?.shared ?? [])].map((x) => [x.id, x]),
+  );
+
+  const cards = scene.cards
+    .map((card) => toItem(card, byId))
+    .filter((x): x is CarouselItem => !!x)
+    .filter((x) => !respond.hidden.includes(x.key));
+
+  function toItem(card: SceneCard, tasks: Map<string, TaskDto>): CarouselItem | null {
+    if (card.kind === 'nextTask') {
+      const task = tasks.get(card.task.id);
+      if (!task) return null;
+      return {
+        key: task.id,
+        label: t.cardNextTask(task.title),
+        node: (
+          <TaskCard
+            task={task}
+            featured
+            onDone={() => done.ask(task)}
+            onEdit={() => router.push({ pathname: '/tarea/[id]', params: { id: task.id } })}
+          />
+        ),
+      };
+    }
+    if (card.kind === 'request' && card.request.kind === 'task') {
+      const task = tasks.get(card.request.id.replace(/^task:/, ''));
+      if (!task) return null;
+      return {
+        key: task.id,
+        label: t.cardShared(task.person?.name ?? '', task.title),
+        node: (
+          <CompanionTaskCard
+            task={task}
+            caption={es.companion.sharedCaption}
+            line={es.companion.wantsYou}
+            meta={formatDue(task.dueAt)}
+            actions={
+              <>
+                <CardAction
+                  label={es.companion.accept}
+                  icon="check"
+                  onPress={() => respond.accept(task)}
+                />
+                <CardAction
+                  label={es.companion.reject}
+                  variant="ghost"
+                  onPress={() => respond.askReject(task)}
+                />
+              </>
+            }
+          />
+        ),
+      };
+    }
+    // Sesiones y apoyo: fases 4 y 5
+    return null;
+  }
+
+  const empty = scene.a11y.kind === 'empty' || scene.a11y.kind === 'alone';
+  const presence =
+    scene.a11y.kind === 'contacts' ? presenceLine(scene.a11y.present, scene.a11y.absent) : '';
 
   return (
     <Screen
       caption={formatLongDay(new Date())}
-      title={nothing ? t.title : t.liveTitle}
+      title={dto && !cards.length && empty ? t.title : t.liveTitle}
       action={
         <IconButton
           icon="profile"
@@ -57,22 +120,59 @@ export default function TodayScreen() {
         />
       }
     >
-      {!hasContacts && contacts.isSuccess && (
-        <Text variant="body" color={colors.text.secondary}>
+      <HomeScene scene={scene} motion={home.motion} />
+
+      {scene.a11y.kind === 'empty' && (
+        <Text variant="body" color={colors.text.secondary} style={styles.pad}>
           {t.intro}
         </Text>
       )}
+      {presence ? (
+        // Ya lo lee la forma: aquí no se repite a VoiceOver
+        <Text
+          variant="body"
+          color={colors.text.secondary}
+          style={styles.pad}
+          importantForAccessibility="no"
+          accessibilityElementsHidden
+        >
+          {presence}
+        </Text>
+      ) : null}
 
-      {(shared.length > 0 || hurras.length > 0) && (
-        <ListCard>
-          {shared.length > 0 && (
-            <ListRow
-              icon="companion"
-              title={t.sharedWaiting(shared.length)}
-              subtitle={t.sharedWaitingSub}
-              onPress={() => router.navigate('/acompano')}
+      {cards.length > 0 ? (
+        <Carousel title={t.forToday} items={cards} />
+      ) : (
+        dto && (
+          <>
+            <EmphasisText
+              text={t.nextTask}
+              variant="section"
+              accessibilityRole="header"
+              style={styles.pad}
             />
-          )}
+            <EmptyStateCard
+              icon="tasks"
+              title={t.emptyTitle}
+              body={scene.a11y.kind === 'empty' ? t.emptyBody : t.emptyBodyWithContacts}
+              actions={
+                <Button
+                  label={t.createFirst}
+                  icon="plus"
+                  onPress={() => router.push('/tarea/nueva')}
+                />
+              }
+            />
+          </>
+        )
+      )}
+
+      {cards.length > 0 && (
+        <Button variant="link" label={t.seeTasks} onPress={() => router.navigate('/tareas')} />
+      )}
+
+      {hurras.length > 0 && (
+        <ListCard>
           {hurras.map((x) => (
             <ListRow
               key={x.id}
@@ -84,31 +184,8 @@ export default function TodayScreen() {
         </ListCard>
       )}
 
-      <EmphasisText
-        text={t.nextTask}
-        variant="section"
-        accessibilityRole="header"
-        style={styles.pad}
-      />
-      {next ? (
-        <>
-          <TaskCard
-            task={next}
-            featured
-            onEdit={() => router.push({ pathname: '/tarea/[id]', params: { id: next.id } })}
-          />
-          <Button variant="link" label={t.seeTasks} onPress={() => router.navigate('/tareas')} />
-        </>
-      ) : (
-        <EmptyStateCard
-          icon="tasks"
-          title={t.emptyTitle}
-          body={t.emptyBody}
-          actions={
-            <Button label={t.createFirst} icon="plus" onPress={() => router.push('/tarea/nueva')} />
-          }
-        />
-      )}
+      {done.sheet}
+      {respond.sheet}
     </Screen>
   );
 }
