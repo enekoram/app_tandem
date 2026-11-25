@@ -34,7 +34,7 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [NuevaPassKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NuevaPassKV) | Crear contraseña nueva · LF | 1 | hecha |
 | [InvitacionAppKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-InvitacionAppKV) | Invitación a la app · LF | 2 | hecha |
 | [RegistroInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-RegistroInvitadoKV) | Crear cuenta con invitación · LF | 2 | hecha |
-| [PermisoNotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PermisoNotificacionesKV) | Activar notificaciones · nuevo | 5 | pendiente |
+| [PermisoNotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PermisoNotificacionesKV) | Activar notificaciones · nuevo | 5 | hecha |
 | [BienvenidaInvitadoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BienvenidaInvitadoKV) | Bienvenida persona invitada · nuevo | 2 | hecha |
 
 ### Acceso · errores
@@ -57,13 +57,13 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [EditarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarTareaKV) | Editar tarea · LF | 2 | hecha |
 | [BorrarTareaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarTareaKV) | Borrar tarea · LF | 2 | hecha |
 | [TareaBorradaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaKV) | Tarea borrada · LF | 2 | hecha |
-| [PedirApoyoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoKV) | Pedir apoyo · LF | 5 | pendiente |
+| [PedirApoyoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoKV) | Pedir apoyo · LF | 5 | hecha |
 | [TareaTerminadaKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaKV) | Tarea terminada · LF | 2 | hecha |
 | [TareasTerminadasKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasKV) | Tareas terminadas · LF | 2 | hecha |
 | [TareasLimiteKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasLimiteKV) | Mis tareas (5 de 5) · LF | 2 | hecha |
-| [ApoyoPedidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoKV) | Apoyo pedido · LF | 5 | pendiente |
-| [ApoyoRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoKV) | Apoyo recibido · LF | 5 | pendiente |
-| [HurraRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HurraRecibidoKV) | ¡Hurra! recibido · nuevo | 5 | pendiente |
+| [ApoyoPedidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoKV) | Apoyo pedido · LF | 5 | hecha |
+| [ApoyoRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoKV) | Apoyo recibido · LF | 5 | hecha |
+| [HurraRecibidoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-HurraRecibidoKV) | ¡Hurra! recibido · nuevo | 5 | hecha |
 | [CambiosGuardadosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-CambiosGuardadosKV) | Cambios guardados · nuevo | 2 | hecha |
 | [EditarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarGymKV) | Editar tarea · gym · nuevo | 2 | hecha |
 | [BorrarGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarGymKV) | Borrar tarea · gym · nuevo | 2 | hecha |
@@ -71,9 +71,9 @@ Estados: `pendiente` · `hecha` · `revisada`
 | [EditarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-EditarPortfolioKV) | Editar tarea · acompañante pendiente · nuevo | 2 | hecha |
 | [BorrarPortfolioKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-BorrarPortfolioKV) | Borrar tarea · acompañante pendiente · nuevo | 2 | hecha |
 | [TareaBorradaPortKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaBorradaPortKV) | Tarea borrada · portfolio · nuevo | 2 | hecha |
-| [PedirApoyoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoGymKV) | Pedir apoyo · Juan · nuevo | 5 | pendiente |
-| [ApoyoPedidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoGymKV) | Apoyo pedido · Juan · nuevo | 5 | pendiente |
-| [ApoyoRecibidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoGymKV) | Apoyo recibido · Juan · nuevo | 5 | pendiente |
+| [PedirApoyoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PedirApoyoGymKV) | Pedir apoyo · Juan · nuevo | 5 | hecha |
+| [ApoyoPedidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoPedidoGymKV) | Apoyo pedido · Juan · nuevo | 5 | hecha |
+| [ApoyoRecibidoGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ApoyoRecibidoGymKV) | Apoyo recibido · Juan · nuevo | 5 | hecha |
 | [TareaTerminadaGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaGymKV) | Tarea terminada · Juan · nuevo | 2 | hecha |
 | [TareasTerminadasGymKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareasTerminadasGymKV) | Terminadas · tras el gym · nuevo | 2 | hecha |
 | [TareaTerminadaSoloKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-TareaTerminadaSoloKV) | Tarea terminada · sin acompañante · nuevo | 2 | hecha |
@@ -153,7 +153,7 @@ Estados: `pendiente` · `hecha` · `revisada`
 | Pantalla | Título en el canvas | Fase | Estado |
 |---|---|---|---|
 | [PerfilKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-PerfilKV) | Mi perfil · LF | 2 | hecha |
-| [NotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NotificacionesKV) | Configurar notificaciones · LF | 5 | pendiente |
+| [NotificacionesKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-NotificacionesKV) | Configurar notificaciones · LF | 5 | hecha |
 | [ContactosKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-ContactosKV) | Mis contactos · LF | 2 | hecha |
 | [AnadirContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-AnadirContactoKV) | Añadir contacto · LF | 2 | hecha |
 | [DetalleContactoKV](https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f#artboard-DetalleContactoKV) | Detalle de contacto · LF | 2 | hecha |
@@ -212,3 +212,5 @@ Estados: `pendiente` · `hecha` · `revisada`
 | 2026-11-25 | Orden de tareas abiertas (API y Home): con fecha por cercanía y después sin fecha, la más reciente. |
 | 2026-11-25 | Sesiones: una sola sesión viva por tarea; solo vale mientras la tarea siga abierta y con el mismo acompañante aceptado; «terminada» se decide al leer (hora de fin), sin worker. Enlace de Meet pegado a mano (opcional) o «Crear videollamada en Meet» (meet.google.com/new). Google OAuth, Calendar y recordatorios en cola, aplazados (Google sin verificar, sin Redis). |
 | 2026-11-25 | Fase 4 empezada sobre `fase-3-home` sin fusionar la fase 3 (la fase 3 espera la prueba en el móvil). |
+| 2026-11-25 | Apoyo: pedir (caduca a los 15 min), enviar manteniendo pulsado (latido cada 3 s por REST, 5 min como máximo, sin escribir cada latido), «Pensé en ti» (1 cada 10 min). Con VoiceOver, «Enviar apoyo» es tocar para empezar y para parar. |
+| 2026-11-25 | Push: Expo Push sin SDK; las reglas viven sobre los change streams (un solo sitio); no se avisa a quien tiene la app abierta; recordatorio de sesión con una comprobación por minuto (sin Redis), idempotente. Textos sin contenido de tareas. Sin horario de silencio todavía. En Expo Go, los push solo funcionan en **iPhone** y necesitan el proyecto de EAS (`eas init`). |

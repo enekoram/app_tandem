@@ -61,11 +61,13 @@
 5. ✅ SesionPorEmpezar (titular de la Home), SesionActiva, estado `live`. ⏸ Modo «presencia sin vídeo» como opción explícita (hoy: sesión sin enlace).
 
 ## Fase 5 · Apoyo y notificaciones (`fase-5-apoyo`)
-1. Pedir apoyo (ApoyoPedido), responder (aceptar / ahora no), caducidad.
-2. Enviar apoyo (mantener pulsado) con presencia y corazón en tiempo real (ApoyoRecibido).
-3. «Pensé en ti», ¡hurra! y «Gracias».
-4. Push: PermisoNotificaciones, tokens, catálogo completo, categorías/acciones rápidas, agrupación, horario de silencio, idempotencia y límite de frecuencia; NotificacionesKV en Perfil.
-5. Fallback por email para invitaciones y avisos críticos.
+> Estado 2026-11-25: hecho y con tests en la API; **sin probar en el móvil** (🧑). Sale de `fase-4-sesiones`.
+
+1. ✅ Pedir apoyo (ApoyoPedido), responder (enviar / ahora no), caducidad de 15 min.
+2. ✅ Enviar apoyo (mantener pulsado) con corazón en tiempo real (ApoyoRecibido).
+3. ✅ «Pensé en ti», ¡hurra! (HurraRecibido). ⏸ «Gracias» (respuesta al ¡hurra!).
+4. ✅ Push: PermisoNotificaciones, tokens, catálogo, idempotencia, NotificacionesKV, recordatorio de sesión. ⏸ Categorías/acciones rápidas, agrupación, horario de silencio. 🧑 `eas init` para el projectId.
+5. ✅ Email: las invitaciones ya van por email (fase 2). ⏸ Fallback por email de avisos críticos.
 
 ## Fase 6 · Pulido (`fase-6-pulido`)
 Motion fino en todos los componentes, auditoría de accesibilidad (VoiceOver, TalkBack, teclado externo, Dynamic Type máximo), todos los estados vacíos y de error del canvas, Sentry, analítica sin contenido, Live Activity (si hay tiempo), exportar datos, pruebas en dispositivos reales.

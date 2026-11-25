@@ -595,7 +595,20 @@ export const es = {
       hurras: { title: '¡Hurras!', body: 'Cuando celebran tus tareas terminadas' },
       sessionReminders: { title: 'Sesiones', body: 'Antes de que empiece una sesión' },
     },
-    pushLater: 'Los avisos en el móvil llegarán más adelante. Mientras, lo verás al abrir la app.',
+    pushLater:
+      'Los avisos te llegan al móvil cuando no tienes la app abierta. Sin contenido de tus tareas: solo quién y qué.',
+    permission: {
+      exampleCaption: 'Marta · ahora',
+      exampleTitle: { lead: 'Te está ', em: 'enviando apoyo' } satisfies Emphasis,
+      caption: 'Un último paso',
+      title: { lead: 'Que no se te ', em: 'escape el apoyo' } satisfies Emphasis,
+      body: 'Activa las notificaciones para saber cuándo alguien te envía apoyo, te invita a una sesión o comparte una tarea contigo.',
+      later: 'Puedes cambiarlo cuando quieras en Mi perfil › Notificaciones.',
+      enable: 'Activar notificaciones',
+      notNow: 'Ahora no',
+      denied: 'Sin permiso: puedes activarlas en los Ajustes del móvil.',
+      unavailable: 'En este móvil aún no se pueden recibir avisos (lo verás al abrir la app).',
+    },
   },
   carousel: {
     previous: 'Tarjeta anterior',

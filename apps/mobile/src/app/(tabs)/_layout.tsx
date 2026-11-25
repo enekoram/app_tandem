@@ -1,11 +1,12 @@
-import { Tabs } from 'expo-router';
+import { router, Tabs } from 'expo-router';
 import { useMeControllerMe } from '@tandems/api-client';
 import { useEffect } from 'react';
 import { useContactsControllerList } from '@tandems/api-client';
+import { prefs } from '@/lib/prefs';
 import { onRealtime, useRealtime } from '@/lib/realtime';
 import { es } from '@/strings/es';
 import { useResumeInvite } from '@/lib/useResumeInvite';
-import { colors } from '@/theme';
+import { colors, durations } from '@/theme';
 import { TabBar, useToast } from '@/ui';
 
 export default function TabsLayout() {
@@ -15,6 +16,13 @@ export default function TabsLayout() {
   useResumeInvite();
   // Mientras hay sesión: avisos en tiempo real y presencia («está contigo»)
   useRealtime();
+
+  // PermisoNotificaciones, una sola vez (después de retomar una invitación, si la hay)
+  useEffect(() => {
+    if (prefs.pushAsked() || prefs.pendingInvite()) return;
+    const timer = setTimeout(() => router.push('/avisos'), durations.slow * 3);
+    return () => clearTimeout(timer);
+  }, []);
 
   // «Juan pensó en ti»: aviso efímero, sin contenido (doc 03 · toasts)
   const toast = useToast();

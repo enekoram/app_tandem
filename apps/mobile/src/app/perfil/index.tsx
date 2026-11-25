@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { useContactsControllerList, useMeControllerMe } from '@tandems/api-client';
 import { authClient } from '@/lib/auth';
+import { disablePush } from '@/lib/push';
 import { es } from '@/strings/es';
 import { colors, radii, selfColor, sizes, spacing } from '@/theme';
 import {
@@ -27,6 +28,7 @@ export default function ProfileScreen() {
 
   const signOut = async () => {
     setConfirmingSignOut(false);
+    await disablePush();
     await authClient.signOut();
     toast(es.profile.signedOut);
   };

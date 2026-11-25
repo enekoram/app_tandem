@@ -100,3 +100,27 @@ CÓMO PREPARARLO
         «EN VIVO»; «Abrir Google Meet» abre el enlace (o crea una videollamada si no hay)
 [ ] 6.10 Marcar la tarea como hecha: su sesión desaparece en los dos móviles
 [ ] 6.11 VoiceOver en las tarjetas de sesión y en las hojas
+
+─────────────────────────────────────────────
+7. APOYO Y AVISOS (fase 5) · dos móviles
+─────────────────────────────────────────────
+[ ] 7.0 (Una vez) Para los push: en apps/mobile, «npx eas login» y «npx eas init» con la
+        cuenta de Expo -> añade el projectId a app.json. Sin esto la app funciona,
+        pero no llegan avisos al móvil. En Expo Go solo funcionan en iPhone.
+[ ] 7.1 Al entrar por primera vez sale «Que no se te escape el apoyo» -> Activar / Ahora no
+[ ] 7.2 Móvil A: «Pedir apoyo» en la siguiente tarea -> mensaje opcional -> la Home pasa
+        a «Esperando el apoyo de…»
+[ ] 7.3 Móvil B: en la Home, «Marta te pide apoyo» (la primera tarjeta); con la app
+        cerrada, llega el aviso «Marta te pide apoyo» (sin el título de la tarea)
+[ ] 7.4 Móvil B: MANTENER PULSADO «Enviar apoyo» -> en el móvil A late un corazón en la
+        forma y sale «Juan te está enviando apoyo»; al soltar, se apaga en unos segundos
+[ ] 7.5 Vibración suave en cada latido solo con estímulo completo
+[ ] 7.6 Con VoiceOver: tocar «Enviar apoyo» empieza y tocar otra vez para
+[ ] 7.7 «Ahora no» en una petición
+[ ] 7.8 Detalle de contacto -> «Pensé en ti» -> el otro móvil ve «Juan pensó en ti»;
+        repetirlo enseguida avisa de que ya se lo dijiste
+[ ] 7.9 Terminar una tarea y que el otro envíe ¡hurra! -> pantalla «Marta celebra contigo»
+        (una sola vez)
+[ ] 7.10 Perfil › Notificaciones: desactivar un tipo y comprobar que ya no llega
+[ ] 7.11 Tocar un aviso abre la pantalla que toca
+[ ] 7.12 Recordatorio de sesión 10 min antes (con la app cerrada)

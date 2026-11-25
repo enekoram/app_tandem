@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -32,6 +33,15 @@ export default function RootLayout() {
     if (ready) void SplashScreen.hideAsync();
   }, [ready]);
 
+  // Al tocar un aviso push: abrir su pantalla (la ruta viene en el aviso, sin contenido)
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      const url = response.notification.request.content.data?.url;
+      if (typeof url === 'string' && url.startsWith('/')) router.navigate(url as never);
+    });
+    return () => sub.remove();
+  }, []);
+
   // Al cerrar sesión, fuera los datos de la persona anterior
   useEffect(() => {
     if (!signedIn) queryClient.clear();
@@ -57,6 +67,10 @@ export default function RootLayout() {
               <Stack.Screen name="perfil/contrasena" options={{ presentation: 'modal' }} />
               <Stack.Screen name="perfil/notificaciones" />
               <Stack.Screen name="apoyo/pedir" options={{ presentation: 'modal' }} />
+              <Stack.Screen
+                name="avisos"
+                options={{ presentation: 'modal', gestureEnabled: false }}
+              />
               <Stack.Screen name="contactos/index" />
               <Stack.Screen name="contactos/[id]" />
               <Stack.Screen name="contactos/nuevo" options={{ presentation: 'modal' }} />
