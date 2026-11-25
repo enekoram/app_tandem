@@ -4,3 +4,4 @@ export * from './rules/contacts.ts';
 export * from './rules/tasks.ts';
 export * from './rules/users.ts';
 export * from './schemas/index.ts';
+export * from './home/scene.ts';
