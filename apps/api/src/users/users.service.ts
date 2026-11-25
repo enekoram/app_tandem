@@ -57,6 +57,19 @@ export class UsersService {
       .orFail();
   }
 
+  async setQuiet(
+    me: UserDocument,
+    quiet: { enabled: boolean; start: string; end: string },
+  ): Promise<UserDocument> {
+    return this.users
+      .findOneAndUpdate(
+        { _id: me._id },
+        { $set: { 'prefs.quiet': quiet } },
+        { returnDocument: 'after' },
+      )
+      .orFail();
+  }
+
   /** Eliminar cuenta: borra el perfil (libera el email para una cuenta nueva). */
   async purge(id: Types.ObjectId, session: ClientSession): Promise<void> {
     await this.users.deleteOne({ _id: id }, { session });

@@ -604,6 +604,13 @@ export const es = {
     },
     pushLater:
       'Los avisos te llegan al móvil cuando no tienes la app abierta. Sin contenido de tus tareas: solo quién y qué.',
+    quiet: {
+      title: { lead: 'Horario de ', em: 'silencio' } satisfies Emphasis,
+      toggle: 'Silenciar avisos por la noche',
+      body: 'No te llegarán avisos en estas horas, salvo los recordatorios de tus sesiones.',
+      from: 'Desde',
+      to: 'Hasta',
+    },
     permission: {
       exampleCaption: 'Marta · ahora',
       exampleTitle: { lead: 'Te está ', em: 'enviando apoyo' } satisfies Emphasis,

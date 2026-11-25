@@ -9,7 +9,10 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {
+  DEFAULT_QUIET_HOURS,
   NOTIFICATION_KINDS,
+  quietHoursSchema,
+  type QuietHoursInput,
   notificationPrefsSchema,
   updateProfileSchema,
   type NotificationKind,
@@ -43,6 +46,18 @@ export class MeDto {
     description: `Avisos activados (${NOTIFICATION_KINDS.join(', ')}); por defecto, todos`,
   })
   notifications!: Record<NotificationKind, boolean>;
+
+  @ApiProperty({
+    type: 'object',
+    properties: {
+      enabled: { type: 'boolean' },
+      start: { type: 'string', example: '22:00' },
+      end: { type: 'string', example: '08:00' },
+    },
+    required: ['enabled', 'start', 'end'],
+    description: 'Horario de silencio (sin avisos push salvo recordatorios de sesión)',
+  })
+  quiet!: { enabled: boolean; start: string; end: string };
 }
 
 @ApiTags('me')
@@ -79,6 +94,18 @@ export class MeController {
     return toMeDto(updated);
   }
 
+  /** Horario de silencio. */
+  @Patch('quiet')
+  @ApiBody({ schema: openApiSchema(quietHoursSchema) })
+  @ApiOkResponse({ type: MeDto })
+  async quiet(
+    @Session() session: UserSession,
+    @Body(new ZodPipe(quietHoursSchema)) body: QuietHoursInput,
+  ): Promise<MeDto> {
+    const me = await this.users.ensureProfile(session.user);
+    return toMeDto(await this.users.setQuiet(me, body));
+  }
+
   /** NotificacionesKV: activar o desactivar cada tipo de aviso. */
   @Patch('notifications')
   @ApiBody({ schema: openApiSchema(notificationPrefsSchema) })
@@ -109,5 +136,6 @@ function toMeDto(profile: UserDocument): MeDto {
     timezone: profile.timezone,
     stimulus: profile.prefs.stimulus,
     notifications: notificationsOf(profile),
+    quiet: profile.prefs.quiet ?? { ...DEFAULT_QUIET_HOURS },
   };
 }

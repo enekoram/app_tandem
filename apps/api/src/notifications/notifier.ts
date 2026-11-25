@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import type { NotificationKind } from '@tandems/shared';
+import { inQuietHours, type NotificationKind } from '@tandems/shared';
 import type { Model, Types } from 'mongoose';
 import { Contact } from '../contacts/contact.schema.js';
 import { Presence } from '../realtime/presence.js';
@@ -48,8 +48,16 @@ export class Notifier {
     text: textKey,
     url,
   }: NotifyInput): Promise<boolean> {
-    const user = await this.users.findById(to, { prefs: 1 });
+    const user = await this.users.findById(to, { prefs: 1, timezone: 1 });
     if (!user || user.prefs?.notifications?.[kind] === false) return false;
+    // Horario de silencio: no se avisa (salvo recordatorios de sesión, que eligió ella)
+    if (
+      kind !== 'sessionReminders' &&
+      user.prefs?.quiet &&
+      inQuietHours(new Date(), user.timezone, user.prefs.quiet)
+    ) {
+      return false;
+    }
     if (this.presence.isOnline(to.toString())) return false;
     const devices = await this.tokens.find({ user_id: to });
     if (!devices.length) return false;

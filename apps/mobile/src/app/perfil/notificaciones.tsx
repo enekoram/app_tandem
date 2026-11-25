@@ -5,12 +5,13 @@ import {
   getMeControllerMeQueryKey,
   useMeControllerMe,
   useMeControllerNotifications,
+  useMeControllerQuiet,
 } from '@tandems/api-client';
 import type { NotificationKind } from '@tandems/shared';
 import type { Emphasis } from '@/strings/es';
 import { es } from '@/strings/es';
 import { colors, sizes, spacing } from '@/theme';
-import { EmphasisText, ListCard, Screen, Text, useToast } from '@/ui';
+import { DateTimePill, EmphasisText, ListCard, Screen, Text, useToast } from '@/ui';
 
 const GROUPS: { title: Emphasis; kinds: NotificationKind[] }[] = [
   {
@@ -29,6 +30,19 @@ export default function NotificationsScreen() {
   const me = useMeControllerMe();
   const update = useMeControllerNotifications();
   const prefs = me.data?.status === 200 ? me.data.data.notifications : undefined;
+  const quiet = me.data?.status === 200 ? me.data.data.quiet : undefined;
+  const updateQuiet = useMeControllerQuiet();
+
+  const saveQuiet = (next: { enabled: boolean; start: string; end: string }) =>
+    updateQuiet.mutate(
+      { data: next },
+      {
+        onSuccess: (res) => {
+          if (res.status === 200) queryClient.setQueryData(getMeControllerMeQueryKey(), res);
+        },
+        onError: () => toast(es.auth.errors.network, { kind: 'err' }),
+      },
+    );
 
   const toggle = (kind: NotificationKind, value: boolean) =>
     update.mutate(
@@ -80,8 +94,64 @@ export default function NotificationsScreen() {
           </ListCard>
         </View>
       ))}
+
+      {quiet && (
+        <View style={styles.group}>
+          <EmphasisText
+            text={t.quiet.title}
+            variant="section"
+            accessibilityRole="header"
+            style={styles.pad}
+          />
+          <ListCard>
+            <View style={styles.row}>
+              <View style={styles.texts}>
+                <Text variant="bodyStrong">{t.quiet.toggle}</Text>
+                <Text variant="label" color={colors.text.secondary}>
+                  {t.quiet.body}
+                </Text>
+              </View>
+              <Switch
+                value={quiet.enabled}
+                onValueChange={(enabled) => saveQuiet({ ...quiet, enabled })}
+                accessibilityLabel={t.quiet.toggle}
+                accessibilityHint={t.quiet.body}
+                trackColor={{ true: colors.action.primary, false: colors.border.subtle }}
+              />
+            </View>
+            {quiet.enabled && (
+              <>
+                <DateTimePill
+                  label={t.quiet.from}
+                  mode="time"
+                  value={toDate(quiet.start)}
+                  onChange={(d) => d && saveQuiet({ ...quiet, start: toHHMM(d) })}
+                />
+                <DateTimePill
+                  label={t.quiet.to}
+                  mode="time"
+                  value={toDate(quiet.end)}
+                  onChange={(d) => d && saveQuiet({ ...quiet, end: toHHMM(d) })}
+                />
+              </>
+            )}
+          </ListCard>
+        </View>
+      )}
     </Screen>
   );
+}
+
+/** «22:00» ↔ hora de hoy (para el selector nativo). */
+function toDate(hhmm: string): Date {
+  const [h, m] = hhmm.split(':').map(Number);
+  const d = new Date();
+  d.setHours(h ?? 0, m ?? 0, 0, 0);
+  return d;
+}
+const pad = (n: number) => String(n).padStart(2, '0');
+function toHHMM(d: Date): string {
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 const styles = StyleSheet.create({

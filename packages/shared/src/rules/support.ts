@@ -29,3 +29,38 @@ export const NOTIFICATION_KINDS = [
   'sessionReminders',
 ] as const;
 export type NotificationKind = (typeof NOTIFICATION_KINDS)[number];
+
+/** Horario de silencio por defecto (desactivado): de 22:00 a 8:00. */
+export const DEFAULT_QUIET_HOURS = { enabled: false, start: '22:00', end: '08:00' } as const;
+
+/** «HH:MM» (00:00–23:59). */
+export const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+const minutesOf = (hhmm: string) => {
+  const [h, m] = hhmm.split(':').map(Number);
+  return h! * 60 + m!;
+};
+
+/**
+ * ¿Está `now` dentro del horario de silencio, en la zona horaria de la persona?
+ * Admite tramos que cruzan la medianoche (22:00–08:00). Inicio incluido, fin excluido.
+ */
+export function inQuietHours(
+  now: Date,
+  timeZone: string,
+  quiet: { enabled: boolean; start: string; end: string },
+): boolean {
+  if (!quiet.enabled || quiet.start === quiet.end) return false;
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(now);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const minute = Number(parts.find((p) => p.type === 'minute')?.value ?? 0);
+  const t = hour * 60 + minute;
+  const start = minutesOf(quiet.start);
+  const end = minutesOf(quiet.end);
+  return start < end ? t >= start && t < end : t >= start || t < end;
+}
