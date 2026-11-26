@@ -22,7 +22,6 @@ curl -fsSL https://fnm.vercel.app/install | bash   # fnm (versiones de Node)
 # cierra y abre Terminal
 git clone https://github.com/enekoram/app_tandem.git ~/Documents/proyectos/app_tandem
 cd ~/Documents/proyectos/app_tandem
-git checkout fix-pruebas-2                 # rama de trabajo actual (ver docs/BITACORA.md)
 fnm install && fnm use                     # Node 24 según .nvmrc
 corepack enable                            # pnpm en la versión del package.json
 pnpm install

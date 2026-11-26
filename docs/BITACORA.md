@@ -204,11 +204,11 @@
 - «Pedir apoyo» directo: `AskSupportButton` (relleno + halo, según el perfil de movimiento) y `useAskSupport` en la Home y Mis tareas; fuera la hoja `apoyo/pedir` y el mensaje opcional.
 
 ### Cierre de la sesión 4
-- Probado en el iPhone por Eneko (arreglos y «Pedir apoyo» directo). Todo subido a GitHub en `fix-pruebas-2`; **falta su ok para fusionar en `main`**.
+- Probado en el iPhone por Eneko (arreglos y «Pedir apoyo» directo). `fix-pruebas-2` fusionada en `main` con su ok.
 - Se sigue desde otro ordenador: `docs/NUEVO-ORDENADOR.md` (llevar a mano `apps/api/.env` y `docs/pwd_usuarios_prueba.txt`) y `docs/PROMPT-SIGUIENTE-SESION.md`.
 
 ### Pendiente
-1. 🧑 Ok para fusionar `fix-pruebas-2` en `main`.
+1. 🧑 Subir: `git push origin main fix-pruebas-2` (pide usuario y token).
 2. 🧑 `cd apps/mobile && npx eas-cli init` (avisos push en Expo Go) y commit del `app.json`.
 3. Seguir `docs/PRUEBAS-PENDIENTES.txt` y arreglar lo que salga.
 4. Si un fallo de red vuelve a salir como error rojo «Uncaught (in promise)» con la API arrancada: buscar qué llamada no lo captura.
