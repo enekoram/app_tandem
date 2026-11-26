@@ -2,11 +2,12 @@
  * Crea cuentas de prueba en la base de DESARROLLO (nunca en producción).
  * Uso: pnpm --filter @tandems/api seed:users
  * Las contraseñas se generan al azar y se escriben en un archivo ignorado por git
- * (docs/pwd_usuarios_prueba.txt). Las cuentas que ya existen se saltan.
+ * (docs/pwd_usuarios_prueba.txt). Las cuentas que ya existen se saltan y el archivo no se
+ * sobrescribe (se añaden solo las nuevas).
  */
 import 'reflect-metadata';
 import { randomInt } from 'node:crypto';
-import { appendFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { NestFactory } from '@nestjs/core';
 import { AuthService } from '@thallesp/nestjs-better-auth';
@@ -39,11 +40,12 @@ const auth = app.get(AuthService);
 const users = app.get(UsersService);
 
 const out = fileURLToPath(new URL('../../../../docs/pwd_usuarios_prueba.txt', import.meta.url));
-writeFileSync(
-  out,
-  `Cuentas de prueba de DESARROLLO (base tandems_dev). Creadas el ${new Date().toISOString().slice(0, 16)}.\n` +
-    'Archivo ignorado por git: no subir. Los emails son de example.com (no reciben correo).\n\n',
-);
+if (!existsSync(out))
+  writeFileSync(
+    out,
+    `Cuentas de prueba de DESARROLLO (base tandems_dev). Creadas el ${new Date().toISOString().slice(0, 16)}.\n` +
+      'Archivo ignorado por git: no subir. Los emails son de example.com (no reciben correo).\n\n',
+  );
 
 for (const name of PEOPLE) {
   const email = emailFor(name);
@@ -55,7 +57,6 @@ for (const name of PEOPLE) {
     console.warn(`· ${name}: creada`);
   } catch (error) {
     const code = (error as { body?: { code?: string } }).body?.code ?? (error as Error).message;
-    appendFileSync(out, `${name.padEnd(7)} ${email.padEnd(20)} (no creada: ${code})\n`);
     console.warn(`· ${name}: no creada (${code})`);
   }
 }

@@ -193,3 +193,11 @@
 - Home, «Te piden»: bajo la forma se explica qué pide y qué significan las ondas; tocar la forma abre la petición (tarea → Acompaño, sesión → ConfirmarSesion).
 - `useMotionProfile` (lib/motion) compartido por la Home, Tareas que acompaño y HurraRecibido.
 - Tests: 203 en shared y 98 en la API. Empaqueta para iOS.
+
+### Sesión 4 (continuación) — todo probable en Expo Go
+- Alcance: **proyecto de aprendizaje**; nada de App Store, Render ni textos legales (se quedan como están, sin pruebas).
+- «No carga en Expo Go»: en el Mac todo funciona (Metro sirve el bundle completo). En el log de ayer: Expo Go con otra cuenta («minu.minu») que la línea de comandos («eneko.ram»). Hay que usar la misma.
+- `seed:demo` (API): monta la red de prueba con los servicios reales (contactos aceptados Marta/Juan/Lucía, invitación pendiente a Javier, tareas en los dos sentidos, sesión en 10 min, ¡hurra! recibido). Ejecutada en `tandems_dev`.
+- `seed:users` ya no sobrescribe el archivo de contraseñas al repetirse.
+- Home: la forma sin destino ya no lee `.value` durante el render (avisos de Reanimated en el log).
+- 🧑 Pendiente: `npx eas-cli init` en apps/mobile para los push (el permiso de Claude Code no deja crearlo en tu cuenta).

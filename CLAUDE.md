@@ -22,6 +22,7 @@ Sin Docker. Dev contra Atlas M0 (`tandems_dev`) y Render Key Value (prefijo `dev
 - Node 24 con `fnm` (`~/.local/share/fnm`); si el shell no lo carga: `export PATH=$HOME/.local/share/fnm:$PATH && eval "$(fnm env --shell bash --version-file-strategy=recursive)" && fnm use`.
 - `pnpm install` · `pnpm dev` / `pnpm stop` (API + Metro en segundo plano, logs en `.logs/`, QR para Expo Go; `pnpm dev api` o `pnpm dev mobile` para uno solo)
 - `pnpm test` · `pnpm lint` · `pnpm typecheck` · `pnpm format`
+- `pnpm --filter @tandems/api seed:users` y luego `seed:demo`: cuentas de prueba y red de prueba montada (solo desarrollo)
 - `pnpm generate:api`: exporta `apps/api/openapi.json` y regenera `packages/api-client` (la CI falla si no está al día)
 - `pnpm brand:assets`: icono, splash y favicon desde `assets/brand/logo-mark.svg`
 - Secretos de desarrollo en `apps/api/.env` (plantilla en `.env.example`, ignorado por git).

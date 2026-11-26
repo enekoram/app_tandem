@@ -87,20 +87,21 @@ function useSlot(target: ShapeTarget | undefined, motion: MotionProfile): SlotVa
   const cy = useSharedValue(target?.cy ?? SCENE_H / 2);
   const r = useSharedValue(target?.r ?? 0);
   const opacity = useSharedValue(target ? target.opacity : 0);
-  const tcx = target?.cx ?? cx.value;
-  const tcy = target?.cy ?? cy.value;
+  // Sin destino, la forma se queda donde estaba (sin leer `.value` durante el render)
+  const tcx = target?.cx ?? null;
+  const tcy = target?.cy ?? null;
   const tr = target?.r ?? 0;
   const to = target ? target.opacity : 0;
   useEffect(() => {
     const spring = motionProfiles[motion].spring;
     if (spring) {
-      cx.value = withSpring(tcx, spring);
-      cy.value = withSpring(tcy, spring);
+      if (tcx !== null) cx.value = withSpring(tcx, spring);
+      if (tcy !== null) cy.value = withSpring(tcy, spring);
       r.value = withSpring(tr, spring);
       opacity.value = withTiming(to, { duration: durations.base });
     } else {
-      cx.value = tcx;
-      cy.value = tcy;
+      if (tcx !== null) cx.value = tcx;
+      if (tcy !== null) cy.value = tcy;
       r.value = tr;
       opacity.value = withTiming(to, { duration: durations.fade });
     }
