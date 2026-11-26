@@ -67,7 +67,6 @@ export default function RootLayout() {
               <Stack.Screen name="perfil/editar" options={{ presentation: 'modal' }} />
               <Stack.Screen name="perfil/contrasena" options={{ presentation: 'modal' }} />
               <Stack.Screen name="perfil/notificaciones" />
-              <Stack.Screen name="apoyo/pedir" options={{ presentation: 'modal' }} />
               <Stack.Screen
                 name="avisos"
                 options={{ presentation: 'modal', gestureEnabled: false }}

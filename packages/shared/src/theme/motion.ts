@@ -64,6 +64,18 @@ export const celebration = {
   distance: { full: 120, gentle: 70 },
 } as const;
 
+/**
+ * «Pedir apoyo» sin pantalla intermedia (pedido el 2026-11-26): el botón se rellena de
+ * izquierda a derecha con el color de quien acompaña (como una barra) y queda con un halo
+ * que respira mientras esperas. Duraciones en ms; `haloScale` y `haloOpacity`, máximos.
+ */
+export const askSupport = {
+  fill: 900,
+  halo: 2200,
+  haloScale: 1.08,
+  haloOpacity: 0.55,
+} as const;
+
 /** Configuración de muelles (forma de Reanimated `withSpring`). */
 export const springs = {
   full: { damping: 14, stiffness: 140, mass: 1 },

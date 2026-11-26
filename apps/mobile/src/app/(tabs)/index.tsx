@@ -17,6 +17,7 @@ import { useSessionActions } from '@/features/sessions/useSessionActions';
 import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
+import { useAskSupport } from '@/features/support/useAskSupport';
 import { formatDue, formatLongDay } from '@/lib/dates';
 import { useOnline } from '@/lib/online';
 import { prefs } from '@/lib/prefs';
@@ -56,6 +57,7 @@ export default function TodayScreen() {
   const queryClient = useQueryClient();
   const toast = useToast();
   const online = useOnline();
+  const askSupport = useAskSupport();
   const decline = useSupportControllerDecline();
   const finished = useTasksControllerList({ status: 'done' });
   const { scene, dto } = home;
@@ -123,12 +125,7 @@ export default function TodayScreen() {
           <TaskCard
             task={task}
             featured
-            supportAsked={asked.has(task.id)}
-            onAskSupport={
-              online && task.companionStatus === 'accepted'
-                ? () => router.push({ pathname: '/apoyo/pedir', params: { taskId: task.id } })
-                : undefined
-            }
+            support={askSupport(task)}
             onDone={() => done.ask(task)}
             onEdit={() => router.push({ pathname: '/tarea/[id]', params: { id: task.id } })}
           />

@@ -162,3 +162,6 @@ CÓMO PREPARARLO
 [ ] 10.5 Elegir acompañante: los no elegidos se ven atenuados y con círculo vacío
 [ ] 10.6 HurraRecibido: formas que se juntan + estallido; vibra; solo «Ver siguiente tarea»
 [ ] 10.7 Home con petición: texto bajo la forma explicando las ondas; tocar la forma abre la petición
+[ ] 10.8 «Pedir apoyo» sale en todas tus tareas con acompañante aceptado (Home y Mis tareas);
+        al tocarlo se rellena con el color de la persona, queda «Apoyo pedido a…» con halo y
+        el otro móvil ve la petición. Sin pantalla intermedia.

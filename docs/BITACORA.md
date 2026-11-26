@@ -201,3 +201,4 @@
 - `seed:users` ya no sobrescribe el archivo de contraseñas al repetirse.
 - Home: la forma sin destino ya no lee `.value` durante el render (avisos de Reanimated en el log).
 - 🧑 Pendiente: `npx eas-cli init` en apps/mobile para los push (el permiso de Claude Code no deja crearlo en tu cuenta).
+- «Pedir apoyo» directo: `AskSupportButton` (relleno + halo, según el perfil de movimiento) y `useAskSupport` en la Home y Mis tareas; fuera la hoja `apoyo/pedir` y el mensaje opcional.

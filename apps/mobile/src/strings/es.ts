@@ -550,14 +550,9 @@ export const es = {
     },
     ask: {
       action: 'Pedir apoyo',
-      asked: 'Pedido',
-      title: { lead: 'Pedir ', em: 'apoyo' } satisfies Emphasis,
-      heading: (name: string): Emphasis => ({ lead: `Pide a ${name} que `, em: 'esté contigo' }),
-      body: (name: string) =>
-        `${name} verá que estás trabajando en esta tarea y que quieres sentir su apoyo.`,
-      message: 'Mensaje (opcional)',
-      send: (name: string) => `Enviar petición a ${name}`,
-      cancel: 'Cancelar',
+      actionA11y: (name: string) => `Pedir apoyo a ${name}`,
+      askedLine: (name: string) => `Apoyo pedido a ${name}`,
+      askedA11y: (name: string) => `Apoyo pedido a ${name}. Esperando respuesta`,
       sent: (name: string) => `Petición enviada a ${name}`,
     },
     waiting: {

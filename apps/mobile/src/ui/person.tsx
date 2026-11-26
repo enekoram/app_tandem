@@ -21,6 +21,7 @@ export function usePersonStyle(id: PersonColorId | undefined) {
   return {
     label: c.label,
     fill: c.base,
+    soft: c.soft,
     text: c.text,
     edge: [c.deep, c.base, c.soft] as const,
   };
