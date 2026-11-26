@@ -2,16 +2,15 @@
 
 ---
 
-Retomamos el proyecto **Tandems** (app de acompañamiento para personas con TDAH: Expo + NestJS + MongoDB Atlas + Render). Eres el único desarrollador; yo reviso, pruebo en el iPhone (Expo Go) y decido.
+Retomamos el proyecto **Tandems** (app de acompañamiento para personas con TDAH: Expo + NestJS + MongoDB Atlas). Es un **proyecto de aprendizaje**: la meta es que la app funcione entera en **Expo Go** contra la API local (`pnpm dev`). Nada de App Store, Render, Xcode obligatorio ni textos legales. Eres el único desarrollador; yo pruebo en el iPhone y decido.
 
-Antes de nada, lee en este orden: `CLAUDE.md`, `docs/BITACORA.md` (sobre todo «Pendiente para la próxima sesión» de la última sesión), `docs/05-plan-por-fases.md` (estado de la fase 1 y fase 2), `docs/06-ui-kit.md` y, por encima, `docs/01` a `04` y `docs/PROGRESO.md`. Ahí está todo lo decidido; no vuelvas a plantear decisiones ya tomadas.
+Antes de nada, lee: `CLAUDE.md`, `docs/BITACORA.md` (la última sesión, la 4, y su «Pendiente»), `docs/PRUEBAS-PENDIENTES.txt` y, por encima, `docs/PROGRESO.md` (tabla de decisiones al final). No vuelvas a plantear decisiones ya tomadas.
 
-Estado: fases 0 a 6 en `main` (las 2–6 sin probar en el móvil). Lo que hay que probar está en `docs/PRUEBAS-PENDIENTES.txt`: vamos punto por punto.
+Estado: fases 0–7 en `main`. Los arreglos de la sesión 4 están en la rama **`fix-pruebas-2`** (probados por mí en el iPhone, pendientes de fusionar en `main` con mi ok). Si estoy en un ordenador nuevo, sigue `docs/NUEVO-ORDENADOR.md`.
 
 Hoy:
-1. Comprueba el repositorio (`git status`, rama, commits sin subir, estado de la CI) y dime qué tareas 🧑 de la bitácora siguen abiertas.
-2. Si sigue pendiente, guíame paso a paso para conectar el Blueprint de Render y comprobar `/health` en staging.
-3. Repasemos `docs/PRUEBAS-PENDIENTES.txt` punto por punto: te digo qué he visto y lo arreglas en una rama `fix-…` sobre `main` (fusión con mi ok).
-4. Cuando llegues a una tarea que solo puedo hacer yo (cuentas, secretos), para y guíame. Las claves nunca se pegan en el chat ni van al repositorio: dime dónde ponerlas.
+1. Comprueba el repositorio (rama, commits sin subir) y que `pnpm dev` arranca. Si falta `apps/api/.env`, para y guíame (nunca pegues claves en el chat).
+2. Te digo qué he visto al probar y lo arreglas en `fix-pruebas-2` (o en una rama `fix-…` nueva sobre `main` si ya está fusionada).
+3. Tareas que solo puedo hacer yo (cuentas, secretos, `npx eas-cli init` para los push): para y dime el comando.
 
-Recuerda: el canvas (https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f) es de solo lectura; usa solo las páginas «Prototipo con look and feel» (pantallas) y «UI kit» (componentes). Al terminar cada paso, resume qué has hecho, cómo probarlo y qué viene después, y actualiza `docs/BITACORA.md`, `docs/PROGRESO.md` y este prompt **antes de cerrar la sesión**.
+El canvas (https://claude.ai/code/artifact/c23a6b19-90d6-458f-9b71-db2da5cc796f) es de solo lectura; usa solo «Prototipo con look and feel» y «UI kit». Si te pido algo distinto del canvas, mando yo: apúntalo en las decisiones de `docs/PROGRESO.md`. Al terminar cada paso, resume qué has hecho y cómo probarlo, y antes de cerrar la sesión actualiza `docs/BITACORA.md`, `docs/PROGRESO.md` y este prompt, y sube todo a GitHub.
