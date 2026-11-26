@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "openapi": "nest build && node dist/openapi.js",
-    "seed:users": "nest build && node --env-file=.env dist/scripts/seed-dev-users.js"
+    "seed:users": "tsc -p tsconfig.build.json --outDir dist-seed && node --env-file=.env dist-seed/scripts/seed-dev-users.js",
+    "seed:demo": "tsc -p tsconfig.build.json --outDir dist-seed && node --env-file=.env dist-seed/scripts/seed-dev-demo.js"
   },
   "dependencies": {
     "@better-auth/expo": "^1.7.27",

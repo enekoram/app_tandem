@@ -6,7 +6,10 @@ import {
   useTasksControllerAccompanying,
   type TaskDto,
 } from '@tandems/api-client';
+import { SendSupportButton } from '@/features/support/SendSupportButton';
 import { formatDue } from '@/lib/dates';
+import { useMotionProfile } from '@/lib/motion';
+import { useOnline } from '@/lib/online';
 import { invalidateTasks } from '@/lib/queries';
 import { runUndoable } from '@/lib/undoable';
 import { es } from '@/strings/es';
@@ -16,14 +19,18 @@ import {
   ConfirmSheet,
   EmptyStateCard,
   Screen,
+  Text,
   useToast,
 } from '@/ui';
+import { colors } from '@/theme';
 
-/** Tareas que acompaño (aceptadas), con «Dejar de acompañar». */
+/** Tareas que acompaño (aceptadas), con «Enviar apoyo» y «Dejar de acompañar». */
 export default function AccompaniedTasksScreen() {
   const t = es.companion;
   const toast = useToast();
   const queryClient = useQueryClient();
+  const motion = useMotionProfile();
+  const online = useOnline();
   const query = useTasksControllerAccompanying({ status: 'open' });
   const [leaving, setLeaving] = useState<TaskDto | null>(null);
   const [hidden, setHidden] = useState<string[]>([]);
@@ -63,6 +70,19 @@ export default function AccompaniedTasksScreen() {
             task={task}
             caption={t.list.from(task.person?.name ?? '', t.list.stateAccepted)}
             meta={`${t.list.youAccompany} · ${formatDue(task.dueAt)}`}
+            footer={
+              online ? (
+                <SendSupportButton
+                  taskId={task.id}
+                  name={task.person?.name ?? ''}
+                  motion={motion}
+                />
+              ) : (
+                <Text variant="label" color={colors.text.caption}>
+                  {es.offline.supportNeedsConnection}
+                </Text>
+              )
+            }
             actions={
               <CardAction label={t.list.leave} variant="link" onPress={() => setLeaving(task)} />
             }

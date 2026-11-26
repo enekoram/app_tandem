@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { ContactDto } from '@tandems/api-client';
 import { es } from '@/strings/es';
-import { borders, colors, radii, sizes, spacing } from '@/theme';
+import { borders, colors, opacities, radii, sizes, spacing } from '@/theme';
 import { Icon } from './icons';
 import { ListCard } from './list';
 import { PersonToken } from './person';
@@ -37,7 +37,12 @@ export function PersonPicker({
               accessibilityState={{ checked: selected }}
               accessibilityLabel={pending ? `${c.name}, ${es.contacts.pending}` : c.name}
               onPress={() => onChange(c.id)}
-              style={({ pressed }) => [styles.row, pressed && styles.pressed]}
+              style={({ pressed }) => [
+                styles.row,
+                selected && styles.rowSelected,
+                value && !selected && styles.dimmed,
+                pressed && styles.pressed,
+              ]}
             >
               <PersonToken
                 name={c.name}
@@ -55,13 +60,15 @@ export function PersonPicker({
                   </Text>
                 )}
               </View>
-              <View style={[styles.check, !selected && styles.hidden]}>
-                <Icon
-                  name="check"
-                  size={sizes.icon.inline}
-                  color={colors.action.onPrimary}
-                  strokeWidth={2.4}
-                />
+              <View style={[styles.check, !selected && styles.checkOff]}>
+                {selected && (
+                  <Icon
+                    name="check"
+                    size={sizes.icon.inline}
+                    color={colors.action.onPrimary}
+                    strokeWidth={2.4}
+                  />
+                )}
               </View>
             </Pressable>
           );
@@ -107,7 +114,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  hidden: { opacity: 0 },
+  checkOff: {
+    backgroundColor: 'transparent',
+    borderWidth: borders.pending,
+    borderColor: colors.border.pending,
+  },
+  rowSelected: { backgroundColor: colors.bg.ground },
+  dimmed: { opacity: opacities.unselected },
   add: {
     width: sizes.avatar.sm,
     height: sizes.avatar.sm,

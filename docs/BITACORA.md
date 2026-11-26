@@ -182,3 +182,33 @@
 - «Gracias» por el ¡hurra!, horario de silencio, límites en rutas sensibles, textos legales (borrador) enlazados desde Crear cuenta y Perfil, `docs/DESPLIEGUE.md`.
 - Prueba de humo: la API compilada arranca en modo producción, registra, valida la sesión y oculta /docs.
 - Tests: 201 en shared y 98 en la API. Empaqueta para iOS.
+
+### Sesión 4 — 2026-11-26 · arreglos de la segunda prueba (`fix-pruebas-2`)
+- Iniciar sesión: el logo ya no se corta por arriba (interlineado del logo 56 → 70; en iOS un interlineado menor que el cuerpo recorta).
+- Botones y acciones de tarjeta con el texto centrado (también en dos líneas); «Unirse a la sesión» en su propia fila.
+- Tareas que acompaño: «Enviar apoyo» (mantener pulsado) en cada tarea; sin conexión, el aviso de siempre.
+- Crear/editar tarea: al abrir el selector de fecha u hora se cierra el teclado.
+- Elegir acompañante: los no elegidos bajan de opacidad (`opacities.unselected`), la fila elegida tiene fondo y los demás muestran un círculo vacío.
+- HurraRecibido: nueva animación (`CelebrationArt`: las formas se juntan con muelle y salta un estallido de puntos de marca; suave = uno solo y menos puntos; mínimo = fundido) y vibración de éxito con estímulo completo. Solo queda «Ver siguiente tarea» (fuera «Dar las gracias» y «Ver tareas terminadas»; el endpoint de gracias queda en la API sin uso).
+- Home, «Te piden»: bajo la forma se explica qué pide y qué significan las ondas; tocar la forma abre la petición (tarea → Acompaño, sesión → ConfirmarSesion).
+- `useMotionProfile` (lib/motion) compartido por la Home, Tareas que acompaño y HurraRecibido.
+- Tests: 203 en shared y 98 en la API. Empaqueta para iOS.
+
+### Sesión 4 (continuación) — todo probable en Expo Go
+- Alcance: **proyecto de aprendizaje**; nada de App Store, Render ni textos legales (se quedan como están, sin pruebas).
+- «No carga en Expo Go»: en el Mac todo funciona (Metro sirve el bundle completo). En el log de ayer: Expo Go con otra cuenta («minu.minu») que la línea de comandos («eneko.ram»). Hay que usar la misma.
+- `seed:demo` (API): monta la red de prueba con los servicios reales (contactos aceptados Marta/Juan/Lucía, invitación pendiente a Javier, tareas en los dos sentidos, sesión en 10 min, ¡hurra! recibido). Ejecutada en `tandems_dev`.
+- `seed:users` ya no sobrescribe el archivo de contraseñas al repetirse.
+- Home: la forma sin destino ya no lee `.value` durante el render (avisos de Reanimated en el log).
+- 🧑 Pendiente: `npx eas-cli init` en apps/mobile para los push (el permiso de Claude Code no deja crearlo en tu cuenta).
+- «Pedir apoyo» directo: `AskSupportButton` (relleno + halo, según el perfil de movimiento) y `useAskSupport` en la Home y Mis tareas; fuera la hoja `apoyo/pedir` y el mensaje opcional.
+
+### Cierre de la sesión 4
+- Probado en el iPhone por Eneko (arreglos y «Pedir apoyo» directo). Todo subido a GitHub en `fix-pruebas-2`; **falta su ok para fusionar en `main`**.
+- Se sigue desde otro ordenador: `docs/NUEVO-ORDENADOR.md` (llevar a mano `apps/api/.env` y `docs/pwd_usuarios_prueba.txt`) y `docs/PROMPT-SIGUIENTE-SESION.md`.
+
+### Pendiente
+1. 🧑 Ok para fusionar `fix-pruebas-2` en `main`.
+2. 🧑 `cd apps/mobile && npx eas-cli init` (avisos push en Expo Go) y commit del `app.json`.
+3. Seguir `docs/PRUEBAS-PENDIENTES.txt` y arreglar lo que salga.
+4. Si un fallo de red vuelve a salir como error rojo «Uncaught (in promise)» con la API arrancada: buscar qué llamada no lo captura.

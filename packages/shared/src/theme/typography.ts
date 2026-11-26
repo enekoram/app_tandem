@@ -33,7 +33,7 @@ export const typography = {
   /** Texto que se escribe en un campo. */
   input: { family: 'sans', size: 17, lineHeight: 22, letterSpacing: 0 },
   /** Marca «Tandems» (logo) y su lema. */
-  logo: { family: 'serif', size: 62, lineHeight: 56, letterSpacing: -0.03 },
+  logo: { family: 'serif', size: 62, lineHeight: 70, letterSpacing: -0.03 },
   tagline: { family: 'serif', size: 21, lineHeight: 23, letterSpacing: 0 },
   /** Titular grande del onboarding. */
   hero: { family: 'serif', size: 44, lineHeight: 45, letterSpacing: -0.01 },

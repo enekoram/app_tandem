@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import {
   Blur,
   Canvas,
@@ -87,20 +87,21 @@ function useSlot(target: ShapeTarget | undefined, motion: MotionProfile): SlotVa
   const cy = useSharedValue(target?.cy ?? SCENE_H / 2);
   const r = useSharedValue(target?.r ?? 0);
   const opacity = useSharedValue(target ? target.opacity : 0);
-  const tcx = target?.cx ?? cx.value;
-  const tcy = target?.cy ?? cy.value;
+  // Sin destino, la forma se queda donde estaba (sin leer `.value` durante el render)
+  const tcx = target?.cx ?? null;
+  const tcy = target?.cy ?? null;
   const tr = target?.r ?? 0;
   const to = target ? target.opacity : 0;
   useEffect(() => {
     const spring = motionProfiles[motion].spring;
     if (spring) {
-      cx.value = withSpring(tcx, spring);
-      cy.value = withSpring(tcy, spring);
+      if (tcx !== null) cx.value = withSpring(tcx, spring);
+      if (tcy !== null) cy.value = withSpring(tcy, spring);
       r.value = withSpring(tr, spring);
       opacity.value = withTiming(to, { duration: durations.base });
     } else {
-      cx.value = tcx;
-      cy.value = tcy;
+      if (tcx !== null) cx.value = tcx;
+      if (tcy !== null) cy.value = tcy;
       r.value = tr;
       opacity.value = withTiming(to, { duration: durations.fade });
     }
@@ -201,7 +202,18 @@ function Letter({
  * Escena de la Home: tú y tu gente como formas que se funden (misma técnica que el
  * onboarding: desenfoque + umbral de alfa sobre una máscara con el degradado).
  */
-export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfile }) {
+export function HomeScene({
+  scene,
+  motion,
+  onPress,
+  accessibilityHint,
+}: {
+  scene: Scene;
+  motion: MotionProfile;
+  /** Si alguien te pide algo, tocar la forma abre la petición. */
+  onPress?: () => void;
+  accessibilityHint?: string;
+}) {
   const [width, setWidth] = useState(0);
   const geometry = sceneGeometry(scene);
   const shapes = geometry.shapes;
@@ -271,10 +283,13 @@ export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfi
 
   const k = Math.min(width / SCENE_W, 1.2);
   return (
-    <View
+    <Pressable
       accessible
-      accessibilityRole="image"
+      accessibilityRole={onPress ? 'button' : 'image'}
       accessibilityLabel={describeSceneA11y(scene.a11y)}
+      accessibilityHint={onPress ? accessibilityHint : undefined}
+      disabled={!onPress}
+      onPress={onPress}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       style={styles.wrap}
     >
@@ -403,7 +418,7 @@ export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfi
           </Group>
         </Canvas>
       )}
-    </View>
+    </Pressable>
   );
 }
 

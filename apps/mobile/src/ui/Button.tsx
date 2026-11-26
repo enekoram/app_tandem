@@ -36,7 +36,7 @@ export function Button({ label, variant = 'primary', icon, disabled, ...rest }: 
         <Text
           variant="bodyStrong"
           color={disabled ? colors.text.inactive : fg}
-          style={variant === 'link' ? styles.linkText : undefined}
+          style={[styles.text, variant === 'link' && styles.linkText]}
         >
           {label}
         </Text>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'stretch',
   },
-  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
+  text: { textAlign: 'center', flexShrink: 1 },
   primary: { backgroundColor: colors.action.primary },
   destructive: { backgroundColor: colors.action.destructive },
   secondary: {

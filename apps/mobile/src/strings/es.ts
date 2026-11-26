@@ -43,6 +43,15 @@ export const es = {
     cardShared: (name: string, title: string) => `${name} te comparte ${title}`,
     cardSession: (name: string, title: string) => `Sesión con ${name}: ${title}`,
     cardSupport: (name: string, title: string) => `${name} te pide apoyo: ${title}`,
+    /** Bajo la forma cuando alguien te pide algo: qué significan las ondas. */
+    asks: {
+      task: (name: string, title: string) => `${name} quiere que le acompañes en «${title}».`,
+      session: (name: string) => `${name} te propone una sesión.`,
+      support: (name: string) => `${name} te pide apoyo.`,
+      ripples: 'Las ondas alrededor de su forma indican que espera tu respuesta.',
+      tap: 'Toca para responder',
+      hint: 'Abre la petición para responder',
+    },
     soonTitle: { lead: 'Tu sesión ', em: 'empieza pronto' } satisfies Emphasis,
     startsIn: (min: number) =>
       min === 0 ? 'Empieza ahora' : pluralEs(min, 'Empieza en 1 min', `Empieza en ${min} min`),
@@ -541,14 +550,9 @@ export const es = {
     },
     ask: {
       action: 'Pedir apoyo',
-      asked: 'Pedido',
-      title: { lead: 'Pedir ', em: 'apoyo' } satisfies Emphasis,
-      heading: (name: string): Emphasis => ({ lead: `Pide a ${name} que `, em: 'esté contigo' }),
-      body: (name: string) =>
-        `${name} verá que estás trabajando en esta tarea y que quieres sentir su apoyo.`,
-      message: 'Mensaje (opcional)',
-      send: (name: string) => `Enviar petición a ${name}`,
-      cancel: 'Cancelar',
+      actionA11y: (name: string) => `Pedir apoyo a ${name}`,
+      askedLine: (name: string) => `Apoyo pedido a ${name}`,
+      askedA11y: (name: string) => `Apoyo pedido a ${name}. Esperando respuesta`,
       sent: (name: string) => `Petición enviada a ${name}`,
     },
     waiting: {
@@ -573,8 +577,6 @@ export const es = {
     title: (name: string): Emphasis => ({ lead: `${name} celebra `, em: 'contigo' }),
     body: (title: string, name: string) =>
       `Terminaste «${title}» y ${name} te ha enviado un ¡hurra!`,
-    thank: 'Dar las gracias',
-    thankedToast: (name: string) => `${name} sabrá que te ha llegado.`,
     thanked: 'Te ha dado las gracias',
   },
   notifications: {

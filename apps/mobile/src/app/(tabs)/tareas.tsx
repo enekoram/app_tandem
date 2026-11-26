@@ -7,6 +7,7 @@ import {
   type TaskDto,
 } from '@tandems/api-client';
 import { MAX_OPEN_TASKS } from '@tandems/shared';
+import { useAskSupport } from '@/features/support/useAskSupport';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { es } from '@/strings/es';
 import { colors, spacing } from '@/theme';
@@ -28,6 +29,7 @@ export default function TasksScreen() {
   const t = es.tasks;
   const query = useTasksControllerList({ status: 'open' });
   const contacts = useContactsControllerList();
+  const askSupport = useAskSupport();
   const done = useCompleteTask();
   const [limitOpen, setLimitOpen] = useState(false);
 
@@ -131,6 +133,7 @@ export default function TasksScreen() {
               <TaskCard
                 task={first}
                 featured
+                support={askSupport(first)}
                 onDone={() => done.ask(first)}
                 onEdit={() => edit(first)}
               />
@@ -148,6 +151,7 @@ export default function TasksScreen() {
                 <TaskCard
                   key={task.id}
                   task={task}
+                  support={askSupport(task)}
                   onDone={() => done.ask(task)}
                   onEdit={() => edit(task)}
                 />

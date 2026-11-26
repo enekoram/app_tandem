@@ -1,37 +1,32 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { tasksControllerThanks } from '@tandems/api-client';
+import * as Haptics from 'expo-haptics';
+import { useMotionProfile } from '@/lib/motion';
 import { es } from '@/strings/es';
 import { colors, spacing } from '@/theme';
-import { AuthLayout, Button, Card, EmphasisText, Text, useToast } from '@/ui';
-import { OnboardingArt } from '@/ui/art/OnboardingArt';
+import { AuthLayout, Button, Card, EmphasisText, Text } from '@/ui';
+import { CelebrationArt } from '@/ui/art/CelebrationArt';
 
-/** HurraRecibido: alguien que te acompaña celebra una tarea que terminaste. */
+/**
+ * HurraRecibido: alguien que te acompaña celebra una tarea que terminaste. Las formas se
+ * juntan con un estallido (según el perfil de movimiento) y una vibración de éxito solo con
+ * estímulo completo. Una sola salida: «Ver siguiente tarea» (pedido del 2026-11-26).
+ */
 export default function HurraReceivedScreen() {
-  const {
-    id = '',
-    title = '',
-    name = '',
-  } = useLocalSearchParams<{ id?: string; title?: string; name?: string }>();
+  const { title = '', name = '' } = useLocalSearchParams<{ title?: string; name?: string }>();
   const t = es.hurra;
-  const toast = useToast();
-  const [thanked, setThanked] = useState(false);
+  const motion = useMotionProfile();
 
-  const thank = async () => {
-    setThanked(true);
-    const ok = await tasksControllerThanks(id)
-      .then((res) => res.status === 200)
-      .catch(() => false);
-    if (ok) toast(t.thankedToast(name), { kind: 'ok' });
-    else {
-      setThanked(false);
-      toast(es.auth.errors.network, { kind: 'err' });
+  useEffect(() => {
+    if (motion === 'full') {
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     }
-  };
+  }, [motion]);
+
   return (
     <AuthLayout>
-      <OnboardingArt step={0} />
+      <CelebrationArt motion={motion} />
       <View style={styles.texts}>
         <Text variant="caption" color={colors.text.caption}>
           {t.caption}
@@ -49,21 +44,7 @@ export default function HurraReceivedScreen() {
       </Card>
       <View style={styles.spacer} />
       <View style={styles.cta}>
-        {id ? (
-          <Button
-            label={t.thank}
-            icon="heart"
-            variant="secondary"
-            onPress={() => void thank()}
-            disabled={thanked}
-          />
-        ) : null}
         <Button label={es.tasks.finished.next} onPress={() => router.back()} />
-        <Button
-          label={es.tasks.finished.seeDone}
-          variant="secondary"
-          onPress={() => router.replace('/tarea/terminadas')}
-        />
       </View>
     </AuthLayout>
   );

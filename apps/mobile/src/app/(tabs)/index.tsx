@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   useSupportControllerDecline,
@@ -17,6 +17,7 @@ import { useSessionActions } from '@/features/sessions/useSessionActions';
 import { useHome } from '@/features/home/useHome';
 import { useCompleteTask } from '@/features/tasks/useCompleteTask';
 import { useRespondShared } from '@/features/tasks/useRespondShared';
+import { useAskSupport } from '@/features/support/useAskSupport';
 import { formatDue, formatLongDay } from '@/lib/dates';
 import { useOnline } from '@/lib/online';
 import { prefs } from '@/lib/prefs';
@@ -56,6 +57,7 @@ export default function TodayScreen() {
   const queryClient = useQueryClient();
   const toast = useToast();
   const online = useOnline();
+  const askSupport = useAskSupport();
   const decline = useSupportControllerDecline();
   const finished = useTasksControllerList({ status: 'done' });
   const { scene, dto } = home;
@@ -123,12 +125,7 @@ export default function TodayScreen() {
           <TaskCard
             task={task}
             featured
-            supportAsked={asked.has(task.id)}
-            onAskSupport={
-              online && task.companionStatus === 'accepted'
-                ? () => router.push({ pathname: '/apoyo/pedir', params: { taskId: task.id } })
-                : undefined
-            }
+            support={askSupport(task)}
             onDone={() => done.ask(task)}
             onEdit={() => router.push({ pathname: '/tarea/[id]', params: { id: task.id } })}
           />
@@ -202,6 +199,30 @@ export default function TodayScreen() {
   const presence =
     scene.a11y.kind === 'contacts' ? presenceLine(scene.a11y.present, scene.a11y.absent) : '';
 
+  // Te piden: explicar las ondas y dejar tocar la forma para responder
+  const firstRequest = scene.approach ? scene.cards[0] : undefined;
+  const asking =
+    firstRequest?.kind === 'request'
+      ? (() => {
+          const r = firstRequest.request;
+          const name = r.person.name;
+          const rawId = r.id.replace(/^[a-z]+:/, '');
+          if (r.kind === 'task') {
+            return {
+              text: t.asks.task(name, r.taskTitle),
+              open: () => router.navigate('/acompano'),
+            };
+          }
+          if (r.kind === 'session') {
+            return {
+              text: t.asks.session(name),
+              open: () => router.push({ pathname: '/sesion/[id]', params: { id: rawId } }),
+            };
+          }
+          return { text: t.asks.support(name), open: undefined };
+        })()
+      : undefined;
+
   // SesionPorEmpezar: la Home cambia de titular cuando falta poco (doc 03 · sessionSoon)
   const soon = scene.pulse ? scene.cards.find((c) => c.kind === 'session') : undefined;
   const minutesLeft =
@@ -237,7 +258,21 @@ export default function TodayScreen() {
         />
       }
     >
-      <HomeScene scene={scene} motion={home.motion} />
+      <HomeScene
+        scene={scene}
+        motion={home.motion}
+        onPress={asking?.open}
+        accessibilityHint={t.asks.hint}
+      />
+      {asking ? (
+        <View style={[styles.pad, styles.asks]}>
+          <Text variant="lead">{asking.text}</Text>
+          <Text variant="body" color={colors.text.secondary}>
+            {t.asks.ripples}
+            {asking.open ? ` ${t.asks.tap}.` : ''}
+          </Text>
+        </View>
+      ) : null}
       {supporterName ? (
         <Text variant="lead" color={colors.text.secondary} style={styles.pad}>
           {es.support.receiving.body(supporterName)}
@@ -319,4 +354,5 @@ export default function TodayScreen() {
 
 const styles = StyleSheet.create({
   pad: { paddingHorizontal: spacing.sm },
+  asks: { gap: spacing.xxs },
 });

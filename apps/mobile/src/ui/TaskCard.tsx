@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import type { TaskDto } from '@tandems/api-client';
 import { formatDue } from '@/lib/dates';
@@ -58,7 +59,7 @@ export function CardAction({
       {icon && (
         <Icon name={icon} size={sizes.icon.button} color={colors.text.primary} strokeWidth={1.8} />
       )}
-      <Text variant="label" style={variant === 'link' ? styles.linkText : undefined}>
+      <Text variant="label" style={[styles.actionText, variant === 'link' && styles.linkText]}>
         {label}
       </Text>
     </Pressable>
@@ -71,20 +72,12 @@ export interface TaskCardProps {
   featured?: boolean;
   onDone?: () => void;
   onEdit?: () => void;
-  /** «Pedir apoyo» (PedirApoyo); con `supportAsked`, «Pedido». */
-  onAskSupport?: () => void;
-  supportAsked?: boolean;
+  /** «Pedir apoyo» (AskSupportButton), en su fila sobre las acciones. */
+  support?: ReactNode;
 }
 
 /** Tarjeta de una tarea propia (canvas «Mis tareas»). */
-export function TaskCard({
-  task,
-  featured = false,
-  onDone,
-  onEdit,
-  onAskSupport,
-  supportAsked = false,
-}: TaskCardProps) {
+export function TaskCard({ task, featured = false, onDone, onEdit, support }: TaskCardProps) {
   const active = task.companionStatus === 'pending' || task.companionStatus === 'accepted';
   const person = usePersonStyle(task.person?.color);
   const { caption, prefix, suffix } = describe(task);
@@ -120,16 +113,9 @@ export function TaskCard({
           {task.description}
         </Text>
       ) : null}
-      {(onDone || onEdit || onAskSupport) && (
+      {support ? <View style={styles.actions}>{support}</View> : null}
+      {(onDone || onEdit) && (
         <View style={styles.actions}>
-          {onAskSupport && (
-            <CardAction
-              label={supportAsked ? es.support.ask.asked : es.support.ask.action}
-              icon="heart"
-              variant={supportAsked ? 'solid' : 'ghost'}
-              onPress={onAskSupport}
-            />
-          )}
           {onDone && (
             <CardAction
               label={es.tasks.card.done}
@@ -176,6 +162,7 @@ const styles = StyleSheet.create({
     borderColor: colors.action.primary,
   },
   actionLink: { flex: 0, backgroundColor: 'transparent', borderColor: 'transparent' },
+  actionText: { textAlign: 'center', flexShrink: 1 },
   linkText: { textDecorationLine: 'underline' },
   pressed: { opacity: 0.8 },
 });
