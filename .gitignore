@@ -1,6 +1,8 @@
 # Dependencias y builds
 node_modules/
 dist/
+# Compilación aparte de las semillas (no pisa la de pnpm dev)
+dist-seed/
 build/
 .expo/
 .expo-shared/
