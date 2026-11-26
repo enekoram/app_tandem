@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Keyboard, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { es } from '@/strings/es';
@@ -40,6 +40,7 @@ export function DateTimePill({
     : es.tasks.form.choose;
 
   const openPicker = () => {
+    Keyboard.dismiss(); // que el teclado no tape el selector
     const start = value ?? new Date();
     if (Platform.OS === 'android') {
       DateTimePickerAndroid.open({

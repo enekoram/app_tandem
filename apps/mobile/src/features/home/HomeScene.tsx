@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import {
   Blur,
   Canvas,
@@ -201,7 +201,18 @@ function Letter({
  * Escena de la Home: tú y tu gente como formas que se funden (misma técnica que el
  * onboarding: desenfoque + umbral de alfa sobre una máscara con el degradado).
  */
-export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfile }) {
+export function HomeScene({
+  scene,
+  motion,
+  onPress,
+  accessibilityHint,
+}: {
+  scene: Scene;
+  motion: MotionProfile;
+  /** Si alguien te pide algo, tocar la forma abre la petición. */
+  onPress?: () => void;
+  accessibilityHint?: string;
+}) {
   const [width, setWidth] = useState(0);
   const geometry = sceneGeometry(scene);
   const shapes = geometry.shapes;
@@ -271,10 +282,13 @@ export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfi
 
   const k = Math.min(width / SCENE_W, 1.2);
   return (
-    <View
+    <Pressable
       accessible
-      accessibilityRole="image"
+      accessibilityRole={onPress ? 'button' : 'image'}
       accessibilityLabel={describeSceneA11y(scene.a11y)}
+      accessibilityHint={onPress ? accessibilityHint : undefined}
+      disabled={!onPress}
+      onPress={onPress}
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       style={styles.wrap}
     >
@@ -403,7 +417,7 @@ export function HomeScene({ scene, motion }: { scene: Scene; motion: MotionProfi
           </Group>
         </Canvas>
       )}
-    </View>
+    </Pressable>
   );
 }
 

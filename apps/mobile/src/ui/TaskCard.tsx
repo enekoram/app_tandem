@@ -58,7 +58,7 @@ export function CardAction({
       {icon && (
         <Icon name={icon} size={sizes.icon.button} color={colors.text.primary} strokeWidth={1.8} />
       )}
-      <Text variant="label" style={variant === 'link' ? styles.linkText : undefined}>
+      <Text variant="label" style={[styles.actionText, variant === 'link' && styles.linkText]}>
         {label}
       </Text>
     </Pressable>
@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     borderColor: colors.action.primary,
   },
   actionLink: { flex: 0, backgroundColor: 'transparent', borderColor: 'transparent' },
+  actionText: { textAlign: 'center', flexShrink: 1 },
   linkText: { textDecorationLine: 'underline' },
   pressed: { opacity: 0.8 },
 });

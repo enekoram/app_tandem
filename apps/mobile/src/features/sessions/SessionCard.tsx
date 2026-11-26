@@ -134,6 +134,10 @@ export function SessionCard({
       {kind === 'upcoming' && (
         <View style={styles.actions}>
           <CardAction label={t.join} onPress={() => onJoin?.()} />
+        </View>
+      )}
+      {kind === 'upcoming' && (
+        <View style={styles.actions}>
           <CardAction label={t.cancel} variant="ghost" onPress={() => onCancel?.()} />
           <CardAction
             label={t.choose}

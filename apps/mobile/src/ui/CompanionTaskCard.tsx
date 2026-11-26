@@ -15,6 +15,7 @@ export function CompanionTaskCard({
   caption,
   line,
   meta,
+  footer,
   actions,
 }: {
   task: TaskDto;
@@ -22,6 +23,8 @@ export function CompanionTaskCard({
   /** Texto tras el nombre: «quiere que le acompañes». Si no hay, solo `meta`. */
   line?: string;
   meta?: string;
+  /** Contenido a todo el ancho antes de las acciones (p. ej. «Enviar apoyo»). */
+  footer?: ReactNode;
   actions?: ReactNode;
 }) {
   const owner = task.person;
@@ -60,6 +63,7 @@ export function CompanionTaskCard({
           ) : null}
         </View>
       </View>
+      {footer}
       {actions ? <View style={styles.actions}>{actions}</View> : null}
     </Card>
   );

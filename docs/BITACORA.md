@@ -182,3 +182,14 @@
 - «Gracias» por el ¡hurra!, horario de silencio, límites en rutas sensibles, textos legales (borrador) enlazados desde Crear cuenta y Perfil, `docs/DESPLIEGUE.md`.
 - Prueba de humo: la API compilada arranca en modo producción, registra, valida la sesión y oculta /docs.
 - Tests: 201 en shared y 98 en la API. Empaqueta para iOS.
+
+### Sesión 4 — 2026-11-26 · arreglos de la segunda prueba (`fix-pruebas-2`)
+- Iniciar sesión: el logo ya no se corta por arriba (interlineado del logo 56 → 70; en iOS un interlineado menor que el cuerpo recorta).
+- Botones y acciones de tarjeta con el texto centrado (también en dos líneas); «Unirse a la sesión» en su propia fila.
+- Tareas que acompaño: «Enviar apoyo» (mantener pulsado) en cada tarea; sin conexión, el aviso de siempre.
+- Crear/editar tarea: al abrir el selector de fecha u hora se cierra el teclado.
+- Elegir acompañante: los no elegidos bajan de opacidad (`opacities.unselected`), la fila elegida tiene fondo y los demás muestran un círculo vacío.
+- HurraRecibido: nueva animación (`CelebrationArt`: las formas se juntan con muelle y salta un estallido de puntos de marca; suave = uno solo y menos puntos; mínimo = fundido) y vibración de éxito con estímulo completo. Solo queda «Ver siguiente tarea» (fuera «Dar las gracias» y «Ver tareas terminadas»; el endpoint de gracias queda en la API sin uso).
+- Home, «Te piden»: bajo la forma se explica qué pide y qué significan las ondas; tocar la forma abre la petición (tarea → Acompaño, sesión → ConfirmarSesion).
+- `useMotionProfile` (lib/motion) compartido por la Home, Tareas que acompaño y HurraRecibido.
+- Tests: 203 en shared y 98 en la API. Empaqueta para iOS.

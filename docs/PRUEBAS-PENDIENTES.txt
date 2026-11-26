@@ -142,8 +142,18 @@ CÓMO PREPARARLO
 [ ] 9.1 Crear cuenta: los enlaces «Leer las condiciones» y «Leer la política de
         privacidad» abren sus textos (sin sesión); Perfil › Privacidad y condiciones
 [ ] 9.2 Revisar el contenido de los textos legales (son un borrador)
-[ ] 9.3 HurraRecibido -> «Dar las gracias» -> el otro móvil ve el aviso y, en sus
-        terminadas, «Te ha dado las gracias»
+[-] 9.3 (Retirado el 2026-11-26: HurraRecibido ya no tiene «Dar las gracias»)
 [ ] 9.4 Notificaciones -> «Silenciar avisos por la noche» con Desde/Hasta: dentro de esas
         horas no llegan avisos (salvo recordatorios de sesión)
 [ ] 9.5 Iniciar sesión mal 6 veces seguidas: a la sexta, «Demasiados intentos»
+
+─────────────────────────────────────────────
+10. ARREGLOS DEL 2026-11-26 (fix-pruebas-2)
+─────────────────────────────────────────────
+[ ] 10.1 Iniciar sesión: el logo se ve entero
+[ ] 10.2 Textos de botones centrados; «Unirse a la sesión» ocupa su fila
+[ ] 10.3 Acompaño › Tareas que acompaño: «Enviar apoyo» manteniendo pulsado llega al otro móvil
+[ ] 10.4 Nueva tarea: escribir el título y tocar la fecha -> se cierra el teclado
+[ ] 10.5 Elegir acompañante: los no elegidos se ven atenuados y con círculo vacío
+[ ] 10.6 HurraRecibido: formas que se juntan + estallido; vibra; solo «Ver siguiente tarea»
+[ ] 10.7 Home con petición: texto bajo la forma explicando las ondas; tocar la forma abre la petición

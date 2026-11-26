@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   useSupportControllerDecline,
@@ -202,6 +202,30 @@ export default function TodayScreen() {
   const presence =
     scene.a11y.kind === 'contacts' ? presenceLine(scene.a11y.present, scene.a11y.absent) : '';
 
+  // Te piden: explicar las ondas y dejar tocar la forma para responder
+  const firstRequest = scene.approach ? scene.cards[0] : undefined;
+  const asking =
+    firstRequest?.kind === 'request'
+      ? (() => {
+          const r = firstRequest.request;
+          const name = r.person.name;
+          const rawId = r.id.replace(/^[a-z]+:/, '');
+          if (r.kind === 'task') {
+            return {
+              text: t.asks.task(name, r.taskTitle),
+              open: () => router.navigate('/acompano'),
+            };
+          }
+          if (r.kind === 'session') {
+            return {
+              text: t.asks.session(name),
+              open: () => router.push({ pathname: '/sesion/[id]', params: { id: rawId } }),
+            };
+          }
+          return { text: t.asks.support(name), open: undefined };
+        })()
+      : undefined;
+
   // SesionPorEmpezar: la Home cambia de titular cuando falta poco (doc 03 · sessionSoon)
   const soon = scene.pulse ? scene.cards.find((c) => c.kind === 'session') : undefined;
   const minutesLeft =
@@ -237,7 +261,21 @@ export default function TodayScreen() {
         />
       }
     >
-      <HomeScene scene={scene} motion={home.motion} />
+      <HomeScene
+        scene={scene}
+        motion={home.motion}
+        onPress={asking?.open}
+        accessibilityHint={t.asks.hint}
+      />
+      {asking ? (
+        <View style={[styles.pad, styles.asks]}>
+          <Text variant="lead">{asking.text}</Text>
+          <Text variant="body" color={colors.text.secondary}>
+            {t.asks.ripples}
+            {asking.open ? ` ${t.asks.tap}.` : ''}
+          </Text>
+        </View>
+      ) : null}
       {supporterName ? (
         <Text variant="lead" color={colors.text.secondary} style={styles.pad}>
           {es.support.receiving.body(supporterName)}
@@ -319,4 +357,5 @@ export default function TodayScreen() {
 
 const styles = StyleSheet.create({
   pad: { paddingHorizontal: spacing.sm },
+  asks: { gap: spacing.xxs },
 });

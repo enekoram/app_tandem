@@ -101,3 +101,9 @@ export const borders = {
   hairline: 1,
   pending: 1.5,
 } as const;
+
+/** Opacidades con significado (siempre acompañadas de otra señal, nunca solas). */
+export const opacities = {
+  /** Opciones no elegidas cuando ya hay una elegida (selector de acompañante). */
+  unselected: 0.45,
+} as const;

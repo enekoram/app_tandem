@@ -48,6 +48,22 @@ export const easings = {
  */
 export const orbit = { maxAngle: 0.35, duration: 9000, apartFactor: 0.4 } as const;
 
+/**
+ * Celebración del ¡hurra! recibido (pedido tras las pruebas del 2026-11-26): las dos formas se
+ * juntan y salta un estallido de puntos con los colores de marca, que se repite suave.
+ * Duraciones en ms; distancias en pt (sobre el lienzo de 358 × 220).
+ */
+export const celebration = {
+  /** Las formas se acercan hasta fundirse. */
+  join: 900,
+  /** Estallido de puntos (ida y fundido). */
+  burst: 1400,
+  /** Pausa entre estallidos. */
+  rest: 2600,
+  particles: { full: 16, gentle: 8 },
+  distance: { full: 120, gentle: 70 },
+} as const;
+
 /** Configuración de muelles (forma de Reanimated `withSpring`). */
 export const springs = {
   full: { damping: 14, stiffness: 140, mass: 1 },

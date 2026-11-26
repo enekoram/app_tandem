@@ -1,18 +1,15 @@
 import { useEffect, useMemo } from 'react';
-import { useReducedMotion } from 'react-native-reanimated';
 import { useMachine } from '@xstate/react';
 import { useHomeControllerHome, useMeControllerMe, type HomeDto } from '@tandems/api-client';
 import {
   describeScene,
   homeMachine,
   msUntilBaseChanges,
-  profileForStimulus,
-  resolveMotionProfile,
   selectHomeState,
   selectToast,
   toHomeSnapshot,
-  type MotionProfile,
 } from '@tandems/shared';
+import { useMotionProfile } from '@/lib/motion';
 import { onRealtime } from '@/lib/realtime';
 
 /**
@@ -59,11 +56,7 @@ export function useHome() {
     return () => clearTimeout(timer);
   }, [snapshot, send, state.context.base]);
 
-  const reduceMotion = useReducedMotion();
-  const motion: MotionProfile = resolveMotionProfile(
-    profileForStimulus(profile?.stimulus ?? 'full'),
-    reduceMotion,
-  );
+  const motion = useMotionProfile();
   const initials = (profile?.displayName ?? '').trim().charAt(0).toLocaleUpperCase('es');
   const homeState = selectHomeState(state);
   const scene = describeScene(homeState, snapshot, { initials });
